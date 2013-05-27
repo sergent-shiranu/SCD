@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
+    
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical" 
+	    android:background="#FFFFFF">
+	    
+	    
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="0dp"
+	        android:layout_weight="1"
+	        android:orientation="vertical"
+	        android:padding="6dip" >
+	
+	        <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:orientation="horizontal" >
+	
+	            <Button
+	                android:id="@+id/recherche_avance"
+	                style="@style/HomeButton"
+	                android:layout_width="match_parent"
+	                android:drawableTop="@drawable/search"
+	                android:onClick="onButtonClicker"
+	                android:text="Recherche avancée"
+	                android:textAppearance="?android:attr/textAppearanceSmall"
+	                android:textColor="#000000" />
+	
+	            <Button
+	                android:id="@+id/compte_lecteur"
+	                style="@style/HomeButton"
+	                android:drawableTop="@drawable/user"
+	                android:onClick="onButtonClicker"
+	                android:text="Compte Lecteur" 
+	                android:textColor="#000000"
+	                android:textAppearance="?android:attr/textAppearanceSmall"/>
+	            
+	            
+	            
+	        </LinearLayout>
+	
+	        <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:orientation="horizontal" >
+	
+	            <Button
+	                android:id="@+id/periodiques"
+	                style="@style/HomeButton"
+	                android:drawableTop="@drawable/book"
+	                android:onClick="onButtonClicker"
+	                android:text="Périodiques" 
+	                android:textColor="#000000"
+	                android:textAppearance="?android:attr/textAppearanceSmall"
+	                android:layout_margin="5dp"/>
+	
+	            <Button
+	                android:id="@+id/setting"
+	                style="@style/HomeButton"
+	                android:drawableTop="@drawable/setting"
+	                android:onClick="onButtonClicker"
+	                android:text="Paramètres" 
+	                android:textColor="#000000"
+	                android:textAppearance="?android:attr/textAppearanceSmall"/>
+	            
+	           
+	        </LinearLayout>
+	
+	        <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:orientation="horizontal" >
+	
+	            <Button
+	                android:id="@+id/periodiques"
+	                style="@style/HomeButton"
+	                android:drawableTop="@drawable/book"
+	                android:onClick="onButtonClicker"
+	                android:text="Périodiques" 
+	                android:textColor="#000000"
+	                android:textAppearance="?android:attr/textAppearanceSmall"
+	                android:layout_margin="5dp"/>
+	
+	            <Button
+	                android:id="@+id/setting"
+	                style="@style/HomeButton"
+	                android:drawableTop="@drawable/setting"
+	                android:onClick="onButtonClicker"
+	                android:text="Paramètres" 
+	                android:textColor="#000000"
+	                android:textAppearance="?android:attr/textAppearanceSmall"/>
+	            
+	           
+	        </LinearLayout>
+	        
+		</LinearLayout>
+		
+	</LinearLayout>
+
+</ScrollView>
