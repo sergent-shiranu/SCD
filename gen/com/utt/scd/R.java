@@ -910,12 +910,14 @@ containing a value of this type.
         public static final int abs__textfield_searchview_right_holo_dark=0x7f02006d;
         public static final int abs__textfield_searchview_right_holo_light=0x7f02006e;
         public static final int abs__toast_frame=0x7f02006f;
-        public static final int book=0x7f020070;
-        public static final int ic_launcher=0x7f020071;
-        public static final int library_black=0x7f020072;
-        public static final int search=0x7f020073;
-        public static final int setting=0x7f020074;
-        public static final int user=0x7f020075;
+        public static final int action_about=0x7f020070;
+        public static final int action_search=0x7f020071;
+        public static final int book=0x7f020072;
+        public static final int library_black=0x7f020073;
+        public static final int sablier=0x7f020074;
+        public static final int search=0x7f020075;
+        public static final int setting=0x7f020076;
+        public static final int user=0x7f020077;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f040020;
@@ -1070,7 +1072,6 @@ containing a value of this type.
         AppBaseTheme from BOTH res/values/styles.xml and
         res/values-v11/styles.xml on API 14+ devices.
     
- API 14 theme customizations can go here. 
          */
         public static final int AppBaseTheme=0x7f0a0059;
         /**  Application theme. 
