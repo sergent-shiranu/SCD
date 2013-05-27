@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class CompteLecteur extends SherlockFragmentActivity 
+public class Resultats extends SherlockFragmentActivity 
 {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -14,7 +14,7 @@ public class CompteLecteur extends SherlockFragmentActivity
 		super.onCreate(savedInstanceState);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		
-		setContentView(R.layout.compte_lecteur);
+		setContentView(R.layout.resultats);
 		
 		getSupportActionBar().setHomeButtonEnabled(true);
 	}

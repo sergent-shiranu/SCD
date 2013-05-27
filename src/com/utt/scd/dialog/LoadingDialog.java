@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
+import com.utt.scd.R;
 
 public class LoadingDialog extends SherlockDialogFragment 
 {
