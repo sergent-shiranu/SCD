@@ -74,6 +74,42 @@ public class Connection
 		}
 	}
 	
+	public List<ParseObject> rechercheAvancee(String titre, String auteur, String support, String langue, String uv) throws ConnectionNotInitializedException, ParseException
+	{
+		ParseQuery query = new ParseQuery("Livre");
+		
+		if (!titre.equals(""))
+		{
+			query.whereMatches("Titre", regexRecherche(titre));
+		}
+		if (!auteur.equals(""))
+		{
+			query.whereMatches("Auteur", regexRecherche(auteur));
+		}
+		if (!support.equals(""))
+		{
+			query.whereMatches("Titre", regexRecherche(support));
+		}
+		if (!langue.equals(""))
+		{
+			query.whereMatches("Titre", regexRecherche(langue));
+		}
+		if (!uv.equals(""))
+		{
+			query.whereMatches("Titre", regexRecherche(uv));
+		}
+		
+		
+		if (!this.isInitialized) 
+		{
+			throw new ConnectionNotInitializedException("Connection has not been initialized");
+		}
+		else
+		{
+			return query.find();
+		}
+	}
+	
 	
 	public String regexRecherche(String chaine)
 	{

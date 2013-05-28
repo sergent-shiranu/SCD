@@ -36,6 +36,37 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
+
+        
+        <activity
+            android:name=".Resultats"
+            android:label="Résultats"
+            android:theme="@style/Theme.Sherlock.Light.DarkActionBar" >
+        </activity>
+        
+        <activity
+            android:name=".RechercheAvancee"
+            android:label="Recherche Avancée"
+            android:theme="@style/Theme.Sherlock.Light.DarkActionBar" >
+        </activity>
+        
+        <activity
+            android:name=".Comptelecteur"
+            android:label="Compte Lecteur"
+            android:theme="@style/Theme.Sherlock.Light.DarkActionBar" >
+        </activity>
+        
+        <activity
+            android:name=".Periodiques"
+            android:label="Périodiques"
+            android:theme="@style/Theme.Sherlock.Light.DarkActionBar" >
+        </activity>
+        
+        <activity
+            android:name=".Parametre"
+            android:label="Paramètres"
+            android:theme="@style/Theme.Sherlock.Light.DarkActionBar" >
+        </activity>
     </application>
 
 </manifest>
