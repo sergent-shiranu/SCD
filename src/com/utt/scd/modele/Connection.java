@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -88,15 +87,15 @@ public class Connection
 		}
 		if (!support.equals(""))
 		{
-			query.whereMatches("Titre", regexRecherche(support));
+			query.whereMatches("Support", regexRecherche(support));
 		}
 		if (!langue.equals(""))
 		{
-			query.whereMatches("Titre", regexRecherche(langue));
+			query.whereMatches("Langue", regexRecherche(langue));
 		}
 		if (!uv.equals(""))
 		{
-			query.whereMatches("Titre", regexRecherche(uv));
+			query.whereMatches("UV", regexRecherche(uv));
 		}
 		
 		
