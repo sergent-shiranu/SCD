@@ -25,7 +25,7 @@
 	            android:orientation="horizontal" >
 	
 	            <Button
-	                android:id="@+id/recherche_avance"
+	                android:id="@+id/recherche_avancee"
 	                style="@style/HomeButton"
 	                android:layout_width="match_parent"
 	                android:drawableTop="@drawable/search"
@@ -64,7 +64,7 @@
 	                android:layout_margin="5dp"/>
 	
 	            <Button
-	                android:id="@+id/setting"
+	                android:id="@+id/settings"
 	                style="@style/HomeButton"
 	                android:drawableTop="@drawable/setting"
 	                android:onClick="onButtonClicker"

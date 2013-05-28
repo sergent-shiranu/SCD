@@ -968,8 +968,8 @@ containing a value of this type.
         public static final int listView1=0x7f040036;
         public static final int normal=0x7f040001;
         public static final int periodiques=0x7f040034;
-        public static final int recherche_avance=0x7f040032;
-        public static final int setting=0x7f040035;
+        public static final int recherche_avancee=0x7f040032;
+        public static final int settings=0x7f040035;
         public static final int showCustom=0x7f040008;
         public static final int showHome=0x7f040005;
         public static final int showTitle=0x7f040007;
@@ -1004,10 +1004,12 @@ containing a value of this type.
         public static final int abs__simple_dropdown_hint=0x7f030014;
         public static final int activity_scd=0x7f030015;
         public static final int compte_lecteur=0x7f030016;
-        public static final int recherche_avance=0x7f030017;
-        public static final int resultats=0x7f030018;
-        public static final int sherlock_spinner_dropdown_item=0x7f030019;
-        public static final int sherlock_spinner_item=0x7f03001a;
+        public static final int parametres=0x7f030017;
+        public static final int periodiques=0x7f030018;
+        public static final int recherche_avance=0x7f030019;
+        public static final int resultats=0x7f03001a;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001b;
+        public static final int sherlock_spinner_item=0x7f03001c;
     }
     public static final class menu {
         public static final int scd=0x7f0b0000;

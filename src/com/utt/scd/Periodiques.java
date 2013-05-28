@@ -1,12 +1,13 @@
 package com.utt.scd;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-
-public class Parametre extends SherlockFragmentActivity 
+public class Periodiques extends SherlockFragmentActivity
 {
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -18,4 +19,5 @@ public class Parametre extends SherlockFragmentActivity
 		
 		getSupportActionBar().setHomeButtonEnabled(true);
 	}
+
 }
