@@ -1,8 +1,11 @@
 package com.utt.scd;
 
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.LinkedList;
 import java.util.List;
 
+import resultats.Resultats;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
@@ -12,21 +15,22 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 import com.actionbarsherlock.widget.SearchView;
-import com.parse.Parse;
+import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.PushService;
 import com.utt.scd.dialog.AlertingDialogOneButton;
-import com.utt.scd.modele.Connection;
-import com.utt.scd.modele.ConnectionNotInitializedException;
+import com.utt.scd.model.API;
+import com.utt.scd.model.Connection;
+import com.utt.scd.model.ConnectionNotInitializedException;
+import com.utt.scd.model.HttpVerb;
 
-public class SCD extends SherlockFragmentActivity implements OnClickListener 
+public class SCD extends SherlockFragmentActivity implements OnClickListener, OnQueryTextListener 
 {
 
 	private Button recherche_avancee,
@@ -34,13 +38,13 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener
 					periodiques,
 					settings;
 	
-	
+	public static int THEME = R.style.Theme_Dark_blue;
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
-		setTheme(R.style.Theme_Sherlock_Light_DarkActionBar);
+		setTheme(THEME);
 		super.onCreate(savedInstanceState);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		
@@ -60,7 +64,8 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener
 		this.settings = (Button) findViewById(R.id.settings);
 		this.settings.setOnClickListener(this);
 		
-		Parse.initialize(this, "UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx", "XqnwGIwr89qMXkPcohKVmny8lYVEyzu58Osh9qW8");
+
+		PushService.setDefaultPushCallback(this, SCD.class);
 		PushService.subscribe(this,  "Giants", SCD.class);
 		ParseInstallation.getCurrentInstallation().saveInBackground();
 		
@@ -125,6 +130,8 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener
 	
 	private AlertingDialogOneButton alertingDialogOneButton;
 	
+	
+	
 	public class RechercheSimple extends AsyncTask<String, Integer, String>
 	{
 		public Connection connection;
@@ -150,6 +157,10 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener
 		{
 			try 
 			{
+				//connection.doRequest(HttpVerb.GET, API.LIVRES,"");
+				System.out.println("where={\"Titre\":{\"$regex\":\".*[bB][Uu][Ll][Aa][Tt][Ss].*\"}}");
+				connection.doRequest(HttpVerb.GET, API.LIVRES, URLEncoder.encode("where={\"Titre\":{\"$regex\":\".*[bB][Uu][Ll][Aa][Tt][Ss].*\"}}","UTF-8"));
+				//connection.doRequest(HttpVerb.GET, API.LIVRES, URLEncoder.encode("where={" + "Titre" + " : { " + "$regex"+ " : " + ".*[bB][Uu][Ll][Aa][Tt][Ss].*"+ "}"+"}" ));
 				this.list = connection.rechercheSimple("bulats");
 			} 
 			catch (ConnectionNotInitializedException e) 
@@ -163,6 +174,9 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return "fail";
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			
 			return "successful";
@@ -213,6 +227,7 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener
 		//Create the search view
         SearchView searchView = new SearchView(getSupportActionBar().getThemedContext());
         searchView.setQueryHint("Recherche simple");
+        searchView.setOnQueryTextListener(this);
         
        
         MenuItem recherche_simple = menu.add(0,0,0,"Recherche simple");
@@ -241,7 +256,7 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener
 				return true;
 	
 			case 1:
-	
+				
 				new RechercheSimple().execute();
 				
 				return true;
@@ -254,6 +269,25 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener
 	
 		};
 
+		return false;
+	}
+
+
+	@Override
+	public boolean onQueryTextSubmit(String query) 
+	{
+		Intent intent = new Intent(this, Resultats.class);
+		intent.putExtra("Titre", query);
+		startActivity(intent);
+		
+		return false;
+	}
+
+
+	@Override
+	public boolean onQueryTextChange(String newText) 
+	{
+		// TODO Auto-generated method stub
 		return false;
 	}
 

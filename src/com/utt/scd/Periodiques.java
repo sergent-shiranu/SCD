@@ -11,7 +11,7 @@ public class Periodiques extends SherlockFragmentActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
-		setTheme(R.style.Theme_Sherlock_Light_DarkActionBar);
+		setTheme(SCD.THEME);
 		super.onCreate(savedInstanceState);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		
