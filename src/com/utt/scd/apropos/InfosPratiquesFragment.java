@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.utt.scd.R;
@@ -78,9 +79,7 @@ public class InfosPratiquesFragment extends SherlockFragment implements OnClickL
 			if(null != locations && null != providerList && providerList.size() > 0)
 			{                 
 				location_longitude = locations.getLongitude();
-				location_latitude = locations.getLatitude();  	
-				
-				
+				location_latitude = locations.getLatitude();  			
 			}
 			
 			if(location_latitude != 0 && location_longitude != 0)
@@ -95,8 +94,11 @@ public class InfosPratiquesFragment extends SherlockFragment implements OnClickL
 					    								"com.google.android.maps.MapsActivity"));
 				startActivity(intent);
 			}
+			else
+			{
+				Toast.makeText(getSherlockActivity(), "Votre position actuelle est inconnue", Toast.LENGTH_LONG).show();
+			}
 			
-
 		}
 		else if (v.equals(questions_reponses))
 		{
