@@ -201,7 +201,7 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 			{	
 				listLivres = resultats;
 				
-				livre = listLivres.get(0);
+				//livre = listLivres.get(0);
 				populateListView();
 				
 				/*for (int i = 0; i< resultats.size(); i++)

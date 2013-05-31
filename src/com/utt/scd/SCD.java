@@ -24,6 +24,7 @@ import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.PushService;
+import com.utt.scd.apropos.Apropos;
 import com.utt.scd.dialog.AlertingDialogOneButton;
 import com.utt.scd.model.API;
 import com.utt.scd.model.Connection;
@@ -253,11 +254,13 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener, On
 		{
 			case 0:
 	
+				
 				return true;
 	
 			case 1:
 				
-				new RechercheSimple().execute();
+				Intent intent = new Intent(this,Apropos.class);
+				startActivity(intent);
 				
 				return true;
 	

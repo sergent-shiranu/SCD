@@ -14,7 +14,7 @@ public class Parametre extends SherlockFragmentActivity
 		super.onCreate(savedInstanceState);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		
-		setContentView(R.layout.recherche_avance);
+		setContentView(R.layout.recherche_avancee);
 		
 		getSupportActionBar().setHomeButtonEnabled(true);
 	}
