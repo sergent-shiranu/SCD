@@ -46,7 +46,29 @@ public class InfosPratiquesFragment extends SherlockFragment implements OnClickL
 	{
 		if (v.equals(itineraire))
 		{
-			Intent intent = new Intent(getSherlockActivity(),Itineraire.class);
+			LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+			String provider = locationManager.getBestProvider(new Criteria(), true);
+			
+			double location_longitude = 0;
+			double location_latitude = 0;
+			Location locations = locationManager.getLastKnownLocation(provider);
+			List<String> providerList = locationManager.getAllProviders();
+			if(null!=locations && null!=providerList && providerList.size()>0)
+			{
+				location_longitude = locations.getLongitude();
+				location_latitude = locations.getLatitude();
+			}
+			
+			System.out.println(location_longitude + " " + location_latitude);
+			
+			double destionation_longitude = 4.0669048;
+			double destionation_latitude = 48.2690833;
+			
+			Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr="+
+													location_latitude + "," + location_longitude) + "&daddr="
+												 	destionation_latitude + ","+ destionation_longitude)
+
+			//Intent intent = new Intent(getSherlockActivity(),Itineraire.class);
 			startActivity(intent);
 		}
 		else if (v.equals(questions_reponses))
