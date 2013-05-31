@@ -75,12 +75,10 @@ public class Connection
 	
 	
 	//******************************* RECHERCHE ***************************************//
-	public List<ParseObject> rechercheSimple(String chaine) throws ConnectionNotInitializedException, ParseException
+	public ParseObject rechercheCached(String objectId) throws ConnectionNotInitializedException, ParseException
 	{
 		ParseQuery query = new ParseQuery("Livre");
 		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
-		
-		query.whereMatches("Titre", regexRecherche(chaine));
 		
 		if (!this.isInitialized) 
 		{
@@ -88,15 +86,19 @@ public class Connection
 		}
 		else
 		{
-			return query.find();
+			return query.get(objectId);
 		}
 	}
+	
+	
+	
 	
 	public List<ParseObject> rechercheAvancee(String titre, String auteur, String support, String langue, String uv, String domaine) throws ConnectionNotInitializedException, ParseException
 	{
 		
 		ParseQuery query = new ParseQuery("Livre");
 		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+		
 		
 		System.out.println(titre + auteur + support + langue + uv + domaine);
 		
@@ -137,6 +139,7 @@ public class Connection
 			query.whereMatches("Domaine", regexRecherche(domaine));
 		}
 		
+		query.addDescendingOrder("Titre");
 		
 		if (!this.isInitialized) 
 		{

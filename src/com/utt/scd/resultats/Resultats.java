@@ -1,9 +1,9 @@
 package com.utt.scd.resultats;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -23,6 +22,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.utt.scd.R;
 import com.utt.scd.SCD;
+import com.utt.scd.apropos.Apropos;
 import com.utt.scd.dialog.AlertingDialogOneButton;
 import com.utt.scd.model.Connection;
 import com.utt.scd.model.ConnectionNotInitializedException;
@@ -91,7 +91,7 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
         this.nombre_resultat = (TextView) findViewById(R.id.textView1);
 		
 		String[] data = {titre, auteur, support, langue, uv, domaine};
-		new Recherche().execute(data);
+		new RechercheSimple().execute(data);
 	}
 	
 	
@@ -116,21 +116,20 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 		
 	}
 	
-	private ParseObject livre;
 	
-	public class Recherche extends AsyncTask<String, Integer, String>
+	public class RechercheSimple extends AsyncTask<String, Integer, String>
 	{
 		private AlertingDialogOneButton alertingDialogOneButton;
 		
 		public Connection connection;
 		public List<ParseObject> resultats;
 
-		public Recherche()
+		public RechercheSimple()
 		{
 			connection = Connection.getInstance();
 			connection.initialize();
 			
-			this.resultats = new LinkedList<ParseObject>();
+			//this.resultats = new LinkedList<ParseObject>();
 		}
 
 		@Override
@@ -217,99 +216,7 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 	}
 	
 	
-	public class RecupererExemplaire extends AsyncTask<String, Integer, String>
-	{
-		private AlertingDialogOneButton alertingDialogOneButton;
-		
-		public Connection connection;
-		public List<ParseObject> resultats;
-
-		public RecupererExemplaire()
-		{
-			connection = Connection.getInstance();
-			connection.initialize();
-			
-			this.resultats = new LinkedList<ParseObject>();
-		}
-
-		@Override
-		protected void onPreExecute() 
-		{
-			super.onPreExecute();
-			setSupportProgressBarIndeterminateVisibility(true); 
-		}
-		
-		@Override
-		protected String doInBackground(String... arg0) 
-		{
-			try 
-			{
-				//connection.doRequest(HttpVerb.GET, API.LIVRES,"");
-				//System.out.println("where={\"Titre\":{\"$regex\":\".*[bB][Uu][Ll][Aa][Tt][Ss].*\"}}");
-				//connection.doRequest(HttpVerb.GET, API.LIVRES, URLEncoder.encode("where={\"Titre\":{\"$regex\":\".*[bB][Uu][Ll][Aa][Tt][Ss].*\"}}","UTF-8"));
-				//connection.doRequest(HttpVerb.GET, API.LIVRES, URLEncoder.encode("where={" + "Titre" + " : { " + "$regex"+ " : " + ".*[bB][Uu][Ll][Aa][Tt][Ss].*"+ "}"+"}" ));
-				//this.list = connection.rechercheSimple("bulats");
-				
-				this.resultats = connection.recupererExemplaire(livre);
-			} 
-			catch (ConnectionNotInitializedException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return "no internet";
-			} 
-			catch (ParseException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return "fail";
-			}
-			
-			return "successful";
-    	    
-		}
-		
-		@Override
-		protected void onPostExecute(String result) 
-		{
-			super.onPostExecute(result);
-			
-			//loadingDialog.dismiss();
-			setSupportProgressBarIndeterminateVisibility(false);  
-			
-			if(result.equals("fail"))
-			{
-				
-				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_about);
-				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
-			}
-			else if(result.equals("no internet"))
-			{
-				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_search);
-				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
-				
-			}
-			else if (result.equals("successful"))
-			{	
-				
-				for (int i = 0 ; i < resultats.size() ; i++)
-				{
-					System.out.println("xxx : " + resultats.get(i).get("etat"));
-				}
-				populateListView();
-				
-				
-			}
-			
-		}
-
-		
-		
-	}
+	
 	
 	
 	@Override
@@ -338,14 +245,13 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 		{
 			case 0:
 	
-				//SCD.THEME = R.style.Theme_Dark_green;
-				new RecupererExemplaire().execute();
+
 				return true;
 	
 			case 1:
 				
-				String[] data = {titre, auteur, support, langue, uv};
-				new RechercheSimple().execute(data);
+				Intent intent = new Intent(this,Apropos.class);
+				startActivity(intent);
 				
 				
 				return true;
@@ -363,9 +269,13 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) 
+	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) 
 	{
-		Toast.makeText(this, "hehe", Toast.LENGTH_SHORT).show();		
+		
+		Intent intent = new Intent(this, LivreDetail.class);			
+		intent.putExtra("objectId", this.adapter.getId(position));
+		
+		startActivity(intent);
 	}
 	
 	

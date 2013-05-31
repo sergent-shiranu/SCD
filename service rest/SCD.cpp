@@ -18,6 +18,44 @@ curl -X GET \
   -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
   https://api.parse.com/1/classes/Periodique | python -mjson.tool
   
+
+// Livre Business Benchmark
+
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"exemplaire_de":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Livre","objectId":"J8sK2Nw82v"}]}}' \
+  https://api.parse.com/1/classes/Exemplaire/0cJ7JmM1KX
+  
+  
+  
+// Livre Android forensic
+
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"exemplaire_de":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Livre","objectId":"IYl1fNRjdl"}]}}' \
+  https://api.parse.com/1/classes/Exemplaire/KbNwQLwW0e 
+  
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"exemplaire_de":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Livre","objectId":"IYl1fNRjdl"}]}}' \
+  https://api.parse.com/1/classes/Exemplaire/x1dQ3AXAMd
+
+  
+  
+// Livre 120 exos
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"exemplaire_de":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Livre","objectId":"bHtTmOLvgs"}]}}' \
+  https://api.parse.com/1/classes/Exemplaire/maTun7QePh
+
   
 // Livre Essential Bulats 
 
@@ -123,8 +161,43 @@ curl -X GET \
   --data-urlencode 'where={"$relatedTo":{"object":{"__type":"Pointer","className":"Exemplaire","objectId":"ZVpviddUUS"},"key":"exemplaire_de"}}' \
   https://api.parse.com/1/classes/Livre
   
+// Livre Business Benchmark
 
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"has":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Exemplaire","objectId":"0cJ7JmM1KX"}]}}' \
+  https://api.parse.com/1/classes/Livre/J8sK2Nw82v
 
+  
+  
+  
+// Livre Android forensic  
+
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"has":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Exemplaire","objectId":"x1dQ3AXAMd"}]}}' \
+  https://api.parse.com/1/classes/Livre/IYl1fNRjdl
+  
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"has":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Exemplaire","objectId":"KbNwQLwW0e"}]}}' \
+  https://api.parse.com/1/classes/Livre/IYl1fNRjdl
+  
+// Livre 120 exos
+
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"has":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Exemplaire","objectId":"maTun7QePh"}]}}' \
+  https://api.parse.com/1/classes/Livre/bHtTmOLvgs
+  
   
 // Livre Essential Bulats 
 
@@ -132,7 +205,7 @@ curl -X PUT \
   -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
   -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
   -H "Content-Type: application/json" \
-  -d '{"has":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Exemplaire","objectId":"9LJEuyiK0e "}]}}' \
+  -d '{"has":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Exemplaire","objectId":"9LJEuyiK0e"}]}}' \
   https://api.parse.com/1/classes/Livre/XDlxVGMT11
   
   

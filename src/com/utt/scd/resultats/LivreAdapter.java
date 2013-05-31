@@ -1,5 +1,6 @@
 package com.utt.scd.resultats;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -42,6 +43,11 @@ public class LivreAdapter extends BaseAdapter
 	{
 		return position;
 	}
+	
+	public String getId(int position)
+	{
+		return this.listLivres.get(position).getObjectId();
+	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) 
@@ -65,14 +71,23 @@ public class LivreAdapter extends BaseAdapter
 		
 
 		TextView auteur = (TextView) view.findViewById(R.id.auteur);
-		String auteur_str = (String)livre.get("Auteur");
-		if (auteur_str.length() > 35)
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<String> auteur_str = (ArrayList<String>)livre.get("Auteur");
+		String auteurs_str="";
+		
+		for(String at : auteur_str)
 		{
-			auteur.setText(auteur_str.substring(0, 34)+ "...");
+			auteurs_str += at;
+		}
+		
+		if (auteurs_str.length() > 35)
+		{
+			auteur.setText(auteurs_str.substring(0, 34)+ "...");
 		}
 		else
 		{
-			auteur.setText(auteur_str);
+			auteur.setText(auteurs_str);
 		}
 
 		
