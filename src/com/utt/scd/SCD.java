@@ -1,13 +1,7 @@
 package com.utt.scd;
 
-import java.io.IOException;
-import java.net.URLEncoder;
-import java.util.LinkedList;
-import java.util.List;
-
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,16 +13,9 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 import com.actionbarsherlock.widget.SearchView;
 import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
-import com.parse.ParseException;
 import com.parse.ParseInstallation;
-import com.parse.ParseObject;
 import com.parse.PushService;
 import com.utt.scd.apropos.Apropos;
-import com.utt.scd.dialog.AlertingDialogOneButton;
-import com.utt.scd.model.API;
-import com.utt.scd.model.Connection;
-import com.utt.scd.model.ConnectionNotInitializedException;
-import com.utt.scd.model.HttpVerb;
 import com.utt.scd.resultats.Resultats;
 
 public class SCD extends SherlockFragmentActivity implements OnClickListener, OnQueryTextListener 
@@ -70,36 +57,6 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener, On
 		PushService.subscribe(this,  "Giants", SCD.class);
 		ParseInstallation.getCurrentInstallation().saveInBackground();
 		
-		/*ParseQuery query = new ParseQuery("Livre");
-		//query.whereContains("Titre", "BULATS");
-		query.whereMatches("Titre", ".*[bB][Uu][Ll][Aa][Tt][Ss].*");
-		query.findInBackground(new FindCallback() {
-			
-			@Override
-			public void done(List<ParseObject> objects, ParseException e) 
-			{
-				// TODO Auto-generated method stub
-				 if (e == null) 
-				 {
-			            Log.d("score", "Retrieved " + objects.size() + " Livre");
-			            for (int i = 0; i< objects.size(); i++)
-			            {
-			            	System.out.println("titre : " + objects.get(i).get("Titre"));
-			            }
-			            
-			     } 
-				 else 
-				 {
-			            Log.d("score", "Error: " + e.getMessage());
-			     }
-			}
-		});
-				
-		
-		ParseAnalytics.trackAppOpened(getIntent());*/
-		
-		
-		
 	}
 	
 	
@@ -126,98 +83,6 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener, On
 			Intent intent = new Intent(this, Parametre.class);
 			startActivity(intent);
 		}
-	}
-	
-	
-	private AlertingDialogOneButton alertingDialogOneButton;
-	
-	
-	
-	public class RechercheSimple extends AsyncTask<String, Integer, String>
-	{
-		public Connection connection;
-		public List<ParseObject> list;
-
-		public RechercheSimple()
-		{
-			connection = Connection.getInstance();
-			connection.initialize();
-			
-			this.list = new LinkedList<ParseObject>();
-		}
-
-		@Override
-		protected void onPreExecute() 
-		{
-			super.onPreExecute();
-			setSupportProgressBarIndeterminateVisibility(true); 
-		}
-		
-		@Override
-		protected String doInBackground(String... arg0) 
-		{
-			try 
-			{
-				//connection.doRequest(HttpVerb.GET, API.LIVRES,"");
-				System.out.println("where={\"Titre\":{\"$regex\":\".*[bB][Uu][Ll][Aa][Tt][Ss].*\"}}");
-				connection.doRequest(HttpVerb.GET, API.LIVRES, URLEncoder.encode("where={\"Titre\":{\"$regex\":\".*[bB][Uu][Ll][Aa][Tt][Ss].*\"}}","UTF-8"));
-				//connection.doRequest(HttpVerb.GET, API.LIVRES, URLEncoder.encode("where={" + "Titre" + " : { " + "$regex"+ " : " + ".*[bB][Uu][Ll][Aa][Tt][Ss].*"+ "}"+"}" ));
-				this.list = connection.rechercheSimple("bulats");
-			} 
-			catch (ConnectionNotInitializedException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return "no internet";
-			} 
-			catch (ParseException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return "fail";
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			return "successful";
-    	    
-		}
-		
-		@Override
-		protected void onPostExecute(String result) 
-		{
-			super.onPostExecute(result);
-			
-			//loadingDialog.dismiss();
-			setSupportProgressBarIndeterminateVisibility(false);  
-			
-			if(result.equals("fail"))
-			{
-				
-				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_about);
-				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
-			}
-			else if(result.equals("add"))
-			{
-				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_search);
-				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
-				
-			}
-			else if (result.equals("successful"))
-			{		
-				for (int i = 0; i< list.size(); i++)
-	            {
-	            	System.out.println("titre : " + list.get(i).get("Titre"));
-	            }
-			}
-			
-		}
-		
 	}
 	
 
@@ -290,7 +155,6 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener, On
 	@Override
 	public boolean onQueryTextChange(String newText) 
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 

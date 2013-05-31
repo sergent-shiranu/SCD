@@ -91,7 +91,7 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
         this.nombre_resultat = (TextView) findViewById(R.id.textView1);
 		
 		String[] data = {titre, auteur, support, langue, uv, domaine};
-		new RechercheSimple().execute(data);
+		new Recherche().execute(data);
 	}
 	
 	
@@ -118,19 +118,19 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 	
 	private ParseObject livre;
 	
-	public class RechercheSimple extends AsyncTask<String, Integer, String>
+	public class Recherche extends AsyncTask<String, Integer, String>
 	{
 		private AlertingDialogOneButton alertingDialogOneButton;
 		
 		public Connection connection;
 		public List<ParseObject> resultats;
 
-		public RechercheSimple()
+		public Recherche()
 		{
 			connection = Connection.getInstance();
 			connection.initialize();
 			
-			//this.resultats = new LinkedList<ParseObject>();
+			this.resultats = new LinkedList<ParseObject>();
 		}
 
 		@Override
