@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 import com.parse.ParseException;
@@ -27,6 +28,7 @@ import com.parse.ParseObject;
 import com.utt.scd.R;
 import com.utt.scd.SCD;
 import com.utt.scd.apropos.Apropos;
+import com.utt.scd.apropos.Localisation;
 import com.utt.scd.dialog.AlertingDialogOneButton;
 import com.utt.scd.model.Connection;
 import com.utt.scd.model.ConnectionNotInitializedException;
@@ -88,7 +90,7 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 		{
 			this.titre.setText((String)livre.get("Titre"));
 			
-			String au = "";
+			String au = "Auteur : ";
 			
 			@SuppressWarnings("unchecked")
 			ArrayList<String> ar = (ArrayList<String>) livre.get("Auteur");
@@ -108,12 +110,12 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 			
 			
 			this.auteur.setText(au);
-			this.cote.setText((String)livre.get("Cote"));
-			this.isbn.setText((String)livre.get("ISBN"));
-			this.editeur.setText((String)livre.get("Editeur"));
-			this.annee.setText((String)livre.get("Annee"));
+			this.cote.setText("Cote : " + (String)livre.get("Cote"));
+			this.isbn.setText("ISBN : " + (String)livre.get("ISBN"));
+			this.editeur.setText("Editeur : " + (String)livre.get("Editeur"));
+			this.annee.setText("Année : " + (String)livre.get("Annee"));
 			
-			String sup = "";
+			String sup = "Support : ";
 			
 			for(ParseObject ex : exemplaires)
 			{
@@ -133,6 +135,8 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 			
 		}
 	}
+	
+	
 	
 	public class RecupererExemplaires extends AsyncTask<String, Integer, String>
 	{
@@ -243,7 +247,29 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 	
 	}
 
-	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) 
+	{
+		MenuItem panier = menu.add(0,0,0,"Panier");
+        {
+        	panier.setIcon(R.drawable.action_cart);
+        	panier.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);              
+        }
+        
+        MenuItem alerte = menu.add(0,1,1,"Alerte");
+        {
+        	alerte.setIcon(R.drawable.action_alerte);
+        	alerte.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);              
+        }
+ 
+        MenuItem apropos = menu.add(0,2,2,"A propos");
+        {
+            apropos.setIcon(R.drawable.action_about);
+            apropos.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);           
+        }
+        
+		return true;
+	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) 
@@ -251,6 +277,17 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 		switch (item.getItemId()) 
 		{
 			case 0:
+				
+				
+				return true;
+				
+			case 1:
+				
+				
+
+				return true;
+				
+			case 2:
 				
 				Intent intent = new Intent(this,Apropos.class);
 				startActivity(intent);
@@ -270,9 +307,14 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 	}
 
 
+	
 	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
+	public void onClick(View v) 
+	{
+		int position = (Integer) v.getTag();
 		
+		Intent intent = new Intent(this,Localisation.class);
+		intent.putExtra("url", exemplaires.get(position).getParseFile("localisation_image").getUrl());
+		startActivity(intent);
 	}
 }

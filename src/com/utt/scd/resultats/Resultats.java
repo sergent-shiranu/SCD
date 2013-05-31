@@ -223,15 +223,15 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 	public boolean onCreateOptionsMenu(Menu menu) 
 	{
  
-        MenuItem recherche_simple = menu.add(0,0,0,"Panier");
+        MenuItem panier = menu.add(0,0,0,"Panier");
         {
-        	recherche_simple.setIcon(R.drawable.action_cart);
-        	recherche_simple.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);              
+        	panier.setIcon(R.drawable.action_cart);
+        	panier.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);              
         }
         
         MenuItem apropos = menu.add(0,1,1,"Refresh");
         {
-            apropos.setIcon(R.drawable.action_refresh);
+            apropos.setIcon(R.drawable.action_about);
             apropos.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);           
         }
         

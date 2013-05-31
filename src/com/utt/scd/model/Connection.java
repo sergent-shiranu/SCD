@@ -188,6 +188,47 @@ public class Connection
 		return regex;
 	}
 	
+	// Get Livre d'un exemplaire donné
+	public List<ParseObject> recupererLivre(ParseObject exemplaire) throws ConnectionNotInitializedException, ParseException
+	{
+		ParseQuery query = new ParseQuery("Livre");
+		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+		
+		query.whereEqualTo("has", exemplaire);
+
+		if (!this.isInitialized) 
+		{
+			throw new ConnectionNotInitializedException("Connection has not been initialized");
+		}
+		else
+		{
+			return query.find();
+		}
+	}
+	
+	public List<ParseObject> recupererLivre(String id_exemplaire) throws ConnectionNotInitializedException, ParseException
+	{
+		ParseQuery query = new ParseQuery("Livre");
+		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+		
+		ParseQuery subQuery = new ParseQuery("Exemplaire");
+		subQuery.whereMatches("objectId", id_exemplaire);
+
+		query.whereMatchesQuery("has", subQuery);
+		
+		
+		if (!this.isInitialized) 
+		{
+			throw new ConnectionNotInitializedException("Connection has not been initialized");
+		}
+		else
+		{
+			return query.find();
+		}
+	}
+	
+	
+	
 	//******************************* RECUPERER LES EXEMPLAIRES D'UN LIVRE ***************************************//
 	
 	public List<ParseObject> recupererExemplaire(ParseObject livre) throws ConnectionNotInitializedException, ParseException
