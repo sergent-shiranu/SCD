@@ -31,8 +31,8 @@ public class ItineraireTask extends AsyncTask<Void, Integer, Boolean>
  
     private Context context;
     private GoogleMap gMap;
-    private String editDepart;
-    private String editArrivee;
+    private LatLng editDepart;
+    private LatLng editArrivee;
     private final ArrayList<LatLng> lstLatLng = new ArrayList<LatLng>();
  
     /**
@@ -42,7 +42,7 @@ public class ItineraireTask extends AsyncTask<Void, Integer, Boolean>
     * @param editDepart
     * @param editArrivee
     */
-    public ItineraireTask(final Context context, final GoogleMap gMap, final String editDepart, final String editArrivee) 
+    public ItineraireTask(final Context context, final GoogleMap gMap, final LatLng editDepart, final LatLng editArrivee) 
     {
         this.context = context;
         this.gMap= gMap;
@@ -67,11 +67,11 @@ public class ItineraireTask extends AsyncTask<Void, Integer, Boolean>
     {
     	try {
             //Construction de l'url à appeler           
-            final StringBuilder url = new StringBuilder("http://maps.googleapis.com/maps/api/directions/xml?sensor=false&language=fr");
+            final StringBuilder url = new StringBuilder("http://maps.googleapis.com/maps/api/directions/xml?sensor=false&language=fr&mode=walking");
             url.append("&origin=");
-            url.append(editDepart.replace(' ', '+'));
+            url.append("origin=" + editDepart.latitude + "," + editDepart.longitude);
             url.append("&destination=");
-            url.append(editArrivee.replace(' ', '+'));
+            url.append("&destination=" + editArrivee.latitude + "," + editArrivee.longitude);
      
             //Appel du web service
             final InputStream stream = new URL(url.toString()).openStream();
@@ -170,6 +170,7 @@ public class ItineraireTask extends AsyncTask<Void, Integer, Boolean>
         }
         else 
         {
+        	Toast.makeText(context, "OKOKOKOK", Toast.LENGTH_SHORT).show();
             //On déclare le polyline, c'est-à-dire le trait (ici bleu) que l'on ajoute sur la carte pour tracer l'itinéraire
             final PolylineOptions polylines = new PolylineOptions();
             polylines.color(Color.BLUE);

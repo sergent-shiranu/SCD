@@ -5,7 +5,6 @@ import java.net.URLEncoder;
 import java.util.LinkedList;
 import java.util.List;
 
-import resultats.Resultats;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
@@ -30,6 +29,7 @@ import com.utt.scd.model.API;
 import com.utt.scd.model.Connection;
 import com.utt.scd.model.ConnectionNotInitializedException;
 import com.utt.scd.model.HttpVerb;
+import com.utt.scd.resultats.Resultats;
 
 public class SCD extends SherlockFragmentActivity implements OnClickListener, OnQueryTextListener 
 {

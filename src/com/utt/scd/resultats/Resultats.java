@@ -1,4 +1,4 @@
-package resultats;
+package com.utt.scd.resultats;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

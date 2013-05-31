@@ -1,4 +1,4 @@
-package resultats;
+package com.utt.scd.resultats;
 
 import java.util.List;
 

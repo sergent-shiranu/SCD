@@ -61,7 +61,8 @@
             android:text="Itinéraire" 
             android:textColor="#26466D"
             android:textStyle="bold"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:focusable="false"/>
         
         <Button
             android:id="@+id/button1"

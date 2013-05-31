@@ -1,6 +1,5 @@
 package com.utt.scd;
 
-import resultats.Resultats;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +14,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.utt.scd.resultats.Resultats;
 
 public class RechercheAvancee extends SherlockFragmentActivity implements OnClickListener
 {
