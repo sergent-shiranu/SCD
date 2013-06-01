@@ -16,6 +16,8 @@ import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
 import com.parse.ParseInstallation;
 import com.parse.PushService;
 import com.utt.scd.apropos.Apropos;
+import com.utt.scd.periodiques.Periodiques;
+import com.utt.scd.resultats.RechercheAvancee;
 import com.utt.scd.resultats.Resultats;
 
 public class SCD extends SherlockFragmentActivity implements OnClickListener, OnQueryTextListener 

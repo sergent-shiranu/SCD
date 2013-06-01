@@ -71,7 +71,7 @@
         </activity>
 
         <activity
-            android:name=".RechercheAvancee"
+            android:name="com.utt.scd.resultats.RechercheAvancee"
             android:label="Recherche Avancée">
         </activity>
         
@@ -81,8 +81,13 @@
         </activity>
         
         <activity
-            android:name=".Periodiques"
+            android:name="com.utt.scd.periodiques.Periodiques"
             android:label="Périodiques">
+        </activity>
+        
+        <activity
+            android:name="com.utt.scd.periodiques.PeriodiqueDetail"
+            android:label="Périodique Détail">
         </activity>
         
         <activity

@@ -289,23 +289,38 @@ public class Connection
 		}
 	}
 	
+	public ParseObject recupererPeriodique(String objectId) throws ConnectionNotInitializedException, ParseException
+	{
+		ParseQuery query = new ParseQuery("Periodique");
+		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+		
+		if (!this.isInitialized) 
+		{
+			throw new ConnectionNotInitializedException("Connection has not been initialized");
+		}
+		else
+		{
+			return query.get(objectId);
+		}
+	}
+	
 	
 	//******************************* RECUPERER LES EVENEMENTS/ACTIVITES ***************************************//
 	
-		public List<ParseObject> recupererEvenement() throws ConnectionNotInitializedException, ParseException
-		{
-			ParseQuery query = new ParseQuery("Evenement");
-			query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+	public List<ParseObject> recupererEvenement() throws ConnectionNotInitializedException, ParseException
+	{
+		ParseQuery query = new ParseQuery("Evenement");
+		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
 
-			if (!this.isInitialized) 
-			{
-				throw new ConnectionNotInitializedException("Connection has not been initialized");
-			}
-			else
-			{
-				return query.find();
-			}
+		if (!this.isInitialized) 
+		{
+			throw new ConnectionNotInitializedException("Connection has not been initialized");
 		}
+		else
+		{
+			return query.find();
+		}
+	}	
 	
 	
 	
