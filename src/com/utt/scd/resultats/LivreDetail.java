@@ -47,6 +47,7 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 	private ImageView couverture;
 	private Bitmap bitmap;
 	
+	private ImageView imageView;
 	private ListLinearLayout list;
 	private AdapterListLinearLayout adapter;
 	
@@ -77,6 +78,8 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 		
 		this.objectId = this.bundle.getString("objectId");
 		
+		this.imageView = (ImageView) findViewById(R.id.imageView2);
+		this.imageView.setVisibility(View.INVISIBLE);
 		this.list = (ListLinearLayout) findViewById(R.id.listView1);
 		this.list.setOnClickListener(this);
 		

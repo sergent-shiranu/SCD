@@ -28,7 +28,7 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener, On
 					periodiques,
 					settings;
 	
-	public static int THEME = R.style.Theme_Dark_blue;
+	public static int THEME = R.style.Theme_Dark_purple;
 	
 	
 	@Override

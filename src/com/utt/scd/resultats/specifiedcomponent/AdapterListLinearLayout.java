@@ -8,8 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,73 +65,36 @@ public class AdapterListLinearLayout extends BaseAdapter
 		view = this.inflater.inflate(R.layout.exemplaire_item, null);
 		
 		TextView pret = (TextView) view.findViewById(R.id.pret);
-		if(position == 0)
-		{
-			pret.setText("Type");
-			pret.setTypeface(null, Typeface.BOLD);
-			pret.setTextColor(Color.BLUE);
-		}
-		else
-		{
-			pret.setText((String)listItems.get(position).get("duree_pret"));
-		}
+		pret.setText((String)listItems.get(position).get("duree_pret"));
 		
 		
 		
 		TextView etat = (TextView) view.findViewById(R.id.etat);
-		
-		if (position == 0)
+		String et = (String)listItems.get(position).get("etat");
+		if (et.equals("Disponible"))
 		{
-			etat.setText("Etat");
-			etat.setTypeface(null, Typeface.BOLD);
-			etat.setTextColor(Color.BLUE);
+			et = "Dispo";
 		}
-		else
+		else if (et.equals("Prêté à l'extérieur"))
 		{
-			String et = (String)listItems.get(position).get("etat");
-			if (et.equals("Disponible"))
-			{
-				et = "Dispo";
-			}
-			else if (et.equals("Prêté à l'extérieur"))
-			{
-				et = "Prêté";
-			}
-			etat.setText(et);
+			et = "Prêté";
 		}
+		etat.setText(et);
 		
 		
 		TextView localisation = (TextView) view.findViewById(R.id.localisation);
-		if(position == 0)
-		{
-			localisation.setText("Localisation");
-			localisation.setTypeface(null, Typeface.BOLD);
-			localisation.setTextColor(Color.BLUE);
-		}
-		else
-		{
-			localisation.setText((String)listItems.get(position).get("localisation"));
-		}
+		localisation.setText((String)listItems.get(position).get("localisation"));
 		
 		
 		TextView retour = (TextView) view.findViewById(R.id.retour);
-		if(position == 0)
+		if (listItems.get(position).has("retour"))
 		{
-			retour.setText("Retour");
-			retour.setTypeface(null, Typeface.BOLD);
-			retour.setTextColor(Color.BLUE);
-		}
-		else
-		{
-			if (listItems.get(position).has("retour"))
-			{
-				Date rt = (Date)listItems.get(position).getDate("retour");
-				
-				Format formatter  = new SimpleDateFormat("dd/MM/yyyy");
-				
-				retour.setText(formatter.format(rt));
+			Date rt = (Date)listItems.get(position).getDate("retour");
+			
+			Format formatter  = new SimpleDateFormat("dd/MM/yyyy");
+			
+			retour.setText(formatter.format(rt));
 
-			}
 		}
 		
 		ImageView imageView = (ImageView) view.findViewById(R.id.imageView1);

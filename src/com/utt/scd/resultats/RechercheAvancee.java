@@ -16,6 +16,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.utt.scd.R;
 import com.utt.scd.SCD;
+import com.utt.scd.apropos.Apropos;
 
 public class RechercheAvancee extends SherlockFragmentActivity implements OnClickListener
 {
@@ -73,6 +74,9 @@ public class RechercheAvancee extends SherlockFragmentActivity implements OnClic
 		{
 			case 0:
 
+				Intent intent = new Intent(this,Apropos.class);
+				startActivity(intent);
+				
 				return true;
 
 	
@@ -108,6 +112,7 @@ public class RechercheAvancee extends SherlockFragmentActivity implements OnClic
 	            }
             });
             choice = builder.create();
+            choice.setCancelable(true);
             choice.show();
 		}
 		else if (v.equals(langue))
@@ -125,6 +130,7 @@ public class RechercheAvancee extends SherlockFragmentActivity implements OnClic
 				}
 			});
 			choice = builder.create();
+			choice.setCancelable(true);
 			choice.show();
 		}
 		else if (v.equals(rechercher))

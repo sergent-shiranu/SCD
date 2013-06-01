@@ -1,6 +1,7 @@
 package com.utt.scd.resultats;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import android.content.Intent;
@@ -129,7 +130,7 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 			connection = Connection.getInstance();
 			connection.initialize();
 			
-			//this.resultats = new LinkedList<ParseObject>();
+			this.resultats = new LinkedList<ParseObject>();
 		}
 
 		@Override

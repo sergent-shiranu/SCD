@@ -37,8 +37,7 @@ public class PeriodiqueDetail extends SherlockFragmentActivity
 	private String objectId;
 	private ParseObject periodique;
 	
-	private EditText description;
-	private TextView titre,numero;
+	private TextView titre,description,numero;
 	private ImageView localisation;
 	private Bitmap bitmap;
 	
@@ -56,7 +55,7 @@ public class PeriodiqueDetail extends SherlockFragmentActivity
 		getSupportActionBar().setHomeButtonEnabled(true);
 		
 		this.titre = (TextView) findViewById(R.id.textView1);
-		this.description = (EditText) findViewById(R.id.editText1);
+		this.description = (TextView) findViewById(R.id.description);
 		this.numero = (TextView) findViewById(R.id.textView4);
 		
 		this.bundle = getIntent().getExtras();

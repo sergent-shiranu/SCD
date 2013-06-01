@@ -28,14 +28,15 @@
             android:textColor="#330000"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/editText1"
+        <TextView 
+            android:id="@+id/description"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:background="@drawable/custom_border"
             android:ems="10"
-            android:padding="10dp" />
+            android:padding="10dp" 
+            android:textColor="#000000"/>
 
         <TextView
             android:id="@+id/textView3"
