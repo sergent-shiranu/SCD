@@ -18,7 +18,88 @@ curl -X GET \
   -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
   https://api.parse.com/1/classes/Periodique | python -mjson.tool
   
+// Livre JQuery Mobile
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"exemplaire_de":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Livre","objectId":"7R7pSSt8ud"}]}}' \
+  https://api.parse.com/1/classes/Exemplaire/Fg35L2jJQZ
 
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"exemplaire_de":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Livre","objectId":"7R7pSSt8ud"}]}}' \
+  https://api.parse.com/1/classes/Exemplaire/jLBzW3Cck5
+
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"exemplaire_de":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Livre","objectId":"7R7pSSt8ud"}]}}' \
+  https://api.parse.com/1/classes/Exemplaire/Fg35L2jJQZ
+
+
+
+
+ 
+// Livre Ajax
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"exemplaire_de":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Livre","objectId":"t9uCdRuS5S"}]}}' \
+  https://api.parse.com/1/classes/Exemplaire/xHWlu9AnJm
+  
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"exemplaire_de":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Livre","objectId":"t9uCdRuS5S"}]}}' \
+  https://api.parse.com/1/classes/Exemplaire/mkCfhbCn59
+
+  
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"exemplaire_de":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Livre","objectId":"t9uCdRuS5S"}]}}' \
+  https://api.parse.com/1/classes/Exemplaire/FULcymLr9U
+
+
+
+// Livre Android Wireless Application
+
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"exemplaire_de":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Livre","objectId":"7jy7vcLY0W"}]}}' \
+  https://api.parse.com/1/classes/Exemplaire/uanUNF7URE
+  
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"exemplaire_de":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Livre","objectId":"7jy7vcLY0W"}]}}' \
+  https://api.parse.com/1/classes/Exemplaire/mIwRUlZyVr
+  
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"exemplaire_de":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Livre","objectId":"7jy7vcLY0W"}]}}' \
+  https://api.parse.com/1/classes/Exemplaire/DEeI5BfhxG
+  
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"exemplaire_de":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Livre","objectId":"7jy7vcLY0W"}]}}' \
+  https://api.parse.com/1/classes/Exemplaire/4aBFUlUi50
+  
+  
 // Livre Business Benchmark
 
 curl -X PUT \
@@ -160,6 +241,98 @@ curl -X GET \
   -G \
   --data-urlencode 'where={"$relatedTo":{"object":{"__type":"Pointer","className":"Exemplaire","objectId":"ZVpviddUUS"},"key":"exemplaire_de"}}' \
   https://api.parse.com/1/classes/Livre
+  
+  
+  
+ 
+
+// // Livre JQuery Mobile
+
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"has":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Exemplaire","objectId":"Fg35L2jJQZ"}]}}' \
+  https://api.parse.com/1/classes/Livre/7R7pSSt8ud
+  
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"has":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Exemplaire","objectId":"jLBzW3Cck5"}]}}' \
+  https://api.parse.com/1/classes/Livre/7R7pSSt8ud
+  
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"has":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Exemplaire","objectId":"av5mdgRiB5"}]}}' \
+  https://api.parse.com/1/classes/Livre/7R7pSSt8ud
+  
+  
+// Livre Ajax
+
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"has":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Exemplaire","objectId":"xHWlu9AnJm"}]}}' \
+  https://api.parse.com/1/classes/Livre/t9uCdRuS5S
+  
+  
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"has":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Exemplaire","objectId":"mkCfhbCn59"}]}}' \
+  https://api.parse.com/1/classes/Livre/t9uCdRuS5S
+  
+
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"has":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Exemplaire","objectId":"FULcymLr9U"}]}}' \
+  https://api.parse.com/1/classes/Livre/t9uCdRuS5S
+  
+
+  
+  
+// Livre Android wireless Application
+
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"has":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Exemplaire","objectId":"uanUNF7URE"}]}}' \
+  https://api.parse.com/1/classes/Livre/7jy7vcLY0W
+
+
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"has":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Exemplaire","objectId":"mIwRUlZyVr"}]}}' \
+  https://api.parse.com/1/classes/Livre/7jy7vcLY0W
+
+
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"has":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Exemplaire","objectId":"DEeI5BfhxG"}]}}' \
+  https://api.parse.com/1/classes/Livre/7jy7vcLY0W
+
+
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"has":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Exemplaire","objectId":"4aBFUlUi50"}]}}' \
+  https://api.parse.com/1/classes/Livre/7jy7vcLY0W  
+
+  
+  
   
 // Livre Business Benchmark
 
@@ -372,8 +545,41 @@ curl -X GET \
   --data-urlencode 'where={"$relatedTo":{"object":{"__type":"Pointer","className":"_User","objectId":"kdBSL5IoyI"},"key":"emprunter"}}' \
   https://api.parse.com/1/classes/Exemplaire
   
+  
+  
+  
+// Notifier court
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "X-Parse-Master-Key: BFEhYgNBo7ioJl1j9U3X7wyfDNe3rMwX1lDah1a9" \
+  -H "Content-Type: application/json" \
+  -d '{"notifier_court":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"_User","objectId":"kdBSL5IoyI"}]}}' \
+  https://api.parse.com/1/classes/Livre/7jy7vcLY0W
 
+// Notifier Long
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "X-Parse-Master-Key: BFEhYgNBo7ioJl1j9U3X7wyfDNe3rMwX1lDah1a9" \
+  -H "Content-Type: application/json" \
+  -d '{"notifier_long":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"_User","objectId":"kdBSL5IoyI"}]}}' \
+  https://api.parse.com/1/classes/Livre/7jy7vcLY0W
+  
+
+  
 // Panier Livre
+
+
+
+
+
+
+
+
+
+
+
 
 // Emprunter un livre
 curl -X PUT \

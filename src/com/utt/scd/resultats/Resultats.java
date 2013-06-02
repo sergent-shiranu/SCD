@@ -219,6 +219,7 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 	
 	
 	
+	//private MenuItem mPanierMenuItem;
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
@@ -235,6 +236,9 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
             apropos.setIcon(R.drawable.action_about);
             apropos.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);           
         }
+		
+		/*getSupportMenuInflater().inflate(R.menu.resultats, menu);
+		mPanierMenuItem = menu.findItem(R.id.action_panier);*/
         
 		return true;
 	}
@@ -264,6 +268,11 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 				return true;
 	
 		};
+		
+		/*if (item.equals(mPanierMenuItem))
+		{
+			mPanierMenuItem.setActionView(R.layout.actionbar_indeterminate_progress);
+		}*/
 
 		return false;
 	}

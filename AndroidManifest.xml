@@ -76,7 +76,7 @@
         </activity>
         
         <activity
-            android:name=".CompteLecteur"
+            android:name="com.utt.scd.user.CompteLecteur"
             android:label="Compte Lecteur">
         </activity>
         

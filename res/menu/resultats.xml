@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_panier"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/action_cart"
+        android:title="Ajouter à la collection"/>
+    <item
+        android:id="@+id/action_apropos"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/action_about"
+        android:title="A propos"/>
+
+</menu>

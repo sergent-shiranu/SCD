@@ -17,7 +17,7 @@ public class ParseApplication extends Application {
 		// Add your initialization code here
 		Parse.initialize(this, "UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx", "XqnwGIwr89qMXkPcohKVmny8lYVEyzu58Osh9qW8");
 		PushService.setDefaultPushCallback(this, SCD.class);
-		PushService.subscribe(this,  "Giants", SCD.class);
+		PushService.subscribe(this,  "", SCD.class);
 		ParseInstallation.getCurrentInstallation().saveInBackground();
 		
 

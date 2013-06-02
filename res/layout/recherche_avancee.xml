@@ -187,7 +187,7 @@
             android:text="Rechercher"
             android:textColor="#000000"
             android:textStyle="bold"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_border"/>

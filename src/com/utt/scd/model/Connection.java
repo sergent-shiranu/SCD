@@ -21,8 +21,10 @@ import android.os.Build;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class Connection 
 {
@@ -324,6 +326,84 @@ public class Connection
 	
 	
 	
+	//******************************* RECHERCHE ***************************************//
+	
+	public void login(String username, String password) throws ParseException
+	{	
+		ParseUser user = ParseUser.logIn(username, password);
+		
+		user.put("is_logging",1);
+		user.put("installationId", ParseInstallation.getCurrentInstallation().getInstallationId());
+		
+		user.save();
+	}
+	
+	public void logout() throws ParseException
+	{	
+		ParseUser user = ParseUser.getCurrentUser();
+		
+		user.put("is_logging",0);
+		user.remove("installationId");
+	
+		user.save();
+		
+		ParseUser.logOut();
+	}
+	
+	
+	
+	// Ajouter un livre à sa collection
+	
+	public void ajouterLivreCollection(String objectId) throws ParseException, ConnectionNotInitializedException
+	{
+		ParseQuery query = new ParseQuery("Livre");
+		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+		
+		if (!this.isInitialized) 
+		{
+			throw new ConnectionNotInitializedException("Connection has not been initialized");
+		}
+		else
+		{
+			ParseObject livre =  query.get(objectId); // parse exeption s'est produit ici, mais normalement on retourne bien un livre
+			
+			ParseUser user = ParseUser.getCurrentUser();
+			
+			if (user.getObjectId() != null)
+			{
+				livre.put("collecte_par", user);
+				livre.save(); // parse exeption s'est produit ici
+			}
+			
+		}
+	}
+	
+	// Etre alerté par l'apparition d'exemplaire d'un livre, option = 1 pour un exemplaire dispo court, 2 pour dispo long, 0 pour dispo (court + long)
+	
+	public void notifieExemplaire(String objectId, String option) throws ParseException, ConnectionNotInitializedException
+	{
+		ParseQuery query = new ParseQuery("Livre");
+		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+		
+		if (!this.isInitialized) 
+		{
+			throw new ConnectionNotInitializedException("Connection has not been initialized");
+		}
+		else
+		{
+			ParseObject livre =  query.get(objectId);
+			
+			ParseUser user = ParseUser.getCurrentUser();
+			
+			if (user.getObjectId() != null)
+			{
+				livre.put("notifie_a", user);
+				livre.put("notification_type", option);
+				livre.save();
+			}
+			
+		}
+	}
 	
 	
 	

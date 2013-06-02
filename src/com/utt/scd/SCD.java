@@ -10,15 +10,19 @@ import android.widget.Button;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
 import com.actionbarsherlock.widget.SearchView;
 import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
 import com.parse.ParseInstallation;
+import com.parse.ParseUser;
 import com.parse.PushService;
 import com.utt.scd.apropos.Apropos;
+import com.utt.scd.model.Connection;
 import com.utt.scd.periodiques.Periodiques;
 import com.utt.scd.resultats.RechercheAvancee;
 import com.utt.scd.resultats.Resultats;
+import com.utt.scd.user.CompteLecteur;
 
 public class SCD extends SherlockFragmentActivity implements OnClickListener, OnQueryTextListener 
 {
@@ -28,7 +32,7 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener, On
 					periodiques,
 					settings;
 	
-	public static int THEME = R.style.Theme_Dark_purple;
+	public static int THEME = R.style.Theme_Dark_blue;
 	
 	
 	@Override
@@ -37,8 +41,6 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener, On
 		setTheme(THEME);
 		super.onCreate(savedInstanceState);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); 
 		
 		setContentView(R.layout.activity_scd);
 		
@@ -56,9 +58,34 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener, On
 		
 
 		PushService.setDefaultPushCallback(this, SCD.class);
-		PushService.subscribe(this,  "Giants", SCD.class);
+		PushService.subscribe(this,  "", SCD.class);
 		ParseInstallation.getCurrentInstallation().saveInBackground();
 		
+		/*System.out.println("Installation ID : " + ParseInstallation.getCurrentInstallation().getInstallationId());
+		System.out.println("Object ID : " + ParseInstallation.getCurrentInstallation().getString("objectId"));
+		System.out.println("Installation ID : " + ParseInstallation.getCurrentInstallation());*/
+		
+		ParseUser.logInInBackground("nguyenn2", "123456789", new LogInCallback() {
+			
+			@Override
+			public void done(ParseUser user, ParseException e) 
+			{
+				if (user != null)
+				{
+					user.put("is_logging",1);
+					user.put("installationId", ParseInstallation.getCurrentInstallation().getInstallationId());
+					
+					user.saveInBackground();
+				}
+				else
+				{
+					System.out.println("khong logging dc");
+				}
+				
+			}
+		});
+		
+	
 	}
 	
 	
@@ -84,6 +111,14 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener, On
 		{
 			Intent intent = new Intent(this, Parametre.class);
 			startActivity(intent);
+			
+			Connection connection = Connection.getInstance().initialize();
+			try {
+				connection.logout();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	

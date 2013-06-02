@@ -153,7 +153,7 @@ public class RechercheAvancee extends SherlockFragmentActivity implements OnClic
 	{
 		if (textView.getText() != null)
 		{
-			if (!textView.getText().toString().isEmpty())
+			if (textView.getText().toString().length() > 0)
 			{
 				return textView.getText().toString();
 			}
