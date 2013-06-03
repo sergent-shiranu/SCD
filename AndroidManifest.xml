@@ -81,6 +81,11 @@
         </activity>
         
         <activity
+            android:name="com.utt.scd.user.EmpruntDetail"
+            android:label="Compte Lecteur">
+        </activity>
+        
+        <activity
             android:name="com.utt.scd.periodiques.Periodiques"
             android:label="Périodiques">
         </activity>

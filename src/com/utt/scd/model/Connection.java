@@ -449,6 +449,37 @@ public class Connection
 		}
 	}
 	
+	// Get Exemplaire emprunter (ObjectId est id du livre)
+	
+	public List<ParseObject> recupererExemplaireEmprunter(String objectId) throws ConnectionNotInitializedException, ParseException
+	{
+
+		if (!this.isInitialized) 
+		{
+			throw new ConnectionNotInitializedException("Connection has not been initialized");
+		}
+		else
+		{
+			ParseUser user = ParseUser.getCurrentUser();
+			
+			
+			ParseQuery subQuery = new ParseQuery("Livre");
+			ParseObject livre = subQuery.get(objectId);
+			
+			System.out.println(livre.getString("Titre") + "livvvvvvv");
+			
+			ParseQuery query = new ParseQuery("Exemplaire");
+			query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+			
+			query.whereEqualTo("emprunte_par", user); // liste d'exemplaires empruntes
+			query.whereEqualTo("exemplaire_de", livre);
+			//query.whereMatchesQuery("exemplaire_de", subQuery); // son livre correspond*/
+			
+			return query.find();
+
+		}
+	}
+	
 	
 	
 	

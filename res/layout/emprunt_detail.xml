@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wooden_texture"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="200px"
+            android:layout_height="200px"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:focusable="false" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textColor="#734A12"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textColor="#734A12"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textColor="#734A12"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/date_emprunt"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
+        android:background="@drawable/custom_border"
+        android:padding="10dp"
+        android:textColor="#003F87"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/date_retour"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
+        android:background="@drawable/custom_border"
+        android:padding="10dp"
+        android:textColor="#003F87"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/renouvelable"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
+        android:background="@drawable/custom_border"
+        android:padding="10dp"
+        android:textColor="#003F87"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/fiche"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/custom_border"
+        android:text="Accéder à la fiche du livre"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#003F87"
+        android:textStyle="bold" />
+
+</LinearLayout>

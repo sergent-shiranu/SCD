@@ -1,5 +1,6 @@
 package com.utt.scd.user;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,7 +23,6 @@ import com.parse.ParseUser;
 import com.utt.scd.R;
 import com.utt.scd.SCD;
 import com.utt.scd.apropos.Apropos;
-import com.utt.scd.apropos.Localisation;
 import com.utt.scd.dialog.AlertingDialogOneButton;
 import com.utt.scd.model.Connection;
 import com.utt.scd.model.ConnectionNotInitializedException;
@@ -132,6 +132,7 @@ public class CompteLecteur extends SherlockFragmentActivity implements OnClickLi
         
 		return true;
 	}
+	
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) 
@@ -341,8 +342,32 @@ public class CompteLecteur extends SherlockFragmentActivity implements OnClickLi
 	{
 		int position = (Integer) v.getTag();
 		
-		Intent intent = new Intent(this,Localisation.class);
+		Intent intent = new Intent(this,EmpruntDetail.class);
 		intent.putExtra("objectId", livres.get(position).getObjectId());
+		intent.putExtra("Titre", livres.get(position).getString("Titre"));
+		
+		String au = "Auteur : ";
+		
+		@SuppressWarnings("unchecked")
+		ArrayList<String> ar = (ArrayList<String>) livres.get(position).get("Auteur");
+		
+		if (ar.size() == 1)
+		{
+			au = ar.get(0);
+		}
+		else
+		{
+			for (int i = 0 ; i < ar.size() -1 ; i ++)
+			{
+				au += ar.get(i) + "-";
+			}
+			au += ar.get(ar.size()-1);
+		}
+		
+		intent.putExtra("Auteur", au);
+		intent.putExtra("Cote", livres.get(position).getString("Cote"));
+		intent.putExtra("url", livres.get(position).getParseFile("couverture").getUrl());
+		
 		startActivity(intent);
 		
 	}
