@@ -340,35 +340,46 @@ public class CompteLecteur extends SherlockFragmentActivity implements OnClickLi
 	@Override
 	public void onClick(View v) 
 	{
-		int position = (Integer) v.getTag();
-		
-		Intent intent = new Intent(this,EmpruntDetail.class);
-		intent.putExtra("objectId", livres.get(position).getObjectId());
-		intent.putExtra("Titre", livres.get(position).getString("Titre"));
-		
-		String au = "Auteur : ";
-		
-		@SuppressWarnings("unchecked")
-		ArrayList<String> ar = (ArrayList<String>) livres.get(position).get("Auteur");
-		
-		if (ar.size() == 1)
+		if (v.equals(listLinearLayout))
 		{
-			au = ar.get(0);
-		}
-		else
-		{
-			for (int i = 0 ; i < ar.size() -1 ; i ++)
+			int position = (Integer) v.getTag();
+			
+			Intent intent = new Intent(this,EmpruntDetail.class);
+			intent.putExtra("objectId", livres.get(position).getObjectId());
+			intent.putExtra("Titre", livres.get(position).getString("Titre"));
+			
+			String au = "Auteur : ";
+			
+			@SuppressWarnings("unchecked")
+			ArrayList<String> ar = (ArrayList<String>) livres.get(position).get("Auteur");
+			
+			if (ar.size() == 1)
 			{
-				au += ar.get(i) + "-";
+				au = ar.get(0);
 			}
-			au += ar.get(ar.size()-1);
+			else
+			{
+				for (int i = 0 ; i < ar.size() -1 ; i ++)
+				{
+					au += ar.get(i) + "-";
+				}
+				au += ar.get(ar.size()-1);
+			}
+			
+			intent.putExtra("Auteur", au);
+			intent.putExtra("Cote", livres.get(position).getString("Cote"));
+			intent.putExtra("url", livres.get(position).getParseFile("couverture").getUrl());
+			
+			startActivity(intent);
 		}
-		
-		intent.putExtra("Auteur", au);
-		intent.putExtra("Cote", livres.get(position).getString("Cote"));
-		intent.putExtra("url", livres.get(position).getParseFile("couverture").getUrl());
-		
-		startActivity(intent);
+		else if (v.equals(alertes))
+		{
+			
+		}
+		else if (v.equals(collection))
+		{
+			
+		}
 		
 	}
 }

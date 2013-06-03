@@ -396,6 +396,27 @@ public class Connection
 		}
 	}
 	
+	// Récupérer tous les livres dans sa collection
+	public List<ParseObject> recupererLivresCollection() throws ConnectionNotInitializedException, ParseException
+	{
+		ParseUser user = ParseUser.getCurrentUser();
+
+		ParseQuery query = new ParseQuery("Exemplaire");
+		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+		query.whereEqualTo("collecte_par", user);	
+		
+		if (!this.isInitialized) 
+		{
+			throw new ConnectionNotInitializedException("Connection has not been initialized");
+		}
+		else
+		{
+			return query.find();
+		}
+	}
+	
+	
+	
 	// Etre alerté par l'apparition d'exemplaire d'un livre, option = 1 pour un exemplaire dispo court, 2 pour dispo long, 0 pour dispo (court + long)
 	
 	public void notifieExemplaire(String objectId, String option) throws ParseException, ConnectionNotInitializedException
@@ -422,6 +443,29 @@ public class Connection
 			
 		}
 	}
+	
+	
+	// Récupérer les alertes
+	
+	public List<ParseObject> recupererAlertes() throws ConnectionNotInitializedException, ParseException
+	{
+		ParseUser user = ParseUser.getCurrentUser();
+		
+		ParseQuery query = new ParseQuery("Livre");
+		query.whereEqualTo("notifie_a", user);
+
+		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+		
+		if (!this.isInitialized) 
+		{
+			throw new ConnectionNotInitializedException("Connection has not been initialized");
+		}
+		else
+		{
+			return query.find();
+		}
+	}
+	
 	
 	
 	// Get livre emprunter
