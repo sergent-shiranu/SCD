@@ -7,9 +7,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnChildClickListener;
+import android.support.v4.view.ViewPager;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -23,14 +21,19 @@ import com.utt.scd.apropos.Apropos;
 import com.utt.scd.dialog.AlertingDialogOneButton;
 import com.utt.scd.model.Connection;
 import com.utt.scd.model.ConnectionNotInitializedException;
+import com.viewpagerindicator.PageIndicator;
+import com.viewpagerindicator.TitlePageIndicator;
 
-public class Periodiques extends SherlockFragmentActivity implements OnChildClickListener
+
+public class Periodiques extends SherlockFragmentActivity
 {
-
-	private PeriodiquesAdapter adapter;
-	private ExpandableListView list;
+	private PeriodiquesAdapter pediodiquesAdapter;
+	
+	private ViewPager mPager;
+    private PageIndicator mIndicator;
 	
 	private LinkedList<TypePeriodiques> listPeriodiques;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -40,21 +43,26 @@ public class Periodiques extends SherlockFragmentActivity implements OnChildClic
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); 
-		
+
 		setContentView(R.layout.periodiques);
 		
-		getSupportActionBar().setHomeButtonEnabled(true);
+		setSupportProgressBarIndeterminateVisibility(false); 
 		
-		this.list = (ExpandableListView) findViewById(R.id.expandableListView1);
-		this.list.setOnChildClickListener(this);
+		getSupportActionBar().setHomeButtonEnabled(true);
+
+		
 		this.listPeriodiques = new LinkedList<TypePeriodiques>();
 		
 		new RecherchePeriodiques().execute();
+		
+		
+        
 	}
 	
 	
 	public void populateView()
 	{
+        
 		if (this.listPeriodiques != null && this.listPeriodiques.size() > 0)
 		{
 			for (TypePeriodiques tp : listPeriodiques)
@@ -64,13 +72,20 @@ public class Periodiques extends SherlockFragmentActivity implements OnChildClic
 					System.out.println("Titre : " + ob.getString("Categorie"));
 				}
 			}
+			/*this.pediodiquesAdapter = new PeriodiquesAdapter(this, getSupportFragmentManager(), this.listPeriodiques);
+			this.mPager.setAdapter(this.pediodiquesAdapter);
 			
+			this.mIndicator.setViewPager(this.mPager);*/
+			this.mPager = (ViewPager)findViewById(R.id.pager);
+			this.pediodiquesAdapter = new PeriodiquesAdapter(this, getSupportFragmentManager(), this.listPeriodiques);
+			this.mPager.setAdapter(this.pediodiquesAdapter);
 			
-			
-			this.adapter = new PeriodiquesAdapter(this, this.listPeriodiques);
-			this.list.setAdapter(adapter);
+			this.mIndicator = (TitlePageIndicator) findViewById(R.id.indicator);
+			this.mIndicator.setViewPager(this.mPager);
+	
 		}
 	}
+	
 	
 	public class RecherchePeriodiques extends AsyncTask<String, Integer, String>
 	{
@@ -174,8 +189,6 @@ public class Periodiques extends SherlockFragmentActivity implements OnChildClic
 			}
 			else if (result.equals("successful"))
 			{	
-				
-				
 				populateView();
 			}
 			
@@ -185,15 +198,6 @@ public class Periodiques extends SherlockFragmentActivity implements OnChildClic
 		
 	}
 	
-	@Override
-	public boolean onChildClick(ExpandableListView expandablelistview, View clickedView, int groupPosition, int childPosition, long childId) 
-	{
-		Intent intent = new Intent(this, PeriodiqueDetail.class);
-		intent.putExtra("objectId", this.adapter.getId(groupPosition, childPosition));
-		startActivity(intent);
-		
-		return true;
-	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
@@ -216,8 +220,9 @@ public class Periodiques extends SherlockFragmentActivity implements OnChildClic
 		{
 			case 0:
 
-				Intent intent = new Intent(this,Apropos.class);
+				Intent intent = new Intent(this, Apropos.class);
 				startActivity(intent);
+			
 				
 				return true;
 	
@@ -231,8 +236,13 @@ public class Periodiques extends SherlockFragmentActivity implements OnChildClic
 
 		return false;
 	}
+	
+	
 
 
+	
+	
+	
 	
 
 }

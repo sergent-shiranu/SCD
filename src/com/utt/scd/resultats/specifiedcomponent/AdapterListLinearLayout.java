@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.parse.ParseObject;
@@ -95,13 +94,6 @@ public class AdapterListLinearLayout extends BaseAdapter
 			
 			retour.setText(formatter.format(rt));
 
-		}
-		
-		ImageView imageView = (ImageView) view.findViewById(R.id.imageView1);
-		if (position == 0)
-		{
-			imageView.setVisibility(View.INVISIBLE);
-			view.setClickable(false);
 		}
 
 		//Important ça !!!!

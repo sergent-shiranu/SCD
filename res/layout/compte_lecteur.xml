@@ -18,52 +18,84 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="20dp"
             android:background="@drawable/custom_border"
-            android:ems="10"
             android:padding="10dp"
-            android:textColor="#003F87" />
-        
-        <Button android:text="Accéder à ma collection" 
+            android:textColor="#003F87"
+            android:textStyle="bold" />
+
+        <Button
             android:id="@+id/collection"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/custom_border"
-            android:ems="10"
-            android:textColor="#003F87"/>
+ 			android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Accéder à ma collection"
+            android:textColor="#003F87" 
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Permet d'enregistrer une recherche pour une future consultation"
-            android:textColor="#734A12"
             android:layout_marginBottom="20dp"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:textStyle="bold"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-        
-        <Button android:text="Accéder à mes alertes" 
+            android:layout_marginRight="10dp"
+            android:text="Permet d&apos;enregistrer une recherche pour une future consultation"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#734A12"
+            android:textStyle="bold" />
+
+        <Button
             android:id="@+id/alertes"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/custom_border"
-            android:ems="10"
-            android:textColor="#003F87"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Accéder à mes alertes"
+            android:textColor="#003F87" 
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Permet d'être notifié du retour d'un exemplaire"
-            android:textColor="#734A12"
             android:layout_marginBottom="20dp"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:textStyle="bold"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-        
+            android:layout_marginRight="10dp"
+            android:text="Permet d&apos;être notifié du retour d&apos;un exemplaire"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#734A12"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#A3A3A3"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/pret"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#003F87"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <com.utt.scd.resultats.specifiedcomponent.ListLinearLayout
+            android:id="@+id/listView1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+        </com.utt.scd.resultats.specifiedcomponent.ListLinearLayout>
     </LinearLayout>
 
 </ScrollView>

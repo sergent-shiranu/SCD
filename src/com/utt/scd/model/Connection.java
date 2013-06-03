@@ -348,16 +348,24 @@ public class Connection
 		
 	}
 	
-	public void logout() throws ParseException
+	public void logout() throws ParseException, ConnectionNotInitializedException
 	{	
-		ParseUser user = ParseUser.getCurrentUser();
+		if (!this.isInitialized) 
+		{
+			throw new ConnectionNotInitializedException("Connection has not been initialized");
+		}
+		else
+		{
+			ParseUser user = ParseUser.getCurrentUser();
+			
+			user.put("is_logging",0);
+			user.remove("installationId");
 		
-		user.put("is_logging",0);
-		user.remove("installationId");
-	
-		user.save();
+			user.save();
+			
+			ParseUser.logOut();
+		}
 		
-		ParseUser.logOut();
 	}
 	
 	
@@ -415,6 +423,31 @@ public class Connection
 		}
 	}
 	
+	
+	// Get livre emprunter
+	
+	public List<ParseObject> recupererLivresEmprunter() throws ConnectionNotInitializedException, ParseException
+	{
+		ParseUser user = ParseUser.getCurrentUser();
+		
+		ParseQuery query = new ParseQuery("Livre");
+		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+		
+		ParseQuery subQuery = new ParseQuery("Exemplaire");
+		subQuery.whereEqualTo("emprunte_par", user);
+
+		query.whereMatchesQuery("has", subQuery);
+		
+		
+		if (!this.isInitialized) 
+		{
+			throw new ConnectionNotInitializedException("Connection has not been initialized");
+		}
+		else
+		{
+			return query.find();
+		}
+	}
 	
 	
 	

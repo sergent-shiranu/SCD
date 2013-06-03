@@ -3,12 +3,13 @@ package com.utt.scd.resultats.specifiedcomponent;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 
 public class ListLinearLayout extends LinearLayout 
 {
 
-	private AdapterListLinearLayout adapter;
+	private BaseAdapter adapter;
 	private OnClickListener onClickListener = null;
 	
 	public ListLinearLayout(Context context) 
@@ -32,12 +33,12 @@ public class ListLinearLayout extends LinearLayout
 
 
 
-	public AdapterListLinearLayout getAdapter() 
+	public BaseAdapter getAdapter() 
 	{
 		return adapter;
 	}
 
-	public void setAdapter(AdapterListLinearLayout adapter) 
+	public void setAdapter(BaseAdapter adapter) 
 	{
 		this.adapter = adapter;
 		bindLinearLayout();

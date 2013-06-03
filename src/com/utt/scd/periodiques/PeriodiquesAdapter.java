@@ -3,151 +3,47 @@ package com.utt.scd.periodiques;
 import java.util.LinkedList;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.TextView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 
-import com.parse.ParseObject;
-import com.utt.scd.R;
 
-public class PeriodiquesAdapter extends BaseExpandableListAdapter 
+public class PeriodiquesAdapter extends FragmentPagerAdapter 
 {
-
+	private LinkedList<TypePeriodiques> listPeriodiques;
 	private Context context;
-	private LinkedList<TypePeriodiques> groupes;
-	private LayoutInflater inflater;
+	
 
-	public PeriodiquesAdapter(Context context, LinkedList<TypePeriodiques> groupes) 
+	public PeriodiquesAdapter(Context context, FragmentManager fm, LinkedList<TypePeriodiques> listPeriodiques)
 	{
+		super(fm);
+		this.listPeriodiques = listPeriodiques;
 		this.context = context;
-		this.groupes = groupes;
-		this.inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
+	
 
 	@Override
-	public boolean areAllItemsEnabled() 
+	public Fragment getItem(int position) 
 	{
-		return true;
+		return MagazineFragment.newInstance(this.context, this.listPeriodiques.get(position));
 	}
 
-	public Object getChild(int gPosition, int cPosition) 
-	{
-		return groupes.get(gPosition).getList().get(cPosition);
-	}
 
-	public long getChildId(int gPosition, int cPosition) 
+	@Override
+	public int getCount() 
 	{
-		return cPosition;
+		return this.listPeriodiques.size();
 	}
 	
-	public String getId(int gPosition, int cPosition)
+	@Override
+	public int getItemPosition(Object object) 
 	{
-		return groupes.get(gPosition).getList().get(cPosition).getObjectId();
+		return POSITION_NONE;
 	}
 	
-	
-
-	public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) 
+	@Override
+    public CharSequence getPageTitle(int position) 
 	{
-		final ParseObject objet = (ParseObject) getChild(groupPosition, childPosition);
-
-		ChildViewHolder childViewHolder;
-
-		if (convertView == null) 
-		{
-			childViewHolder = new ChildViewHolder();
-
-			convertView = inflater.inflate(R.layout.group_child, null);
-
-			childViewHolder.textViewChild = (TextView) convertView.findViewById(R.id.textView1);
-
-
-			convertView.setTag(childViewHolder);
-		} 
-		else 
-		{
-			childViewHolder = (ChildViewHolder) convertView.getTag();
-		}
-
-		childViewHolder.textViewChild.setText((String)objet.get("Titre"));
-
-		return convertView;
-	}
-
-	public int getChildrenCount(int gPosition) 
-	{
-		return groupes.get(gPosition).getList().size();
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-
-	public Object getGroup(int gPosition) 
-	{
-		return groupes.get(gPosition);
-	}
-
-	public int getGroupCount() 
-	{
-		return groupes.size();
-	}
-
-	public long getGroupId(int gPosition)
-	{
-		return gPosition;
-	}
-
-	public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) 
-	{
-		GroupViewHolder gholder;
-
-		TypePeriodiques group = (TypePeriodiques) getGroup(groupPosition);
-
-		if (convertView == null) 
-		{
-			gholder = new GroupViewHolder();
-
-			convertView = inflater.inflate(R.layout.group_parent, null);
-
-			gholder.textViewGroup = (TextView) convertView.findViewById(R.id.textView1);
-
-			convertView.setTag(gholder);
-		} 
-		else 
-		{
-			gholder = (GroupViewHolder) convertView.getTag();
-		}
-
-		gholder.textViewGroup.setText(group.getNom());
-
-		return convertView;
-	}
-
-	public boolean hasStableIds() 
-	{
-		return true;
-	}
-
-	public boolean isChildSelectable(int arg0, int arg1) 
-	{
-		return true;
-	}
-
-	class GroupViewHolder 
-	{
-		public TextView textViewGroup;
-	}
-
-	class ChildViewHolder 
-	{
-		public TextView textViewChild;
-	}
-
+		return this.listPeriodiques.get(position).getNom();
+    }
 }

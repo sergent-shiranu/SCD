@@ -40,7 +40,7 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener, On
 					periodiques,
 					settings;
 	
-	public static int THEME = R.style.Theme_Dark_blue;
+	public static int THEME = R.style.Theme_Dark_green;
 	
 	
 	@Override
@@ -195,13 +195,13 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener, On
 			Intent intent = new Intent(this, Parametre.class);
 			startActivity(intent);
 			
-			Connection connection = Connection.getInstance().initialize();
+			/*Connection connection = Connection.getInstance().initialize();
 			try {
 				connection.logout();
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 		}
 	}
 	

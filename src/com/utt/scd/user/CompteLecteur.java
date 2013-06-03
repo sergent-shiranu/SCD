@@ -1,7 +1,11 @@
 package com.utt.scd.user;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,16 +16,28 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
+import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.utt.scd.R;
 import com.utt.scd.SCD;
 import com.utt.scd.apropos.Apropos;
+import com.utt.scd.apropos.Localisation;
+import com.utt.scd.dialog.AlertingDialogOneButton;
+import com.utt.scd.model.Connection;
+import com.utt.scd.model.ConnectionNotInitializedException;
+import com.utt.scd.resultats.specifiedcomponent.ListLinearLayout;
 
 public class CompteLecteur extends SherlockFragmentActivity implements OnClickListener 
 {
 	
 	private TextView nom_prenom;
 	private Button collection, alertes;
+	
+	private TextView pret;
+	private ListLinearLayout listLinearLayout;
+	private AdapterListLinearLayoutLivres adapter;
+	private List<ParseObject> livres;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -34,6 +50,8 @@ public class CompteLecteur extends SherlockFragmentActivity implements OnClickLi
 		
 		setContentView(R.layout.compte_lecteur);
 		
+		setSupportProgressBarIndeterminateVisibility(false); 
+		
 		getSupportActionBar().setHomeButtonEnabled(true);
 		
 		this.nom_prenom = (TextView) findViewById(R.id.nom_prenom);
@@ -45,6 +63,13 @@ public class CompteLecteur extends SherlockFragmentActivity implements OnClickLi
 		this.alertes.setOnClickListener(this);
 		
 		
+		this.pret = (TextView) findViewById(R.id.pret);
+		this.listLinearLayout = (ListLinearLayout) findViewById(R.id.listView1);
+		this.listLinearLayout.setOnClickListener(this);
+		
+		this.livres = new LinkedList<ParseObject>();
+		
+		new recupererLivresEmprunter().execute();
 		
 		/*ParseUser.logOut();
 		ParseUser.logInInBackground("nguyenn2", "12345678", new LogInCallback() {
@@ -66,6 +91,28 @@ public class CompteLecteur extends SherlockFragmentActivity implements OnClickLi
 			}
 		ParseUser.logOut();*/
 	}
+	
+	
+	
+	public void populateView()
+	{
+		if (livres != null)
+		{
+			if (livres.size() == 0)
+			{
+				this.pret.setText("Vous n'avez aucun livre à rendre");
+			}
+			else
+			{
+				this.pret.setText("Vous avez emprunté " + livres.size() + " livre(s)");
+			}
+			
+			this.adapter = new AdapterListLinearLayoutLivres(this, livres);
+			this.listLinearLayout.setAdapter(adapter);
+			
+		}
+	}
+	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
@@ -94,9 +141,7 @@ public class CompteLecteur extends SherlockFragmentActivity implements OnClickLi
 		
 			case 0:
 				
-				ParseUser.logOut();
-				
-				this.finish();
+				new logout().execute();
 	
 				return true;
 				
@@ -118,10 +163,187 @@ public class CompteLecteur extends SherlockFragmentActivity implements OnClickLi
 
 		return false;
 	}
+	
+	
+	public class logout extends AsyncTask<String, Integer, String>
+	{
+		private AlertingDialogOneButton alertingDialogOneButton;
+		
+		private Connection connection;
+		
 
+		public logout()
+		{
+			connection = Connection.getInstance();
+			connection.initialize();
+		}
+
+		@Override
+		protected void onPreExecute() 
+		{
+			super.onPreExecute();
+			setSupportProgressBarIndeterminateVisibility(true); 
+		}
+		
+		@Override
+		protected String doInBackground(String... arg0) 
+		{
+			try 
+			{
+				this.connection.logout();
+			} 
+			catch (ParseException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "fail";
+			} 
+			catch (ConnectionNotInitializedException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "no internet";
+			}
+			
+			return "successful";
+    	    
+		}
+		
+		@Override
+		protected void onPostExecute(String result) 
+		{
+			super.onPostExecute(result);
+
+			setSupportProgressBarIndeterminateVisibility(false); 
+			
+			if(result.equals("fail"))
+			{
+				
+				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
+																			result,																			
+																			R.drawable.action_about);
+				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+			}
+			else if(result.equals("no internet"))
+			{
+				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
+																			result,																			
+																			R.drawable.action_search);
+				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+				
+			}
+			else if (result.equals("successful"))
+			{	
+				System.out.println("Identification successful");
+				
+				finish();
+			}
+			
+		}
+
+		
+		
+	}
+	
+	
+	public class recupererLivresEmprunter extends AsyncTask<String, Integer, String>
+	{
+		private AlertingDialogOneButton alertingDialogOneButton;
+		
+		private Connection connection;
+		private List<ParseObject> listLivres;
+		
+
+		public recupererLivresEmprunter()
+		{
+			connection = Connection.getInstance();
+			connection.initialize();
+			
+			this.listLivres = new LinkedList<ParseObject>();
+		}
+
+		@Override
+		protected void onPreExecute() 
+		{
+			super.onPreExecute();
+			setSupportProgressBarIndeterminateVisibility(true); 
+		}
+		
+		@Override
+		protected String doInBackground(String... arg0) 
+		{
+			try 
+			{
+				this.listLivres = this.connection.recupererLivresEmprunter();
+			} 
+			catch (ParseException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "fail";
+			} 
+			catch (ConnectionNotInitializedException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "no internet";
+			}
+			
+			return "successful";
+    	    
+		}
+		
+		@Override
+		protected void onPostExecute(String result) 
+		{
+			super.onPostExecute(result);
+
+			setSupportProgressBarIndeterminateVisibility(false); 
+			
+			if(result.equals("fail"))
+			{
+				
+				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
+																			result,																			
+																			R.drawable.action_about);
+				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+			}
+			else if(result.equals("no internet"))
+			{
+				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
+																			result,																			
+																			R.drawable.action_search);
+				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+				
+			}
+			else if (result.equals("successful"))
+			{	
+				System.out.println("Successful");
+				
+				for (ParseObject obj : listLivres)
+				{
+					System.out.println(obj.getObjectId()+"--------------");
+				}
+				
+				livres = this.listLivres;
+				populateView();
+			}
+			
+		}
+
+		
+		
+	}
+
+	
 	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
+	public void onClick(View v) 
+	{
+		int position = (Integer) v.getTag();
+		
+		Intent intent = new Intent(this,Localisation.class);
+		intent.putExtra("objectId", livres.get(position).getObjectId());
+		startActivity(intent);
 		
 	}
 }
