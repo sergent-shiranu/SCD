@@ -7,12 +7,13 @@
 
     <TextView
         android:id="@+id/pret"
-        android:layout_width="70px"
+        android:layout_width="75px"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
+        android:padding="10dp" 
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#000000" />
 
@@ -23,16 +24,18 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
+        android:padding="10dp" 
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#000000" />
 
     <TextView
         android:id="@+id/localisation"
-        android:layout_width="180px"
+        android:layout_width="190px"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="5dp"
+        android:padding="10dp" 
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#000000" />
 
@@ -42,6 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
+        android:padding="10dp" 
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#000000" />
 

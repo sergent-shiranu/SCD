@@ -91,7 +91,10 @@ public class RechercheAvancee extends SherlockFragmentActivity implements OnClic
 		return false;
 	}
 
+	
+	
 	private AlertDialog choice;
+	
 	@Override
 	public void onClick(View v) 
 	{

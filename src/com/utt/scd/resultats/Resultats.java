@@ -145,12 +145,6 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 		{
 			try 
 			{
-				//connection.doRequest(HttpVerb.GET, API.LIVRES,"");
-				//System.out.println("where={\"Titre\":{\"$regex\":\".*[bB][Uu][Ll][Aa][Tt][Ss].*\"}}");
-				//connection.doRequest(HttpVerb.GET, API.LIVRES, URLEncoder.encode("where={\"Titre\":{\"$regex\":\".*[bB][Uu][Ll][Aa][Tt][Ss].*\"}}","UTF-8"));
-				//connection.doRequest(HttpVerb.GET, API.LIVRES, URLEncoder.encode("where={" + "Titre" + " : { " + "$regex"+ " : " + ".*[bB][Uu][Ll][Aa][Tt][Ss].*"+ "}"+"}" ));
-				//this.list = connection.rechercheSimple("bulats");
-				
 				this.resultats = connection.rechercheAvancee(arg0[0], arg0[1], arg0[2], arg0[3], arg0[4], arg0[5]);
 			} 
 			catch (ConnectionNotInitializedException e) 
@@ -174,8 +168,7 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 		protected void onPostExecute(String result) 
 		{
 			super.onPostExecute(result);
-			
-			//loadingDialog.dismiss();
+
 			setSupportProgressBarIndeterminateVisibility(false); 
 			
 			System.out.println("hehehehehehe");
@@ -200,14 +193,9 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 			else if (result.equals("successful"))
 			{	
 				listLivres = resultats;
-				
-				//livre = listLivres.get(0);
+
 				populateListView();
 				
-				/*for (int i = 0; i< resultats.size(); i++)
-	            {
-	            	System.out.println("titre : " + resultats.get(i).get("Titre"));
-	            }*/
 			}
 			
 		}
@@ -236,9 +224,7 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
             apropos.setIcon(R.drawable.action_about);
             apropos.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);           
         }
-		
-		/*getSupportMenuInflater().inflate(R.menu.resultats, menu);
-		mPanierMenuItem = menu.findItem(R.id.action_panier);*/
+
         
 		return true;
 	}
@@ -268,11 +254,6 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 				return true;
 	
 		};
-		
-		/*if (item.equals(mPanierMenuItem))
-		{
-			mPanierMenuItem.setActionView(R.layout.actionbar_indeterminate_progress);
-		}*/
 
 		return false;
 	}

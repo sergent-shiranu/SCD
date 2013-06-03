@@ -14,7 +14,9 @@ Parse.Cloud.afterSave("_User", function(request) {
 
 		var pushQuery = new Parse.Query(Parse.Installation); 
 		pushQuery.equalTo('installationId', installationId); 
-		// Get installationId utilisé par utilisateur, s'il s'identifie la deuxième fois ds un autre téléphone, le champ installationId de cet user sera mis à jour (nouvelle valeur) et tous les téléphones seront notifiés
+		// Get installationId utilisé par utilisateur, s'il s'identifie la deuxième fois ds un autre téléphone, 
+		// le champ installationId de cet user sera mis à jour (nouvelle valeur) et tous les téléphones dans laquelle 
+		// l'utilisateur s'est identifié seront notifiés 
 		
 		alert("Installation Id : " + installationId);
 		
@@ -31,7 +33,7 @@ Parse.Cloud.afterSave("_User", function(request) {
 			}
 		});
 		
-		
+		//*********************************(NOTIFIER QUAND IL A DES LIVRE A RENDRE)******************************
 		var relation = currentUser.relation("emprunte");
 		
 		relation.query().find({
@@ -77,12 +79,17 @@ Parse.Cloud.afterSave("_User", function(request) {
 					alert("Error: " + error.code + " not found " + error.message);
 			}
 		});
+		
+		
+		
+		
 	}
 
 });
 
 
 
+//*********************************(ALERTER QUAND UN EXEMPLAIRE DEVIENT DISPO)******************************
 Parse.Cloud.afterSave("Exemplaire", function(request, response) {
 	
 	var exemplaire = request.object
@@ -136,19 +143,6 @@ Parse.Cloud.afterSave("Exemplaire", function(request, response) {
 							
 							var pushQuery = new Parse.Query(Parse.Installation); 
 							pushQuery.equalTo('installationId', user.get('installationId'));
-		
-							pushQuery.find({
-								success: function(resultats) 
-								{
-									alert("Il y a au total : " + resultats.length + " téléphone qui va recevoir éventuellement des push notifications." );	
-									alert("Il n'y a qu'un seul device qui recevra des push notifications");
-								},
-
-								error: function(error) 
-								{
-									alert("Il n'y a pas de téléphone qui va recevoir éventuellement des push notification." );	
-								}
-							});
 							
 							Parse.Push.send(
 							{

@@ -328,14 +328,24 @@ public class Connection
 	
 	//******************************* RECHERCHE ***************************************//
 	
-	public void login(String username, String password) throws ParseException
+	public ParseUser login(String username, String password) throws ParseException, ConnectionNotInitializedException
 	{	
-		ParseUser user = ParseUser.logIn(username, password);
+		if (!this.isInitialized) 
+		{
+			throw new ConnectionNotInitializedException("Connection has not been initialized");
+		}
+		else
+		{
+			ParseUser user = ParseUser.logIn(username, password);
+			
+			user.put("is_logging",1);
+			user.put("installationId", ParseInstallation.getCurrentInstallation().getInstallationId());
+			
+			user.save();
+			
+			return user;
+		}
 		
-		user.put("is_logging",1);
-		user.put("installationId", ParseInstallation.getCurrentInstallation().getInstallationId());
-		
-		user.save();
 	}
 	
 	public void logout() throws ParseException
