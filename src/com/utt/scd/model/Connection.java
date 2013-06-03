@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -372,7 +373,7 @@ public class Connection
 	
 	// Ajouter un livre à sa collection
 	
-	public void ajouterLivreCollection(String objectId) throws ParseException, ConnectionNotInitializedException
+	public void ajouterLivreCollection(ArrayList<String> livresPanier) throws ParseException, ConnectionNotInitializedException
 	{
 		ParseQuery query = new ParseQuery("Livre");
 		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
@@ -383,16 +384,19 @@ public class Connection
 		}
 		else
 		{
-			ParseObject livre =  query.get(objectId); // parse exeption s'est produit ici, mais normalement on retourne bien un livre
-			
-			ParseUser user = ParseUser.getCurrentUser();
-			
-			if (user.getObjectId() != null)
+			for (String objectId : livresPanier)
 			{
-				livre.put("collecte_par", user);
-				livre.save(); // parse exeption s'est produit ici
+				ParseObject livre =  query.get(objectId); // parse exeption s'est produit ici, mais normalement on retourne bien un livre
+				
+				ParseUser user = ParseUser.getCurrentUser();
+				
+				if (user.getObjectId() != null)
+				{
+					livre.put("collecte_par", user);
+					livre.save(); // parse exeption s'est produit ici
+				}
 			}
-			
+
 		}
 	}
 	

@@ -114,7 +114,7 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener, On
 		}
 		else if (v.equals(this.compte_lecteur))
 		{
-			System.out.println(ParseUser.getCurrentUser().isAuthenticated());
+			//System.out.println(ParseUser.getCurrentUser().isAuthenticated());
 			//System.out.println(ParseUser.getCurrentUser().getObjectId());
 			if (ParseUser.getCurrentUser().getObjectId() == null)
 			{
