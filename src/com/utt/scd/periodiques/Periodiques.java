@@ -114,7 +114,7 @@ public class Periodiques extends SherlockFragmentActivity
 		{
 			try 
 			{
-				this.resultats = connection.recupererPeriodique();
+				this.resultats = connection.recupererToutesPeriodiques();
 				
 				TypePeriodiques informatique = new TypePeriodiques("Informatique");
 				TypePeriodiques ecologie = new TypePeriodiques("Ecologie");

@@ -25,6 +25,7 @@ import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 public class Connection 
@@ -78,7 +79,9 @@ public class Connection
 	
 	
 	//******************************* RECHERCHE ***************************************//
-	public ParseObject rechercheCached(String objectId) throws ConnectionNotInitializedException, ParseException
+	
+	// Par son objectId
+	public ParseObject rechercheLivre(String objectId) throws ConnectionNotInitializedException, ParseException
 	{
 		ParseQuery query = new ParseQuery("Livre");
 		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
@@ -94,8 +97,7 @@ public class Connection
 	}
 	
 	
-	
-	
+	// Recherche avancée
 	public List<ParseObject> rechercheAvancee(String titre, String auteur, String support, String langue, String uv, String domaine) throws ConnectionNotInitializedException, ParseException
 	{
 		
@@ -103,7 +105,7 @@ public class Connection
 		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
 		
 		
-		System.out.println(titre + auteur + support + langue + uv + domaine);
+		//System.out.println(titre + auteur + support + langue + uv + domaine);
 		
 		if (!titre.equals(""))
 		{
@@ -128,7 +130,7 @@ public class Connection
 		{
 			if (!langue.equals("Toutes"))
 			{
-				System.out.println(regexRecherche(langue));
+				//System.out.println(regexRecherche(langue));
 				query.whereMatches("Langue", regexRecherche(langue));
 			}
 			
@@ -191,10 +193,30 @@ public class Connection
 		return regex;
 	}
 	
-	// Get Livre d'un exemplaire donné
-	public List<ParseObject> recupererLivre(ParseObject exemplaire) throws ConnectionNotInitializedException, ParseException
+	
+	
+	//******************************* RECUPERER LIVRE D'UN EXEMPLAIRE *************************************//
+	
+	// Par exemplaire objet lui-même
+	public List<ParseObject> recupererLivreParSonExemplaire(ParseObject exemplaire) throws ConnectionNotInitializedException, ParseException
 	{
-		ParseQuery query = new ParseQuery("Livre");
+		ParseRelation relation = exemplaire.getRelation("exemplaire_de");
+
+		if (!this.isInitialized) 
+		{
+			throw new ConnectionNotInitializedException("Connection has not been initialized");
+		}
+		else
+		{
+			ParseQuery query = relation.getQuery();
+			query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+			
+			return query.find();
+		}
+		
+		
+		// Autre façon
+		/*ParseQuery query = new ParseQuery("Livre");
 		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
 		
 		query.whereEqualTo("has", exemplaire);
@@ -205,12 +227,16 @@ public class Connection
 		}
 		else
 		{
-			return query.find();
-		}
+			//return query.find();
+		}*/
+
 	}
 	
-	public List<ParseObject> recupererLivre(String id_exemplaire) throws ConnectionNotInitializedException, ParseException
+	
+	// Par son objectId
+	public List<ParseObject> recupererLivreParSonExemplaire(String id_exemplaire) throws ConnectionNotInitializedException, ParseException
 	{
+		
 		ParseQuery query = new ParseQuery("Livre");
 		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
 		
@@ -228,15 +254,44 @@ public class Connection
 		{
 			return query.find();
 		}
+		
+		
+		// Autre façon
+		
+		/*ParseQuery query = new ParseQuery("Exemplaire");
+		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+		
+		ParseObject exemplaire = query.get(id_exemplaire);
+		
+		return recupererLivre(exemplaire);*/
+
 	}
 	
 	
 	
 	//******************************* RECUPERER LES EXEMPLAIRES D'UN LIVRE ***************************************//
 	
-	public List<ParseObject> recupererExemplaire(ParseObject livre) throws ConnectionNotInitializedException, ParseException
+	// Par Objet Livre lui-même
+	public List<ParseObject> recupererExemplaireParSonLivre(ParseObject livre) throws ConnectionNotInitializedException, ParseException
 	{
-		ParseQuery query = new ParseQuery("Exemplaire");
+		
+		ParseRelation relation = livre.getRelation("has");
+
+		if (!this.isInitialized) 
+		{
+			throw new ConnectionNotInitializedException("Connection has not been initialized");
+		}
+		else
+		{
+			ParseQuery query = relation.getQuery();
+			query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+			
+			return query.find();
+		}
+		
+		
+		// Autre façon
+		/*ParseQuery query = new ParseQuery("Exemplaire");
 		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
 		
 		query.whereEqualTo("exemplaire_de", livre);
@@ -248,10 +303,12 @@ public class Connection
 		else
 		{
 			return query.find();
-		}
+		}*/
 	}
 	
-	public List<ParseObject> recupererExemplaire(String id_livre) throws ConnectionNotInitializedException, ParseException
+	
+	// Par son objectId
+	public List<ParseObject> recupererExemplaireParSonLivre(String id_livre) throws ConnectionNotInitializedException, ParseException
 	{
 		ParseQuery query = new ParseQuery("Exemplaire");
 		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
@@ -270,14 +327,26 @@ public class Connection
 		{
 			return query.find();
 		}
+		
+		// Autre façon
+		
+		/*ParseQuery query = new ParseQuery("Livre");
+		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+				
+		ParseObject livre = query.get(id_livre);
+				
+		return recupererExemplaireParSonLivre(livre);*/
 	}
+	
 	
 	
 	
 	
 	//******************************* RECUPERER LES PERIODIQUES ***************************************//
 	
-	public List<ParseObject> recupererPeriodique() throws ConnectionNotInitializedException, ParseException
+	
+	// Toutes périodiques
+	public List<ParseObject> recupererToutesPeriodiques() throws ConnectionNotInitializedException, ParseException
 	{
 		ParseQuery query = new ParseQuery("Periodique");
 		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
@@ -292,6 +361,8 @@ public class Connection
 		}
 	}
 	
+	
+	// Une périodique quelconque par son objectId
 	public ParseObject recupererPeriodique(String objectId) throws ConnectionNotInitializedException, ParseException
 	{
 		ParseQuery query = new ParseQuery("Periodique");
@@ -306,6 +377,10 @@ public class Connection
 			return query.get(objectId);
 		}
 	}
+	
+	
+	
+	
 	
 	
 	//******************************* RECUPERER LES EVENEMENTS/ACTIVITES ***************************************//
@@ -327,8 +402,13 @@ public class Connection
 	
 	
 	
-	//******************************* RECHERCHE ***************************************//
 	
+	
+	
+	//******************************* UTILISATEUR ***************************************//
+	
+	
+	// Login
 	public ParseUser login(String username, String password) throws ParseException, ConnectionNotInitializedException
 	{	
 		if (!this.isInitialized) 
@@ -339,8 +419,8 @@ public class Connection
 		{
 			ParseUser user = ParseUser.logIn(username, password);
 			
-			user.put("is_logging",1);
-			user.put("installationId", ParseInstallation.getCurrentInstallation().getInstallationId());
+			user.put("is_logging",1); // L'indice qui indique si l'utilisateur est connecté actuellement ou pas
+			user.put("installationId", ParseInstallation.getCurrentInstallation().getInstallationId()); // L'indice qui indique sur quel appareil l'utilisateur est connecté (pour envoyer des notifications push)
 			
 			user.save();
 			
@@ -349,6 +429,8 @@ public class Connection
 		
 	}
 	
+	
+	// Logout
 	public void logout() throws ParseException, ConnectionNotInitializedException
 	{	
 		if (!this.isInitialized) 
@@ -371,7 +453,7 @@ public class Connection
 	
 	
 	
-	// Ajouter un livre à sa collection
+	// Ajouter un livre à sa collection, le paramètre contient un array des objectID des livres à ajouter
 	
 	public void ajouterLivreCollection(ArrayList<String> livresPanier) throws ParseException, ConnectionNotInitializedException
 	{
@@ -393,19 +475,21 @@ public class Connection
 				if (user.getObjectId() != null)
 				{
 					livre.put("collecte_par", user);
-					livre.save(); // parse exeption s'est produit ici
+					livre.save(); // parse exception s'est produit ici
 				}
 			}
 
 		}
 	}
 	
+	
+	
 	// Récupérer tous les livres dans sa collection
 	public List<ParseObject> recupererLivresCollection() throws ConnectionNotInitializedException, ParseException
 	{
 		ParseUser user = ParseUser.getCurrentUser();
 
-		ParseQuery query = new ParseQuery("Exemplaire");
+		ParseQuery query = new ParseQuery("Livre");
 		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
 		query.whereEqualTo("collecte_par", user);	
 		
@@ -421,7 +505,13 @@ public class Connection
 	
 	
 	
-	// Etre alerté par l'apparition d'exemplaire d'un livre, option = 1 pour un exemplaire dispo court, 2 pour dispo long, 0 pour dispo (court + long)
+	
+	
+	
+	
+	
+	
+	// Etre alerté par l'apparition d'exemplaire d'un livre; le premier paramètre est objectId du livre,  option = 1 pour un exemplaire dispo court, 2 pour dispo long, 0 pour dispo (court + long)
 	
 	public void notifieExemplaire(String objectId, String option) throws ParseException, ConnectionNotInitializedException
 	{
@@ -440,8 +530,19 @@ public class Connection
 			
 			if (user.getObjectId() != null)
 			{
-				livre.put("notifie_a", user);
-				livre.put("notification_type", option);
+				if (option.equals("1"))
+				{
+					livre.put("notifier_court", user);
+				}
+				else if (option.equals("2"))
+				{
+					livre.put("notifier_long", user);
+				}
+				else
+				{
+					livre.put("notifier_court", user);
+					livre.put("notifier_long", user);
+				}
 				livre.save();
 			}
 			
@@ -449,16 +550,25 @@ public class Connection
 	}
 	
 	
-	// Récupérer les alertes
+	// Récupérer toutes les alertes
 	
 	public List<ParseObject> recupererAlertes() throws ConnectionNotInitializedException, ParseException
 	{
 		ParseUser user = ParseUser.getCurrentUser();
 		
-		ParseQuery query = new ParseQuery("Livre");
-		query.whereEqualTo("notifie_a", user);
+		ParseQuery query_court = new ParseQuery("Livre");
+		query_court.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+		query_court.whereEqualTo("notifie_court", user);
 
-		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+		ParseQuery query_long = new ParseQuery("Livre");
+		query_long.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+		query_long.whereEqualTo("notifie_long", user);
+		
+		List<ParseQuery> queries = new ArrayList<ParseQuery>();
+		queries.add(query_court);
+		queries.add(query_long);
+		 
+		ParseQuery mainQuery = ParseQuery.or(queries);
 		
 		if (!this.isInitialized) 
 		{
@@ -466,13 +576,20 @@ public class Connection
 		}
 		else
 		{
-			return query.find();
+			return mainQuery.find();
 		}
 	}
 	
 	
 	
-	// Get livre emprunter
+	
+	
+	
+	
+	
+	
+	
+	// Get livre emprunter par currentUser
 	
 	public List<ParseObject> recupererLivresEmprunter() throws ConnectionNotInitializedException, ParseException
 	{
@@ -497,6 +614,8 @@ public class Connection
 		}
 	}
 	
+	
+	
 	// Get Exemplaire emprunter (ObjectId est id du livre)
 	
 	public List<ParseObject> recupererExemplaireEmprunter(String objectId) throws ConnectionNotInitializedException, ParseException
@@ -514,13 +633,13 @@ public class Connection
 			ParseQuery subQuery = new ParseQuery("Livre");
 			ParseObject livre = subQuery.get(objectId);
 			
-			System.out.println(livre.getString("Titre") + "livvvvvvv");
+			//System.out.println(livre.getString("Titre") + "livvvvvvv");
 			
 			ParseQuery query = new ParseQuery("Exemplaire");
 			query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
 			
 			query.whereEqualTo("emprunte_par", user); // liste d'exemplaires empruntes
-			query.whereEqualTo("exemplaire_de", livre);
+			query.whereEqualTo("exemplaire_de", livre); // exemplaire qui correspond bien au livre
 			//query.whereMatchesQuery("exemplaire_de", subQuery); // son livre correspond*/
 			
 			return query.find();

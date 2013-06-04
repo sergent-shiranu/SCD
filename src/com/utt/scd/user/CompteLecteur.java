@@ -69,6 +69,9 @@ public class CompteLecteur extends SherlockFragmentActivity implements OnClickLi
 		
 		this.livres = new LinkedList<ParseObject>();
 		
+		this.adapter = new AdapterListLinearLayoutLivres(this, livres);
+		this.listLinearLayout.setAdapter(adapter);
+		
 		new recupererLivresEmprunter().execute();
 		
 		/*ParseUser.logOut();
@@ -107,8 +110,10 @@ public class CompteLecteur extends SherlockFragmentActivity implements OnClickLi
 				this.pret.setText("Vous avez emprunté " + livres.size() + " livre(s)");
 			}
 			
+			this.adapter.setItems(livres);
 			this.adapter = new AdapterListLinearLayoutLivres(this, livres);
 			this.listLinearLayout.setAdapter(adapter);
+			this.listLinearLayout.setOnClickListener(this);
 			
 		}
 	}
@@ -340,9 +345,14 @@ public class CompteLecteur extends SherlockFragmentActivity implements OnClickLi
 	@Override
 	public void onClick(View v) 
 	{
-		if (v.equals(listLinearLayout))
+		/*if (v.equals(listLinearLayout))
 		{
+			
+			System.out.println( "putain de merde ");
+			
 			int position = (Integer) v.getTag();
+			
+			System.out.println( "putain de merde " + position);
 			
 			Intent intent = new Intent(this,EmpruntDetail.class);
 			intent.putExtra("objectId", livres.get(position).getObjectId());
@@ -380,6 +390,53 @@ public class CompteLecteur extends SherlockFragmentActivity implements OnClickLi
 		{
 			
 		}
+		
+	}*/
+		if (v.equals(alertes))
+		{
+			
+		}
+		else if (v.equals(collection))
+		{
+			
+		}
+		else
+		{
+			System.out.println( "putain de merde ");
+			
+			int position = (Integer) v.getTag();
+			
+			System.out.println( "putain de merde " + position);
+			
+			Intent intent = new Intent(this,EmpruntDetail.class);
+			intent.putExtra("objectId", livres.get(position).getObjectId());
+			intent.putExtra("Titre", livres.get(position).getString("Titre"));
+			
+			String au = "Auteur : ";
+			
+			@SuppressWarnings("unchecked")
+			ArrayList<String> ar = (ArrayList<String>) livres.get(position).get("Auteur");
+			
+			if (ar.size() == 1)
+			{
+				au = ar.get(0);
+			}
+			else
+			{
+				for (int i = 0 ; i < ar.size() -1 ; i ++)
+				{
+					au += ar.get(i) + "-";
+				}
+				au += ar.get(ar.size()-1);
+			}
+			
+			intent.putExtra("Auteur", au);
+			intent.putExtra("Cote", livres.get(position).getString("Cote"));
+			intent.putExtra("url", livres.get(position).getParseFile("couverture").getUrl());
+			
+			startActivity(intent);
+		}
+		
 		
 	}
 }

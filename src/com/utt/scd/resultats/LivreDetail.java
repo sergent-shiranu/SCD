@@ -40,8 +40,6 @@ import com.utt.scd.apropos.Localisation;
 import com.utt.scd.dialog.AlertingDialogOneButton;
 import com.utt.scd.model.Connection;
 import com.utt.scd.model.ConnectionNotInitializedException;
-import com.utt.scd.resultats.Resultats.ajouterCollection;
-import com.utt.scd.resultats.Resultats.login;
 import com.utt.scd.resultats.specifiedcomponent.AdapterListLinearLayout;
 import com.utt.scd.resultats.specifiedcomponent.ListLinearLayout;
 
@@ -182,11 +180,11 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 		{
 			try 
 			{
-				this.liv = connection.rechercheCached(arg0[0]);
+				this.liv = connection.rechercheLivre(arg0[0]);
 				
 				bit = BitmapFactory.decodeStream((InputStream)new URL(this.liv.getParseFile("couverture").getUrl()).getContent());
 				
-				this.resultats = connection.recupererExemplaire(this.liv);
+				this.resultats = connection.recupererExemplaireParSonLivre(this.liv);
 			} 
 			catch (ConnectionNotInitializedException e) 
 			{
@@ -345,7 +343,7 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 		    	    				}
 		    	    				else
 		    	    				{
-		    	    					String[] data = {edt_pseudo.getText().toString(),edt_mot_de_passe.getText().toString()};
+		    	    					String[] data = {edt_pseudo.getText().toString(),edt_mot_de_passe.getText().toString(), new String("ajouter")};
 		    	    					new login().execute(data);
 		    	    					choice.dismiss();
 		    	    				}

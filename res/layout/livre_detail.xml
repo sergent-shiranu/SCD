@@ -195,7 +195,9 @@
                 android:id="@+id/listView1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical" 
+                android:focusable="false"
+                android:clickable="true">
             </com.utt.scd.resultats.specifiedcomponent.ListLinearLayout>
         </LinearLayout>
     </ScrollView>

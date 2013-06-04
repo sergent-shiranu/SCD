@@ -570,14 +570,31 @@ curl -X PUT \
   
 // Panier Livre
 
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "X-Parse-Master-Key: BFEhYgNBo7ioJl1j9U3X7wyfDNe3rMwX1lDah1a9" \
+  -H "Content-Type: application/json" \
+  -d '{"collecte_par":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"_User","objectId":"kdBSL5IoyI"},{"__type":"Pointer","className":"_User","objectId":"TGjNNsZKk7"}]}}' \
+  https://api.parse.com/1/classes/Livre/Y5oegF4efN
+  
+  
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "X-Parse-Master-Key: BFEhYgNBo7ioJl1j9U3X7wyfDNe3rMwX1lDah1a9" \
+  -H "Content-Type: application/json" \
+  -d '{"collecte_par":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"_User","objectId":"849H4TDKg7"}]}}' \
+  https://api.parse.com/1/classes/Livre/Y5oegF4efN
+  
 
-
-
-
-
-
-
-
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "X-Parse-Master-Key: BFEhYgNBo7ioJl1j9U3X7wyfDNe3rMwX1lDah1a9" \
+  -H "Content-Type: application/json" \
+  -d '{"collecte_par":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"_User","objectId":"kdBSL5IoyI"}]}}' \
+  https://api.parse.com/1/classes/Livre/66zrfWffeT
 
 
 
