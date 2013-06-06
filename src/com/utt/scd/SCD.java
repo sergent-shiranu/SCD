@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,12 +26,14 @@ import com.parse.ParseUser;
 import com.parse.PushService;
 import com.utt.scd.apropos.Apropos;
 import com.utt.scd.dialog.AlertingDialogOneButton;
+import com.utt.scd.evenements.EvenementsAdapter;
 import com.utt.scd.model.Connection;
 import com.utt.scd.model.ConnectionNotInitializedException;
 import com.utt.scd.periodiques.Periodiques;
 import com.utt.scd.resultats.RechercheAvancee;
 import com.utt.scd.resultats.Resultats;
 import com.utt.scd.user.CompteLecteur;
+import com.viewpagerindicator.PageIndicator;
 
 public class SCD extends SherlockFragmentActivity implements OnClickListener, OnQueryTextListener 
 {
@@ -40,8 +43,12 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener, On
 					periodiques,
 					settings;
 	
-	public static int THEME = R.style.Theme_Dark_green;
+	public static int THEME = R.style.Theme_Dark_blue;
 	
+	
+	private EvenementsAdapter evenementsAdapter;
+	private ViewPager mPager;
+    private PageIndicator mIndicator;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -98,6 +105,16 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener, On
 		});*/
 		
 	
+		/*evenementsAdapter = new EvenementsAdapter(getSupportFragmentManager());
+
+        mPager = (ViewPager)findViewById(R.id.pager);
+        mPager.setAdapter(evenementsAdapter);
+        mPager.setPageMargin(
+        	    getResources().getDimensionPixelOffset(-64));
+
+        mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
+        mIndicator.setViewPager(mPager);*/
+        
 	}
 	
 	
