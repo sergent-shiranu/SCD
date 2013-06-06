@@ -225,7 +225,7 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
         	panier.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);              
         }
         
-        MenuItem apropos = menu.add(0,1,1,"Refresh");
+        MenuItem apropos = menu.add(0,1,1,"A propos");
         {
             apropos.setIcon(R.drawable.action_about);
             apropos.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);           

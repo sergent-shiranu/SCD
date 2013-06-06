@@ -86,6 +86,16 @@
         </activity>
         
         <activity
+            android:name="com.utt.scd.user.collection.Collection"
+            android:label="Collection">
+        </activity>
+        
+        <activity
+            android:name="com.utt.scd.user.alertes.Alertes"
+            android:label="Alertes">
+        </activity>
+        
+        <activity
             android:name="com.utt.scd.periodiques.Periodiques"
             android:label="Périodiques">
         </activity>

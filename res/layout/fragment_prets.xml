@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/wooden_texture"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Prêts longs"
+            android:textStyle="bold"
+            android:textColor="#AA5303" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:text="3 semaines"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Prolongeable 2 semaines"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000" />
+        
+        
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Prêts courts"
+            android:textStyle="bold"
+            android:textColor="#AA5303" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:text="1 semaines"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Prolongeable 1 semaines"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000" />
+        
+        
+        
+        
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Exclu du prêt"
+            android:textStyle="bold"
+            android:textColor="#AA5303" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:text="Consultable uniquement sur place"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000" />
+        
+        
+        
+        
+        
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="En cas de retard"
+            android:textStyle="bold"
+            android:textColor="#AA5303" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="5dp"
+            android:text="Nombre de jours de retard = nombre de jours de suspension de prêt"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000" />
+        
+        
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Etudiant UTT, EPF"
+            android:textStyle="bold"
+            android:textColor="#AA5303" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="5dp"
+            android:text="Emprunter jusqu\'à 10 documents \nAccéder aux ressources électroniques \nBénéficier de tous les servoices du SCD"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000" />
+
+       
+        
+        
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Doctorant, Enseignant-Chercheur"
+            android:textStyle="bold"
+            android:textColor="#AA5303" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="5dp"
+            android:text="Emprunter jusqu\'à 20 documents \nAccéder aux ressources électroniques \nBénéficier de tous les services du SCD"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000" />
+        
+        
+        
+        
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Lecteur extérieur inscrit"
+            android:textStyle="bold"
+            android:textColor="#AA5303" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="5dp"
+            android:text="Emprunter jusqu\'à 5 documents \nAccéder aux ressources électroniques \nPhotocopier ou imprimer sur demande"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000" />
+        
+        
+        <Button
+            android:id="@+id/button1"
+            android:text="Service Questions?Réponses!"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_border"/>
+        
+        
+        
+    </LinearLayout>
+
+</ScrollView>

@@ -27,6 +27,7 @@ import com.utt.scd.dialog.AlertingDialogOneButton;
 import com.utt.scd.model.Connection;
 import com.utt.scd.model.ConnectionNotInitializedException;
 import com.utt.scd.resultats.specifiedcomponent.ListLinearLayout;
+import com.utt.scd.user.collection.Collection;
 
 public class CompteLecteur extends SherlockFragmentActivity implements OnClickListener 
 {
@@ -398,7 +399,8 @@ public class CompteLecteur extends SherlockFragmentActivity implements OnClickLi
 		}
 		else if (v.equals(collection))
 		{
-			
+			Intent intent = new Intent(this, Collection.class);
+			startActivity(intent);
 		}
 		else
 		{

@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class AproposAdapter extends FragmentPagerAdapter 
 {
 
-	protected static final String[] CONTENT = new String[] {"Infos pratiques", "Horaires" };
+	protected static final String[] CONTENT = new String[] {"Infos pratiques", "Horaires", "Prêts", "Services" };
 	
 	private int mCount = CONTENT.length;
 
@@ -24,9 +24,17 @@ public class AproposAdapter extends FragmentPagerAdapter
 		{
 			return InfosPratiquesFragment.newInstance();
 		}			
-		else
+		else if (position == 1)
 		{
 			return HorairesFragment.newInstance();
+		}
+		else if (position == 2)
+		{
+			return PretsFragment.newInstance();
+		}
+		else
+		{
+			return ServicesFragment.newInstance();
 		}
 	}
 

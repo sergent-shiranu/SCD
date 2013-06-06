@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/wooden_texture"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Prêts d\'ordinateur"
+            android:textStyle="bold"
+            android:textColor="#AA5303" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:text="1 mois prolongeable 1 mois"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Etudiants inscrits (UTT/EPF)"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000" />
+        
+        
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Prêts de tablettes, iPad"
+            android:textStyle="bold"
+            android:textColor="#AA5303" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:text="Se renseigner à l\'accueil du SCD"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000" />
+
+        
+        
+        
+        
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Accès Wifi"
+            android:textStyle="bold"
+            android:textColor="#AA5303" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:text="Se connecter avec son identifiant"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000" />
+        
+        
+        
+        
+        
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Actu' Langues"
+            android:textStyle="bold"
+            android:textColor="#AA5303" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="5dp"
+            android:text="La télévision en langues étrangères \nSélection de revues et journaux internationaux"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000" />
+        
+        
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Espace audio-vidéo"
+            android:textStyle="bold"
+            android:textColor="#AA5303" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="5dp"
+            android:text="Ecouter un CD \nVisionner un DVD"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#000000" />
+
+       
+        
+        
+        
+ 
+        
+        <Button
+            android:id="@+id/button1"
+            android:text="Service Questions?Réponses!"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_border"/>
+        
+        
+        
+    </LinearLayout>
+
+</ScrollView>

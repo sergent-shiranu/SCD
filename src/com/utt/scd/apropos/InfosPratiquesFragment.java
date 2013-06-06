@@ -44,7 +44,7 @@ public class InfosPratiquesFragment extends SherlockFragment implements OnClickL
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) 
 	{
-		View view = inflater.inflate(R.layout.infos_pratiques, null);
+		View view = inflater.inflate(R.layout.fragment_infos_pratiques, null);
 		
 		
 		SpannableString spanString = new SpannableString("Itinéraire");

@@ -8,12 +8,11 @@ import android.view.ViewGroup;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.utt.scd.R;
 
-public class HorairesFragment extends SherlockFragment
+public class ServicesFragment extends SherlockFragment 
 {
-
-	public static HorairesFragment newInstance() 
+	public static ServicesFragment newInstance() 
 	{
-		HorairesFragment fragment = new HorairesFragment();
+		ServicesFragment fragment = new ServicesFragment();
 		
 		return fragment;
 	}
@@ -21,9 +20,8 @@ public class HorairesFragment extends SherlockFragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) 
 	{
-		View view = inflater.inflate(R.layout.fragment_horaire, null);
+		View view = inflater.inflate(R.layout.fragment_services, null);
 		
 		return view;
 	}
-	
 }
