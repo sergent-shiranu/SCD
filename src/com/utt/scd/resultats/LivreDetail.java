@@ -258,6 +258,8 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 	
 	}
 
+	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
 	{
@@ -284,8 +286,12 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 	
 	
 	
-	private AlertDialog choice ;
+	private AlertDialog log, choice ;
 	private LayoutInflater inflater;
+	
+	private AlertingDialogOneButton alertingDialogOneButton;
+	
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) 
 	{
@@ -293,8 +299,7 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 		{
 			case 0:
 				
-				
-				if (ParseUser.getCurrentUser().getObjectId() == null)
+				while (ParseUser.getCurrentUser().getObjectId() == null)
 				{
 					final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		            builder.setTitle("Veuillez vous identifier");
@@ -319,15 +324,88 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 		    			}
 		    		});
 		            
-		            choice = builder.create();
-		            choice.setCancelable(true);
-		            choice.setOnShowListener(new DialogInterface.OnShowListener() {
+		            log = builder.create();
+		            log.setCancelable(true);
+		            log.setOnShowListener(new DialogInterface.OnShowListener() {
 
 		                @Override
 		                public void onShow(final DialogInterface dialog) 
 		                {
 
-		                    Button b = choice.getButton(AlertDialog.BUTTON_POSITIVE);
+		                    Button b = log.getButton(AlertDialog.BUTTON_POSITIVE);
+		                    b.setOnClickListener(new View.OnClickListener() {
+
+		                        @Override
+		                        public void onClick(View view) 
+		                        {
+		                        	if (edt_pseudo.getText() == null || edt_pseudo.getText().toString().length() == 0)
+		    	    				{
+		    	    					edt_pseudo.setError("Veuillez remplir ce champ");
+		    	    				}
+		    	    				else if (edt_mot_de_passe.getText() == null || edt_mot_de_passe.getText().toString().length() == 0)
+		    	    				{
+		    	    					edt_mot_de_passe.setError("Veuillez remplir ce champ");
+		    	    				}
+		    	    				else
+		    	    				{
+		    	    					String[] data = {edt_pseudo.getText().toString(),edt_mot_de_passe.getText().toString()};
+		    	    					new login().execute(data);
+		    	    					log.dismiss();
+		    	    				}
+		                        }
+		                    });
+		                }
+		            });
+		            
+		            
+		            log.show();
+				}
+				
+				if (ParseUser.getCurrentUser().getObjectId() != null)
+				{
+					new ajouterCollection().execute();
+				}
+				
+				
+				return true;
+				
+			case 1:
+				
+				
+				while (ParseUser.getCurrentUser().getObjectId() == null)
+				{
+					final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		            builder.setTitle("Veuillez vous identifier");
+		            
+		            inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		            View login = inflater.inflate(R.layout.login, null);
+		            builder.setView(login);
+		            
+		            final EditText edt_pseudo = (EditText) login.findViewById(R.id.editText1);
+		            final EditText edt_mot_de_passe = (EditText) login.findViewById(R.id.editText2);
+		            
+		            builder.setPositiveButton("S'identifier", new DialogInterface.OnClickListener() {
+		    			public void onClick(DialogInterface dialog, int whichButton) 
+		    			{
+		    				
+		    			}
+		    		});
+		            builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+		    			public void onClick(DialogInterface dialog, int whichButton) 
+		    			{
+		    				dialog.dismiss();
+		    			}
+		    		});
+		            
+		            log = builder.create();
+		            log.setCancelable(true);
+		            log.setOnShowListener(new DialogInterface.OnShowListener() {
+
+		                @Override
+		                public void onShow(final DialogInterface dialog) 
+		                {
+
+		                    Button b = log.getButton(AlertDialog.BUTTON_POSITIVE);
 		                    b.setOnClickListener(new View.OnClickListener() {
 
 		                        @Override
@@ -345,7 +423,7 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 		    	    				{
 		    	    					String[] data = {edt_pseudo.getText().toString(),edt_mot_de_passe.getText().toString(), new String("ajouter")};
 		    	    					new login().execute(data);
-		    	    					choice.dismiss();
+		    	    					log.dismiss();
 		    	    				}
 		                        }
 		                    });
@@ -353,17 +431,80 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 		            });
 		            
 		            
-		            choice.show();
+		            log.show();
 				}
-				else
+				
+				if (ParseUser.getCurrentUser().getObjectId() != null)
 				{
-					new ajouterCollection().execute();
+					final CharSequence[] items = {"Long","Disponible"};
+
+
+					AlertDialog.Builder builder = new AlertDialog.Builder(this);
+					builder.setTitle("Être alerté pour un exemplaire de type");
+					builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int item) 
+					{
+						if (item == 0)
+						{
+							boolean dispo = false;
+							
+							for (ParseObject ex : exemplaires)
+							{
+								if (!ex.getString("type_pret").equals("Exclu du prêt") && ex.getString("etat").equals("Disponible") && ex.getString("duree_pret").equals("Long"))
+								{
+									dispo = true;
+								}
+							}
+							
+							if (dispo)
+							{
+								alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
+																								"Il y a au moins un exemplaire de durée prêt Long qui est disponible pour vous",																			
+																								R.drawable.action_about);
+								alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+							}
+							else
+							{	
+								String[] data = {"1"};
+								
+								new notifierExemplaire().execute(data);
+							}
+						}
+						else
+						{
+							boolean dispo = false;
+							
+							for (ParseObject ex : exemplaires)
+							{
+								if (!ex.getString("type_pret").equals("Exclu du prêt") && ex.getString("etat").equals("Disponible"))
+								{
+									dispo = true;
+								}
+							}
+							
+							if (dispo)
+							{
+								alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
+																								"Il y a au moins un exemplaire qui est disponible pour vous",																			
+																								R.drawable.action_about);
+								alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+							}
+							else
+							{
+								String[] data = {"0"};
+								
+								new notifierExemplaire().execute(data);
+							}
+						}
+						
+					    
+						choice.dismiss();    
+					}
+					});
+					choice = builder.create();
+					choice.setCancelable(true);
+					choice.show();
 				}
-				
-				return true;
-				
-			case 1:
-				
 				
 
 				return true;
@@ -458,9 +599,7 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 			}
 			else if (result.equals("successful"))
 			{	
-				//System.out.println("Identification successful");
 				Toast.makeText(getBaseContext(), "Login avec succès", Toast.LENGTH_LONG).show();
-				new ajouterCollection().execute();
 			}
 			
 		}
@@ -549,6 +688,84 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 		}
 
 	}
+
+	
+	public class notifierExemplaire extends AsyncTask<String, Integer, String>
+	{
+		private AlertingDialogOneButton alertingDialogOneButton;
+		
+		private Connection connection;
+		
+
+		public notifierExemplaire()
+		{
+			this.connection = Connection.getInstance();
+			this.connection.initialize();
+		}
+
+		@Override
+		protected void onPreExecute() 
+		{
+			super.onPreExecute();
+			setSupportProgressBarIndeterminateVisibility(true); 
+		}
+		
+		@Override
+		protected String doInBackground(String... arg0) 
+		{
+			try 
+			{
+				this.connection.notifieExemplaire(livre.getObjectId(), arg0[0]);
+			} 
+			catch (ParseException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "fail";
+			} 
+			catch (ConnectionNotInitializedException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "no internet";
+			}
+			
+			return "successful";
+    	    
+		}
+		
+		@Override
+		protected void onPostExecute(String result) 
+		{
+			super.onPostExecute(result);
+
+			setSupportProgressBarIndeterminateVisibility(false); 
+			
+			if(result.equals("fail"))
+			{
+				
+				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
+																			result,																			
+																			R.drawable.action_about);
+				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+			}
+			else if(result.equals("no internet"))
+			{
+				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
+																			result,																			
+																			R.drawable.action_search);
+				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+				
+			}
+			else if (result.equals("successful"))
+			{	
+				Toast.makeText(getBaseContext(), "Vous serez notifié quand un exemplaire disponible", Toast.LENGTH_LONG).show();
+			}
+			
+		}
+
+	}
+	
 	
 	@Override
 	public void onClick(View v) 

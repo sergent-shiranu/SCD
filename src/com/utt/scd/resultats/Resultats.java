@@ -359,6 +359,8 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 	}
 	
 	
+	
+	
 	public class login extends AsyncTask<String, Integer, String>
 	{
 		private AlertingDialogOneButton alertingDialogOneButton;
@@ -518,6 +520,8 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 		}
 
 	}
+
+	
 	
 	
 

@@ -18,6 +18,35 @@ curl -X GET \
   -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
   https://api.parse.com/1/classes/Periodique | python -mjson.tool
   
+  
+  
+  
+// Livre BEC et BULATS
+
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"exemplaire_de":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Livre","objectId":"JJmrrAptGX"}]}}' \
+  https://api.parse.com/1/classes/Exemplaire/MXc1zTKpNA
+  
+  
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"exemplaire_de":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Livre","objectId":"JJmrrAptGX"}]}}' \
+  https://api.parse.com/1/classes/Exemplaire/aoOBhT3AD2
+  
+
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"exemplaire_de":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Livre","objectId":"JJmrrAptGX"}]}}' \
+  https://api.parse.com/1/classes/Exemplaire/3ZvgeFGHbT
+ 
+  
 // Livre JQuery Mobile
 curl -X PUT \
   -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
@@ -243,7 +272,46 @@ curl -X GET \
   https://api.parse.com/1/classes/Livre
   
   
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Livre BEC et BULATS
+
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"has":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Exemplaire","objectId":"MXc1zTKpNA"}]}}' \
+  https://api.parse.com/1/classes/Livre/JJmrrAptGX
   
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"has":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Exemplaire","objectId":"aoOBhT3AD2"}]}}' \
+  https://api.parse.com/1/classes/Livre/JJmrrAptGX
+  
+curl -X PUT \
+  -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
+  -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
+  -H "Content-Type: application/json" \
+  -d '{"has":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Exemplaire","objectId":"3ZvgeFGHbT"}]}}' \
+  https://api.parse.com/1/classes/Livre/JJmrrAptGX
  
 
 // // Livre JQuery Mobile

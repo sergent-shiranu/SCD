@@ -466,15 +466,17 @@ public class Connection
 		}
 		else
 		{
+			ParseUser user = ParseUser.getCurrentUser();
+			
 			for (String objectId : livresPanier)
 			{
 				ParseObject livre =  query.get(objectId); // parse exeption s'est produit ici, mais normalement on retourne bien un livre
-				
-				ParseUser user = ParseUser.getCurrentUser();
+
+				ParseRelation relation = livre.getRelation("collecte_par");
 				
 				if (user.getObjectId() != null)
 				{
-					livre.put("collecte_par", user);
+					relation.add(user);
 					livre.save(); // parse exception s'est produit ici
 				}
 			}
@@ -565,11 +567,26 @@ public class Connection
 		}
 		else
 		{
-			ParseObject livre =  query.get(objectId);
+			ParseObject livre =  query.get(objectId); // parse exeption s'est produit ici, mais normalement on retourne bien un livre
 			
 			ParseUser user = ParseUser.getCurrentUser();
 			
+			ParseRelation relation_long = livre.getRelation("notifier_long");
+			ParseRelation relation_court = livre.getRelation("notifier_court");
+			
 			if (user.getObjectId() != null)
+			{
+				relation_long.add(user);
+				
+				if (option.equals("0"))
+				{
+					relation_court.add(user);
+				}
+				
+				livre.save(); // parse exception s'est produit ici
+			}
+			
+			/*if (user.getObjectId() != null)
 			{
 				if (option.equals("1"))
 				{
@@ -585,7 +602,7 @@ public class Connection
 					livre.put("notifier_long", user);
 				}
 				livre.save();
-			}
+			}*/
 			
 		}
 	}

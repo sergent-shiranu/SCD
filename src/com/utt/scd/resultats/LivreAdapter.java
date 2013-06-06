@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.parse.ParseObject;
 import com.utt.scd.R;
-import com.utt.scd.user.collection.CollectionAdapter.ItemLivre;
 
 public class LivreAdapter extends BaseAdapter 
 {
