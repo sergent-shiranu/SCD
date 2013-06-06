@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -23,6 +24,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.utt.scd.R;
 import com.utt.scd.SCD;
+import com.utt.scd.apropos.Apropos;
 import com.utt.scd.dialog.AlertingDialogOneButton;
 import com.utt.scd.model.Connection;
 import com.utt.scd.model.ConnectionNotInitializedException;
@@ -61,6 +63,29 @@ public class Collection extends SherlockFragmentActivity implements OnItemClickL
         this.nombre_resultat = (TextView) findViewById(R.id.textView1);
         
         new RecupererLivresCollection().execute();
+	}
+	
+	
+	
+	private void populateListView() 
+	{
+		if (this.listLivres.size() != 0)
+		{
+			
+			this.adapter.setItems(listLivres);
+	        this.list.setVisibility(View.VISIBLE);
+	        
+	        this.nombre_resultat.setText("Vous avez collecté " + this.adapter.getCount() +  " livres");
+			this.nombre_resultat.setTypeface(null, Typeface.BOLD);
+		}
+		else
+		{
+			this.list.setVisibility(View.GONE);
+			
+			this.nombre_resultat.setText("Vous n'avez aucun livre");
+			this.nombre_resultat.setTypeface(null, Typeface.BOLD);
+		}
+		
 	}
 	
 	
@@ -156,19 +181,13 @@ public class Collection extends SherlockFragmentActivity implements OnItemClickL
 	public boolean onCreateOptionsMenu(Menu menu) 
 	{
  
-        MenuItem panier = menu.add(0,0,0,"Panier");
-        {
-        	panier.setIcon(R.drawable.action_cart);
-        	panier.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);              
-        }
-        
-        MenuItem corbeille = menu.add(0,1,1,"Corbeille");
+        MenuItem corbeille = menu.add(0,0,0,"Corbeille");
         {
         	corbeille.setIcon(R.drawable.action_delete);
         	corbeille.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);           
         }
         
-        MenuItem apropos = menu.add(0,2,2,"A propos");
+        MenuItem apropos = menu.add(0,1,1,"A propos");
         {
             apropos.setIcon(R.drawable.action_about);
             apropos.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);           
@@ -180,27 +199,140 @@ public class Collection extends SherlockFragmentActivity implements OnItemClickL
 	
 	
 	
+	private AlertingDialogOneButton alertingDialogOneButton;
 	
-	private void populateListView() 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) 
 	{
-		if (this.listLivres.size() != 0)
+		switch (item.getItemId()) 
 		{
-			
-			this.adapter.setItems(listLivres);
-	        this.list.setVisibility(View.VISIBLE);
-	        
-	        this.nombre_resultat.setText("Vous avez collecté " + this.adapter.getCount() +  " livres");
-			this.nombre_resultat.setTypeface(null, Typeface.BOLD);
+			case 0:
+				
+				if (this.listLivres.size() > 0)
+				{
+					this.livresCorbeille = new ArrayList<String>();
+					
+					this.livresCorbeille = this.adapter.getLivresPanier();
+
+					if (this.livresCorbeille.size() == 0)
+					{
+						this.alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
+																						"Veuillez choisir au moins un livre",																			
+																						R.drawable.action_about);
+						this.alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+					}
+					else
+					{
+						new retirerCollection().execute();
+					}
+				}
+				
+				
+				return true;
+				
+			case 1:
+				
+				Intent intent = new Intent(this,Apropos.class);
+				startActivity(intent);
+				
+				
+				return true;
+	
+			case android.R.id.home:
+	
+				this.finish();
+	
+				return true;
+	
+		};
+
+		return false;
+	}
+	
+	
+	
+	public class retirerCollection extends AsyncTask<String, Integer, String>
+	{
+		private AlertingDialogOneButton alertingDialogOneButton;
+		
+		private Connection connection;
+		
+
+		public retirerCollection()
+		{
+			this.connection = Connection.getInstance();
+			this.connection.initialize();
 		}
-		else
+
+		@Override
+		protected void onPreExecute() 
 		{
-			this.list.setVisibility(View.GONE);
-			
-			this.nombre_resultat.setText("Vous n'avez aucun livre");
-			this.nombre_resultat.setTypeface(null, Typeface.BOLD);
+			super.onPreExecute();
+			setSupportProgressBarIndeterminateVisibility(true); 
 		}
 		
+		@Override
+		protected String doInBackground(String... arg0) 
+		{
+			try 
+			{
+				this.connection.retirerLivreCollection(livresCorbeille);
+			} 
+			catch (ParseException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "fail";
+			} 
+			catch (ConnectionNotInitializedException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "no internet";
+			}
+			
+			return "successful";
+    	    
+		}
+		
+		@Override
+		protected void onPostExecute(String result) 
+		{
+			super.onPostExecute(result);
+
+			setSupportProgressBarIndeterminateVisibility(false); 
+			
+			if(result.equals("fail"))
+			{
+				
+				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
+																			result,																			
+																			R.drawable.action_about);
+				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+			}
+			else if(result.equals("no internet"))
+			{
+				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
+																			result,																			
+																			R.drawable.action_search);
+				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+				
+			}
+			else if (result.equals("successful"))
+			{	
+				//System.out.println("Ajout Successful");
+				Toast.makeText(getBaseContext(), "Retirer avec succès", Toast.LENGTH_LONG).show();
+			
+				new RecupererLivresCollection().execute();
+			}
+			
+		}
+
 	}
+	
+	
+	
+	
 
 
 	@Override

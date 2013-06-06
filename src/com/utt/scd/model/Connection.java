@@ -483,6 +483,47 @@ public class Connection
 	}
 	
 	
+	// Retirer un livre de sa collection, le paramètre contient un array des objectID des livres à retirer
+	
+	public void retirerLivreCollection(ArrayList<String> livresCorbeille) throws ParseException, ConnectionNotInitializedException
+	{
+		ParseQuery query = new ParseQuery("Livre");
+		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+		
+		if (!this.isInitialized) 
+		{
+			throw new ConnectionNotInitializedException("Connection has not been initialized");
+		}
+		else
+		{
+			ParseUser user = ParseUser.getCurrentUser();
+			
+			for (String objectId : livresCorbeille)
+			{
+				System.out.println("livre a retirer : " + objectId);
+				
+				ParseObject livre =  query.get(objectId); // parse exeption s'est produit ici, mais normalement on retourne bien un livre
+				
+				ParseRelation relation = livre.getRelation("collecte_par");
+
+				if (user.getObjectId() != null)
+				{
+					relation.remove(user); // parse exception s'est produit ici
+					livre.save(); // IMPORTANT CA !!!!
+				}
+				
+				/*List<ParseObject> a = relation.getQuery().find();
+				
+				for (int i = 0; i < a.size(); i++) 
+				{
+					System.out.println("id : " + a.get(i).getObjectId());
+				}*/
+			}
+
+		}
+	}	
+	
+	
 	
 	// Récupérer tous les livres dans sa collection
 	public List<ParseObject> recupererLivresCollection() throws ConnectionNotInitializedException, ParseException

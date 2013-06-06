@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.parse.ParseObject;
 import com.utt.scd.R;
+import com.utt.scd.user.collection.CollectionAdapter.ItemLivre;
 
 public class LivreAdapter extends BaseAdapter 
 {
@@ -160,6 +161,8 @@ public class LivreAdapter extends BaseAdapter
 	public void setItems(List<ParseObject> listLivres) 
 	{
 		this.listLivres = listLivres;
+		
+		this.listeLivres = new ArrayList<ItemLivre>();
 		
 		for (int i = 0 ; i < listLivres.size() ; i++)
 		{

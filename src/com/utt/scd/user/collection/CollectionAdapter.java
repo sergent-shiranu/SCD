@@ -161,6 +161,8 @@ public class CollectionAdapter extends BaseAdapter
 	{
 		this.listLivres = listLivres;
 		
+		this.listeLivres = new ArrayList<ItemLivre>();
+		
 		for (int i = 0 ; i < listLivres.size() ; i++)
 		{
 			this.listeLivres.add(new ItemLivre(listLivres.get(i)));
@@ -176,7 +178,7 @@ public class CollectionAdapter extends BaseAdapter
 		return this.livresCorbeille;
 	}
 
-	public void setLivresPanier(ArrayList<String> livresCorbeille) 
+	public void setlivresCorbeille(ArrayList<String> livresCorbeille) 
 	{
 		this.livresCorbeille = livresCorbeille;
 	}
