@@ -4,12 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.utt.scd.apropos.InfosPratiquesFragment;
-import com.utt.scd.apropos.ServicesFragment;
-
 public class EvenementsAdapter extends FragmentPagerAdapter 
 {
-	protected static final String[] CONTENT = new String[] {"Infos pratiques", "Horaires"};
+	protected static final String[] CONTENT = new String[] {"A venir", "A venir"};
 	
 	private int mCount = CONTENT.length;
 
@@ -24,11 +21,11 @@ public class EvenementsAdapter extends FragmentPagerAdapter
 	{
 		if (position == 0)
 		{
-			return InfosPratiquesFragment.newInstance();
+			return EvenementFragment.newInstance();
 		}			
 		else
 		{
-			return ServicesFragment.newInstance();
+			return EvenementFragment.newInstance();
 		}
 	}
 

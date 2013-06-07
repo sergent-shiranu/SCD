@@ -1,5 +1,7 @@
 package com.utt.scd;
 
+import java.util.ArrayList;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,11 +9,15 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -23,29 +29,29 @@ import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 import com.parse.PushService;
+import com.slidinglayer.SlidingLayer;
 import com.utt.scd.apropos.Apropos;
 import com.utt.scd.dialog.AlertingDialogOneButton;
+import com.utt.scd.evenements.EvenementsAdapter;
 import com.utt.scd.model.Connection;
 import com.utt.scd.model.ConnectionNotInitializedException;
 import com.utt.scd.periodiques.Periodiques;
 import com.utt.scd.resultats.RechercheAvancee;
 import com.utt.scd.resultats.Resultats;
 import com.utt.scd.user.CompteLecteur;
+import com.viewpagerindicator.CirclePageIndicator;
+import com.viewpagerindicator.PageIndicator;
 
-public class SCD extends SherlockFragmentActivity implements OnClickListener, OnQueryTextListener 
+public class SCD extends SherlockFragmentActivity implements OnQueryTextListener, OnItemClickListener 
 {
 
-	private Button recherche_avancee,
-					compte_lecteur,
-					periodiques,
-					settings;
-	
 	public static int THEME = R.style.Theme_Dark_purple;
 	
-	
-	/*private EvenementsAdapter evenementsAdapter;
-	private ViewPager mPager;
-    private PageIndicator mIndicator;*/
+    private SlidingLayer slidingLayer;
+    
+    private GridView gridView;
+    private SCDAdapter adapter;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -63,162 +69,50 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener, On
 		setSupportProgressBarIndeterminateVisibility(false); 
 		
 		
-		this.recherche_avancee = (Button) findViewById(R.id.recherche_avancee);
-		this.recherche_avancee.setOnClickListener(this);
-		this.compte_lecteur = (Button) findViewById(R.id.compte_lecteur);
-		this.compte_lecteur.setOnClickListener(this);
-		this.periodiques = (Button) findViewById(R.id.periodiques);
-		this.periodiques.setOnClickListener(this);
-		this.settings = (Button) findViewById(R.id.settings);
-		this.settings.setOnClickListener(this);
+		this.gridView = (GridView) findViewById(R.id.gridview);
+		
+		ArrayList<FonctionSCD> items = new ArrayList<FonctionSCD>();
+		items.add(new FonctionSCD("Recherche Avancée", R.drawable.search));
+		items.add(new FonctionSCD("Compte Lecteur", R.drawable.user));
+		items.add(new FonctionSCD("Périodiques", R.drawable.book));
+		items.add(new FonctionSCD("Paramètres", R.drawable.setting));
+		
+		this.adapter = new SCDAdapter(this, items);
+		
+		this.gridView.setAdapter(adapter);
+		this.gridView.setOnItemClickListener(this);
 		
 
 		PushService.setDefaultPushCallback(this, SCD.class);
 		PushService.subscribe(this,  "", SCD.class);
 		ParseInstallation.getCurrentInstallation().saveInBackground();
-		
-		/*System.out.println("Installation ID : " + ParseInstallation.getCurrentInstallation().getInstallationId());
-		System.out.println("Object ID : " + ParseInstallation.getCurrentInstallation().getString("objectId"));
-		System.out.println("Installation ID : " + ParseInstallation.getCurrentInstallation());*/
-		
-		/*ParseUser.logInInBackground("nguyenn2", "123456789", new LogInCallback() {
-			
-			@Override
-			public void done(ParseUser user, ParseException e) 
-			{
-				if (user != null)
-				{
-					user.put("is_logging",1);
-					user.put("installationId", ParseInstallation.getCurrentInstallation().getInstallationId());
-					
-					user.saveInBackground();
-				}
-				else
-				{
-					System.out.println("khong logging dc");
-				}
-				
-			}
-		});*/
-		
-	
-		/*evenementsAdapter = new EvenementsAdapter(getSupportFragmentManager());
 
-        mPager = (ViewPager)findViewById(R.id.pager);
-        mPager.setAdapter(evenementsAdapter);
-        mPager.setPageMargin(
-        	    getResources().getDimensionPixelOffset(-64));
-
-        mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
-        mIndicator.setViewPager(mPager);*/
-        
 	}
+	
+	
+	
+	@Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) 
+	{
+        switch (keyCode) 
+        {
+        case KeyEvent.KEYCODE_BACK:
+            if (slidingLayer.isOpened()) 
+            {
+            	slidingLayer.closeLayer(true);
+                return true;
+            }
+
+        default:
+            return super.onKeyDown(keyCode, event);
+        }
+    }
 	
 	
 	private AlertDialog choice ;
 	private LayoutInflater inflater;
 	
-	@Override
-	public void onClick(View v) 
-	{
-		if (v.equals(this.recherche_avancee))
-		{
-			Intent intent = new Intent(this, RechercheAvancee.class);
-			startActivity(intent);
-		}
-		else if (v.equals(this.compte_lecteur))
-		{
-			//System.out.println(ParseUser.getCurrentUser().isAuthenticated());
-			//System.out.println(ParseUser.getCurrentUser().getObjectId());
-			if (ParseUser.getCurrentUser().getObjectId() == null)
-			{
-				final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	            builder.setTitle("Veuillez vous identifier");
-	            
-	            inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	            View login = inflater.inflate(R.layout.login, null);
-	            builder.setView(login);
-	            
-	            final EditText edt_pseudo = (EditText) login.findViewById(R.id.editText1);
-	            final EditText edt_mot_de_passe = (EditText) login.findViewById(R.id.editText2);
-	            
-	            builder.setPositiveButton("S'identifier", new DialogInterface.OnClickListener() {
-	    			public void onClick(DialogInterface dialog, int whichButton) 
-	    			{
-	    				
-	    			}
-	    		});
-	            builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
-	    			public void onClick(DialogInterface dialog, int whichButton) 
-	    			{
-	    				dialog.dismiss();
-	    			}
-	    		});
-	            
-	            choice = builder.create();
-	            choice.setCancelable(true);
-	            choice.setOnShowListener(new DialogInterface.OnShowListener() {
 
-	                @Override
-	                public void onShow(final DialogInterface dialog) 
-	                {
-
-	                    Button b = choice.getButton(AlertDialog.BUTTON_POSITIVE);
-	                    b.setOnClickListener(new View.OnClickListener() {
-
-	                        @Override
-	                        public void onClick(View view) 
-	                        {
-	                        	if (edt_pseudo.getText() == null || edt_pseudo.getText().toString().length() == 0)
-	    	    				{
-	    	    					edt_pseudo.setError("Veuillez remplir ce champ");
-	    	    				}
-	    	    				else if (edt_mot_de_passe.getText() == null || edt_mot_de_passe.getText().toString().length() == 0)
-	    	    				{
-	    	    					edt_mot_de_passe.setError("Veuillez remplir ce champ");
-	    	    				}
-	    	    				else
-	    	    				{
-	    	    					String[] data = {edt_pseudo.getText().toString(),edt_mot_de_passe.getText().toString()};
-	    	    					new login().execute(data);
-	    	    					choice.dismiss();
-	    	    				}
-	                        }
-	                    });
-	                }
-	            });
-	            
-	            
-	            choice.show();
-
-			}
-			else
-			{
-				Intent intent = new Intent(this, CompteLecteur.class);
-				startActivity(intent);
-			}
-			
-		}
-		else if (v.equals(this.periodiques))
-		{
-			Intent intent = new Intent(this, Periodiques.class);
-			startActivity(intent);
-		}
-		else if (v.equals(this.settings))
-		{
-			Intent intent = new Intent(this, Parametre.class);
-			startActivity(intent);
-			
-			/*Connection connection = Connection.getInstance().initialize();
-			try {
-				connection.logout();
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
-		}
-	}
-	
 	
 	public class login extends AsyncTask<String, Integer, String>
 	{
@@ -374,6 +268,106 @@ public class SCD extends SherlockFragmentActivity implements OnClickListener, On
 	public boolean onQueryTextChange(String newText) 
 	{
 		return false;
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) 
+	{
+		if (position == 0)
+		{
+			Intent intent = new Intent(this, RechercheAvancee.class);
+			startActivity(intent);
+		}
+		else if (position == 1)
+		{
+			if (ParseUser.getCurrentUser().getObjectId() == null)
+			{
+				final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	            builder.setTitle("Veuillez vous identifier");
+	            
+	            inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	            View login = inflater.inflate(R.layout.login, null);
+	            builder.setView(login);
+	            
+	            final EditText edt_pseudo = (EditText) login.findViewById(R.id.editText1);
+	            final EditText edt_mot_de_passe = (EditText) login.findViewById(R.id.editText2);
+	            
+	            builder.setPositiveButton("S'identifier", new DialogInterface.OnClickListener() {
+	    			public void onClick(DialogInterface dialog, int whichButton) 
+	    			{
+	    				
+	    			}
+	    		});
+	            builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+	    			public void onClick(DialogInterface dialog, int whichButton) 
+	    			{
+	    				dialog.dismiss();
+	    			}
+	    		});
+	            
+	            choice = builder.create();
+	            choice.setCancelable(true);
+	            choice.setOnShowListener(new DialogInterface.OnShowListener() {
+
+	                @Override
+	                public void onShow(final DialogInterface dialog) 
+	                {
+
+	                    Button b = choice.getButton(AlertDialog.BUTTON_POSITIVE);
+	                    b.setOnClickListener(new View.OnClickListener() {
+
+	                        @Override
+	                        public void onClick(View view) 
+	                        {
+	                        	if (edt_pseudo.getText() == null || edt_pseudo.getText().toString().length() == 0)
+	    	    				{
+	    	    					edt_pseudo.setError("Veuillez remplir ce champ");
+	    	    				}
+	    	    				else if (edt_mot_de_passe.getText() == null || edt_mot_de_passe.getText().toString().length() == 0)
+	    	    				{
+	    	    					edt_mot_de_passe.setError("Veuillez remplir ce champ");
+	    	    				}
+	    	    				else
+	    	    				{
+	    	    					String[] data = {edt_pseudo.getText().toString(),edt_mot_de_passe.getText().toString()};
+	    	    					new login().execute(data);
+	    	    					choice.dismiss();
+	    	    				}
+	                        }
+	                    });
+	                }
+	            });
+	            
+	            
+	            choice.show();
+
+			}
+			else
+			{
+				Intent intent = new Intent(this, CompteLecteur.class);
+				startActivity(intent);
+			}
+		}
+		else if (position == 2)
+		{
+			Intent intent = new Intent(this, Periodiques.class);
+			startActivity(intent);
+		}
+		else if (position == 3)
+		{
+			Intent intent = new Intent(this, Parametre.class);
+			startActivity(intent);
+			
+			/*if (!this.slidingLayer.isOpened()) 
+			{
+				this.slidingLayer.openLayer(true);
+            }
+			else if (this.slidingLayer.isOpened())
+			{
+				this.slidingLayer.closeLayer(true);
+            }*/
+		}
+		
 	}
 
 	

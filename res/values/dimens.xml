@@ -9,4 +9,6 @@
     <dimen name="standardPaddingSpace">16dp</dimen>
     <dimen name="action_button_min_width">56dp</dimen>
 
+    <dimen name="shadow_width">8dp</dimen>
+    <dimen name="layer_width">300dp</dimen>
 </resources>

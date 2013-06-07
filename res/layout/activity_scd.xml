@@ -1,100 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:fillViewport="true" 
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:fillViewport="true" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/wooden_texture"
-        android:orientation="vertical" >
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal" >
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:padding="6dip" >
+        <FrameLayout
+            android:id="@+id/relative"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal" >
+            <GridView
+                android:id="@+id/gridview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:horizontalSpacing="0dp"
+                android:numColumns="2"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="0dp" />
+        </FrameLayout>
+        
 
-                <Button
-                    android:id="@+id/recherche_avancee"
-                    style="@style/HomeButton"
-                    android:layout_width="match_parent"
-                    android:drawableTop="@drawable/search"
-                    android:onClick="onButtonClicker"
-                    android:text="Recherche avancée"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#000000" />
-
-                <Button
-                    android:id="@+id/compte_lecteur"
-                    style="@style/HomeButton"
-                    android:drawableTop="@drawable/user"
-                    android:onClick="onButtonClicker"
-                    android:text="Compte Lecteur"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#000000" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal" >
-
-                <Button
-                    android:id="@+id/periodiques"
-                    style="@style/HomeButton"
-                    android:layout_margin="5dp"
-                    android:drawableTop="@drawable/book"
-                    android:onClick="onButtonClicker"
-                    android:text="Périodiques"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#000000" />
-
-                <Button
-                    android:id="@+id/settings"
-                    style="@style/HomeButton"
-                    android:drawableTop="@drawable/setting"
-                    android:onClick="onButtonClicker"
-                    android:text="Paramètres"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#000000" />
-            </LinearLayout>
-
-            <!--  <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal" >
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/pager"
-                    android:layout_width="fill_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <com.viewpagerindicator.CirclePageIndicator
-                    android:id="@+id/indicator"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#FFCCCCCC"
-                    android:padding="10dip"
-                    app:fillColor="#FF888888"
-                    app:pageColor="#88FF0000"
-                    app:radius="10dp"
-                    app:strokeColor="#FF000000"
-                    app:strokeWidth="2dp" />
-            </LinearLayout>-->
-        </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
 </ScrollView>
