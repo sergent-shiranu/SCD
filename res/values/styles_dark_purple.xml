@@ -34,12 +34,25 @@
         <item name="actionBarWidgetTheme">@style/Theme.Dark_purple.Widget</item>
 
     </style>
+    
+    
+    <style name="IndeterminateProgress" parent="@android:style/Widget.ProgressBar.Small"> 
+       <item name="android:indeterminateDrawable">@drawable/progress_small_holo</item> 
+   	</style> 
+    
+    
 
     <style name="ActionBar.Solid.Dark_purple" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
         <item name="background">@drawable/ab_solid_dark_purple</item>
         <item name="backgroundStacked">@drawable/ab_stacked_solid_dark_purple</item>
         <item name="backgroundSplit">@drawable/ab_bottom_solid_dark_purple</item>
         <item name="progressBarStyle">@style/ProgressBar.Dark_purple</item>
+        
+        
+        <!-- <item name="android:indeterminateProgressStyle">@style/IndeterminateProgress</item>  -->
+        <item name="indeterminateProgressStyle">@style/IndeterminateProgress</item> 
+        
+        
     </style>
 
     <style name="ActionBar.Transparent.Dark_purple" parent="@style/Widget.Sherlock.ActionBar">

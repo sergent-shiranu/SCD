@@ -9,7 +9,7 @@ import com.utt.scd.apropos.ServicesFragment;
 
 public class EvenementsAdapter extends FragmentPagerAdapter 
 {
-protected static final String[] CONTENT = new String[] {"Infos pratiques", "Horaires"};
+	protected static final String[] CONTENT = new String[] {"Infos pratiques", "Horaires"};
 	
 	private int mCount = CONTENT.length;
 

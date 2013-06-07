@@ -44,7 +44,7 @@
  
     <style name="IndeterminateProgress" parent="@android:style/Widget.ProgressBar.Small"> 
        <item name="android:indeterminateDrawable">@drawable/progress_small_holo</item> 
-   </style> 
+   	</style> 
    
     
     

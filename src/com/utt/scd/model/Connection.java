@@ -608,25 +608,17 @@ public class Connection
 	}
 	
 	
-	// Récupérer toutes les alertes
+	// Récupérer toutes les alertes long (les Livre)
 	
-	public List<ParseObject> recupererAlertes() throws ConnectionNotInitializedException, ParseException
+	public List<ParseObject> recupererAlertesLong() throws ConnectionNotInitializedException, ParseException
 	{
 		ParseUser user = ParseUser.getCurrentUser();
 		
-		ParseQuery query_court = new ParseQuery("Livre");
-		query_court.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
-		query_court.whereEqualTo("notifie_court", user);
-
 		ParseQuery query_long = new ParseQuery("Livre");
 		query_long.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
-		query_long.whereEqualTo("notifie_long", user);
 		
-		List<ParseQuery> queries = new ArrayList<ParseQuery>();
-		queries.add(query_court);
-		queries.add(query_long);
-		 
-		ParseQuery mainQuery = ParseQuery.or(queries);
+		query_long.whereEqualTo("notifier_long", user);
+		query_long.whereNotEqualTo("notifier_court", user);
 		
 		if (!this.isInitialized) 
 		{
@@ -634,9 +626,83 @@ public class Connection
 		}
 		else
 		{
-			return mainQuery.find();
+			return query_long.find();
 		}
+		
 	}
+	
+	
+	// Récupérer toutes les alertes disponibles (les Livre)
+	
+	public List<ParseObject> recupererAlertesDisponibles() throws ConnectionNotInitializedException, ParseException
+	{
+		ParseUser user = ParseUser.getCurrentUser();
+		
+		ParseQuery query_dispo = new ParseQuery("Livre");
+		query_dispo.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+		
+		query_dispo.whereEqualTo("notifier_long", user);
+		query_dispo.whereEqualTo("notifier_court", user);
+		
+		if (!this.isInitialized) 
+		{
+			throw new ConnectionNotInitializedException("Connection has not been initialized");
+		}
+		else
+		{
+			return query_dispo.find();
+		}
+		
+	}
+	
+	
+	
+	// Retirer toutes les alertes long (les Livre)
+	
+	public void retirerAlertes(ArrayList<String> livresCorbeille, String option) throws ConnectionNotInitializedException, ParseException
+	{
+		
+		ParseQuery query = new ParseQuery("Livre");
+		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+		
+		if (!this.isInitialized) 
+		{
+			throw new ConnectionNotInitializedException("Connection has not been initialized");
+		}
+		else
+		{
+			ParseUser user = ParseUser.getCurrentUser();
+			
+			for (String objectId : livresCorbeille)
+			{
+				System.out.println("livre a retirer : " + objectId);
+				
+				ParseObject livre =  query.get(objectId); // parse exeption s'est produit ici, mais normalement on retourne bien un livre
+				
+				ParseRelation relation_long = livre.getRelation("notifier_long");
+				ParseRelation relation_court = livre.getRelation("notifier_court");
+
+				if (user.getObjectId() != null)
+				{
+					relation_long.remove(user); // parse exception s'est produit ici
+					
+					if (option.equals("0"))
+					{
+						relation_court.remove(user); // parse exception s'est produit ici
+					}
+					
+					livre.save(); // IMPORTANT CA !!!!
+				}
+			}
+
+		}
+
+	}
+	
+	
+	
+	
+	
 	
 	
 	

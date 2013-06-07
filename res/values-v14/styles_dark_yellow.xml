@@ -35,11 +35,27 @@
 
     </style>
 
+    
+    
+    <style name="IndeterminateProgress" parent="@android:style/Widget.ProgressBar.Small"/> 
+    
+    
+    
+    
     <style name="ActionBar.Solid.Dark_yellow" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@drawable/ab_solid_dark_yellow</item>
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_dark_yellow</item>
         <item name="android:backgroundSplit">@drawable/ab_bottom_solid_dark_yellow</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Dark_yellow</item>
+        
+        
+        
+        <item name="android:indeterminateProgressStyle">@style/IndeterminateProgress</item> 
+        <item name="indeterminateProgressStyle">@style/IndeterminateProgress</item> 
+        
+        
+        
+        
     </style>
 
     <style name="ActionBar.Transparent.Dark_yellow" parent="@style/Widget.Sherlock.ActionBar">
