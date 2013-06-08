@@ -44,6 +44,7 @@ import com.utt.scd.apropos.Apropos;
 import com.utt.scd.dialog.AlertingDialogOneButton;
 import com.utt.scd.model.Connection;
 import com.utt.scd.model.ConnectionNotInitializedException;
+import com.utt.scd.parametres.Parametre;
 import com.utt.scd.periodiques.Periodiques;
 import com.utt.scd.resultats.RechercheAvancee;
 import com.utt.scd.resultats.Resultats;
@@ -52,7 +53,7 @@ import com.utt.scd.user.CompteLecteur;
 public class SCD extends SherlockFragmentActivity implements OnQueryTextListener, OnItemClickListener, OnClickListener 
 {
 
-	public static int THEME = R.style.Theme_Dark_purple;
+	public static int THEME = R.style.Theme_Dark_blue;
 	
     private SlidingLayer slidingLayer;
     private TextView titre, detail;

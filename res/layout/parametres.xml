@@ -1,16 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
 
-    <ToggleButton
-        android:id="@+id/ParamToggleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/toogletoswitch"
-        android:textOff=""
-        android:textOn="" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/wooden_texture"
+        android:orientation="vertical" >
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:text="Notification des prêts"
+            android:textColor="#CD6839"
+            android:textStyle="bold"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:layout_margin="5dp"
+            android:background="@drawable/custom_border">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rappel de retour des prêts" 
+                android:padding="10dp"
+                android:textColor="#000000"/>
+
+            <ToggleButton
+                android:id="@+id/ParamToggleButton"
+                android:layout_width="60dp"
+                android:layout_height="25dp"
+                android:layout_gravity="right|center_vertical"
+                android:background="@drawable/toogletoswitch" 
+                android:layout_marginRight="10dp"
+                android:padding="10dp"/>
+
+        </FrameLayout>
+        
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:layout_margin="5dp"
+            android:background="@drawable/custom_border">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fréquence de rappel" 
+				android:padding="10dp"
+                android:textColor="#000000"/>
+
+            <TextView 
+                android:text="1 fois par jour"
+                android:id="@+id/TextView5"
+                android:layout_gravity="right|center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+				android:background="#aa336699"
+	            android:textStyle="bold"
+                android:padding="10dp"
+                android:textColor="#FFFFFF"/>
+
+        </FrameLayout>
+        
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:layout_margin="5dp"
+            android:background="@drawable/custom_border">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anticipation" 
+				android:padding="10dp"
+                android:textColor="#000000"/>
+
+            <TextView 
+                android:text="3 jours avant"
+                android:id="@+id/TextView7"
+                android:layout_gravity="right|center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+				android:background="#aa336699"
+	            android:textStyle="bold"
+                android:padding="10dp"
+                android:textColor="#FFFFFF"/>
+
+        </FrameLayout>
+        
+        
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:text="Notification sur les alertes"
+            android:textColor="#CD6839"
+            android:textStyle="bold"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:layout_margin="5dp"
+            android:background="@drawable/custom_border">
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alertes sur un document" 
+                android:padding="10dp"
+                android:textColor="#000000"/>
+
+            <ToggleButton
+                android:id="@+id/ParamToggleButton2"
+                android:layout_width="60dp"
+                android:layout_height="25dp"
+                android:layout_gravity="right|center_vertical"
+                android:background="@drawable/toogletoswitch"
+                android:layout_marginRight="10dp" 
+                android:padding="10dp"/>
+
+        </FrameLayout>
+        
+        
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:layout_margin="5dp"
+            android:background="@drawable/custom_border">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Choisir un thème" 
+				android:padding="10dp"
+                android:textColor="#000000"/>
+
+            <TextView 
+                android:text="Bleu"
+                android:id="@+id/TextView7"
+                android:layout_gravity="right|center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+				android:background="#aa336699"
+	            android:textStyle="bold"
+                android:padding="10dp"
+                android:textColor="#FFFFFF"/>
+
+        </FrameLayout>
+
+    </LinearLayout>
+    
+
+</ScrollView>

@@ -106,7 +106,7 @@
         </activity>
         
         <activity
-            android:name=".Parametre"
+            android:name="com.utt.scd.parametres.Parametre"
             android:label="Paramètres">
         </activity>
     </application>
