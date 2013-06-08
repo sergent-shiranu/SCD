@@ -76,25 +76,6 @@ public class CompteLecteur extends SherlockFragmentActivity implements OnClickLi
 		
 		new recupererLivresEmprunter().execute();
 		
-		/*ParseUser.logOut();
-		ParseUser.logInInBackground("nguyenn2", "12345678", new LogInCallback() {
-			  public void done(ParseUser user, ParseException e) {
-			    if (user != null) {
-			      System.out.println("Okkkkkkkkkkkkkkk");
-			    } else {
-			      // Signup failed. Look at the ParseException to see what happened.
-			    }
-			  }
-			});
-		ParseUser.logOut();
-		String uid = ParseUser.getCurrentUser().getObjectId();
-		if (uid != null) {
-			System.out.println("Koooooooooooo");
-			System.out.println(uid + "hehehe");
-			} else {
-			  // show the signup or login screen
-			}
-		ParseUser.logOut();*/
 	}
 	
 	

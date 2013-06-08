@@ -1,6 +1,10 @@
 package com.utt.scd;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -9,15 +13,20 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -27,30 +36,33 @@ import com.actionbarsherlock.widget.SearchView;
 import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.PushService;
 import com.slidinglayer.SlidingLayer;
 import com.utt.scd.apropos.Apropos;
 import com.utt.scd.dialog.AlertingDialogOneButton;
-import com.utt.scd.evenements.EvenementsAdapter;
 import com.utt.scd.model.Connection;
 import com.utt.scd.model.ConnectionNotInitializedException;
 import com.utt.scd.periodiques.Periodiques;
 import com.utt.scd.resultats.RechercheAvancee;
 import com.utt.scd.resultats.Resultats;
 import com.utt.scd.user.CompteLecteur;
-import com.viewpagerindicator.CirclePageIndicator;
-import com.viewpagerindicator.PageIndicator;
 
-public class SCD extends SherlockFragmentActivity implements OnQueryTextListener, OnItemClickListener 
+public class SCD extends SherlockFragmentActivity implements OnQueryTextListener, OnItemClickListener, OnClickListener 
 {
 
 	public static int THEME = R.style.Theme_Dark_purple;
 	
     private SlidingLayer slidingLayer;
+    private TextView titre, detail;
+    private Button close;
     
     private GridView gridView;
     private SCDAdapter adapter;
+    
+    private LinearLayout parent;
+    private List<ParseObject> listeEvenements;
 
 	
 	@Override
@@ -68,6 +80,9 @@ public class SCD extends SherlockFragmentActivity implements OnQueryTextListener
 		
 		setSupportProgressBarIndeterminateVisibility(false); 
 		
+		PushService.setDefaultPushCallback(this, SCD.class);
+		PushService.subscribe(this,  "", SCD.class);
+		ParseInstallation.getCurrentInstallation().saveInBackground();
 		
 		this.gridView = (GridView) findViewById(R.id.gridview);
 		
@@ -82,11 +97,82 @@ public class SCD extends SherlockFragmentActivity implements OnQueryTextListener
 		this.gridView.setAdapter(adapter);
 		this.gridView.setOnItemClickListener(this);
 		
+		
+		this.parent = (LinearLayout) findViewById(R.id.parent);
+		
 
-		PushService.setDefaultPushCallback(this, SCD.class);
-		PushService.subscribe(this,  "", SCD.class);
-		ParseInstallation.getCurrentInstallation().saveInBackground();
+		this.listeEvenements = new ArrayList<ParseObject>();
+		
+		new recupereEvenements().execute();
+		
+		
+		this.slidingLayer = (SlidingLayer) findViewById(R.id.slidingLayer1);
 
+		this.slidingLayer.setShadowWidthRes(R.dimen.shadow_width);
+		this.slidingLayer.setShadowDrawable(R.drawable.sidebar_shadow);
+		this.slidingLayer.setStickTo(SlidingLayer.STICK_TO_AUTO);
+		this.slidingLayer.setCloseOnTapEnabled(true);
+        
+        this.titre = (TextView) findViewById(R.id.titre);
+        this.detail = (TextView) findViewById(R.id.detail);
+        
+        this.close = (Button) findViewById(R.id.Button1);
+        this.close.setOnClickListener(this);
+
+	}
+	
+	
+	
+	@SuppressWarnings("deprecation")
+	public void populateView()
+	{
+		if (this.listeEvenements.size() > 0)
+		{
+			WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+			Display display = wm.getDefaultDisplay();
+			
+			for (int i = 0 ; i < this.listeEvenements.size() ; i++)
+			{
+				ParseObject eve = this.listeEvenements.get(i);
+				
+				View view = LayoutInflater.from(this).inflate(R.layout.evenement_item, null);
+				
+				TextView date = (TextView) view.findViewById(R.id.date);
+				Format formatter  = new SimpleDateFormat("dd/MM/yyyy");
+				date.setText(formatter.format(eve.getDate("Date")));
+				
+				
+				TextView titre = (TextView) view.findViewById(R.id.textView1);
+				titre.setText(eve.getString("Titre"));
+				
+				TextView detail = (TextView) view.findViewById(R.id.textView2);
+				
+				String dt = eve.getString("Detail");
+				
+				if (dt.length() > 35)
+				{
+					detail.setText(dt.substring(0, 34) + "...");
+				}
+				else
+				{
+					detail.setText(dt);
+				}
+				
+				
+				view.setLayoutParams(new LayoutParams(display.getWidth(), LayoutParams.WRAP_CONTENT));
+				
+				this.parent.addView(view);
+				
+				LinearLayout lay = (LinearLayout) view.findViewById(R.id.lay);
+				
+				lay.setTag(i);
+				
+				lay.setOnClickListener(this);
+				
+				
+			}
+			
+		}
 	}
 	
 	
@@ -96,15 +182,15 @@ public class SCD extends SherlockFragmentActivity implements OnQueryTextListener
 	{
         switch (keyCode) 
         {
-        case KeyEvent.KEYCODE_BACK:
-            if (slidingLayer.isOpened()) 
-            {
-            	slidingLayer.closeLayer(true);
-                return true;
-            }
-
-        default:
-            return super.onKeyDown(keyCode, event);
+	        case KeyEvent.KEYCODE_BACK:
+	            if (slidingLayer.isOpened()) 
+	            {
+	            	slidingLayer.closeLayer(true);
+	                return true;
+	            }
+	
+	        default:
+	            return super.onKeyDown(keyCode, event);
         }
     }
 	
@@ -198,6 +284,90 @@ public class SCD extends SherlockFragmentActivity implements OnQueryTextListener
 	
 	
 
+	public class recupereEvenements extends AsyncTask<String, Integer, String>
+	{
+		private AlertingDialogOneButton alertingDialogOneButton;
+		
+		public Connection connection;
+		public List<ParseObject> resultats;
+
+		public recupereEvenements()
+		{
+			connection = Connection.getInstance();
+			connection.initialize();
+			
+			this.resultats = new LinkedList<ParseObject>();
+		}
+
+		@Override
+		protected void onPreExecute() 
+		{
+			super.onPreExecute();
+			setSupportProgressBarIndeterminateVisibility(true); 
+		}
+		
+		@Override
+		protected String doInBackground(String... arg0) 
+		{
+			try 
+			{
+				this.resultats = connection.recupererEvenement();
+			} 
+			catch (ConnectionNotInitializedException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "no internet";
+			} 
+			catch (ParseException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "fail";
+			}
+			
+			return "successful";
+    	    
+		}
+		
+		@Override
+		protected void onPostExecute(String result) 
+		{
+			super.onPostExecute(result);
+
+			setSupportProgressBarIndeterminateVisibility(false); 
+			
+			if(result.equals("fail"))
+			{
+				
+				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
+																			result,																			
+																			R.drawable.action_about);
+				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+			}
+			else if(result.equals("no internet"))
+			{
+				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
+																			result,																			
+																			R.drawable.action_search);
+				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+				
+			}
+			else if (result.equals("successful"))
+			{	
+				listeEvenements = resultats;
+
+				populateView();
+				
+			}
+			
+		}
+
+		
+		
+	}
+	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
 	{
@@ -366,6 +536,42 @@ public class SCD extends SherlockFragmentActivity implements OnQueryTextListener
 			{
 				this.slidingLayer.closeLayer(true);
             }*/
+		}
+		
+	}
+
+
+
+	@Override
+	public void onClick(View v) 
+	{
+		if (v.equals(close))
+		{
+			if (!this.slidingLayer.isOpened()) 
+			{
+				this.slidingLayer.openLayer(true);
+            }
+			else if (this.slidingLayer.isOpened())
+			{
+				this.slidingLayer.closeLayer(true);
+            }
+		}
+		else
+		{
+			int postion = (Integer) v.getTag();
+			
+			ParseObject eve = this.listeEvenements.get(postion);
+			
+			titre.setText(eve.getString("Titre"));
+			
+			String dt = eve.getString("Detail");
+			
+			detail.setText(dt);
+			
+			if (!slidingLayer.isOpened()) 
+			{
+				slidingLayer.openLayer(true);
+            }
 		}
 		
 	}

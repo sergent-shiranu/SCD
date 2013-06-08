@@ -19,6 +19,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.Build;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
@@ -29,7 +31,7 @@ import com.parse.ParseUser;
 public class Connection 
 {
 
-	//public Gson gson;
+	public Gson gson;
 	
 	private static Connection instance;
 	
@@ -60,9 +62,9 @@ public class Connection
 	public Connection initialize()
 	{
 		
-		//GsonBuilder gsonBuilder = new GsonBuilder();
+		GsonBuilder gsonBuilder = new GsonBuilder();
 		// TODO : Handle timezones properly
-		//this.gson = gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+		this.gson = gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
 		
 		
 		this.isInitialized = true;
@@ -386,6 +388,8 @@ public class Connection
 	{
 		ParseQuery query = new ParseQuery("Evenement");
 		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+		query.setLimit(10);
+		query.addDescendingOrder("Date");
 
 		if (!this.isInitialized) 
 		{
