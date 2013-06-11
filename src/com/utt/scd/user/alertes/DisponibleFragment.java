@@ -28,7 +28,7 @@ public class DisponibleFragment extends SherlockFragment implements OnItemClickL
 	public DisponibleFragment(Context context, List<ParseObject> listLivres) 
 	{
 		this.listLivres = listLivres;
-		this.adapter = new DisponibleAdapter(context, listLivres);
+		this.adapter = new DisponibleAdapter(context, this.listLivres);
 		
 		this.context = context;
 	}
@@ -56,6 +56,7 @@ public class DisponibleFragment extends SherlockFragment implements OnItemClickL
 		
 		this.list = (ListView) view.findViewById(R.id.listView1);
 		this.list.setAdapter(adapter);
+		this.list.setClickable(true);
 		this.list.setOnItemClickListener(this);
 		
 		return view;
@@ -64,9 +65,12 @@ public class DisponibleFragment extends SherlockFragment implements OnItemClickL
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) 
 	{
-		ParseObject livre = this.listLivres.get(position);
+		ParseObject livre = (ParseObject) this.adapter.getItem(position);
 		
 		Intent intent = new Intent(context, LivreDetail.class);
+		
+		System.out.println("livre id : " + livre.getObjectId());
+		
 		intent.putExtra("objectId", livre.getObjectId());
 		startActivity(intent);
 

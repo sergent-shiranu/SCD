@@ -3,9 +3,11 @@ package com.utt.scd.periodiques;
 import java.util.LinkedList;
 
 import android.content.Context;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -51,7 +53,8 @@ public class PeriodiquesAdapter extends BaseAdapter
         return i;
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public View getView(int position, View convertView, ViewGroup viewGroup) 
     {
     	View view = convertView;
@@ -95,6 +98,12 @@ public class PeriodiquesAdapter extends BaseAdapter
         {
         	holder.imageView.setImageResource(R.drawable.sciences);
         }
+        
+        WindowManager wm = (WindowManager) this.context.getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
+		
+		holder.imageView.setMaxWidth(display.getWidth());
+		holder.imageView.setMinimumWidth(display.getWidth());
 
         holder.name.setText(item.getNom());
 

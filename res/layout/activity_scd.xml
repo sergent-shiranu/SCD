@@ -69,7 +69,8 @@
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:text="TextView" 
-		            android:layout_margin="10dp"/>
+		            android:layout_margin="10dp"
+		            android:autoLink="all"/>
 
 	            <Button
 	                android:id="@+id/Button1"

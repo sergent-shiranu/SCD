@@ -81,8 +81,8 @@ public class AdapterListLinearLayout extends BaseAdapter
 		etat.setText(et);
 		
 		
-		TextView localisation = (TextView) view.findViewById(R.id.localisation);
-		localisation.setText((String)listItems.get(position).get("localisation"));
+		/*TextView localisation = (TextView) view.findViewById(R.id.localisation);
+		localisation.setText((String)listItems.get(position).get("localisation"));*/
 		
 		
 		TextView retour = (TextView) view.findViewById(R.id.retour);

@@ -28,7 +28,7 @@ public class LongFragment extends SherlockFragment implements OnItemClickListene
 	public LongFragment(Context context, List<ParseObject> listLivres) 
 	{
 		this.listLivres = listLivres;
-		this.adapter = new LongAdapter(context, listLivres);
+		this.adapter = new LongAdapter(context, this.listLivres);
 		
 		this.context = context;
 	}
@@ -65,7 +65,7 @@ public class LongFragment extends SherlockFragment implements OnItemClickListene
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) 
 	{
-		ParseObject livre = this.listLivres.get(position);
+		ParseObject livre = (ParseObject) this.adapter.getItem(position);
 		
 		Intent intent = new Intent(context, LivreDetail.class);
 		intent.putExtra("objectId", livre.getObjectId());

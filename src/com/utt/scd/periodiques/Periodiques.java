@@ -8,6 +8,7 @@ import net.simonvt.menudrawer.Position;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Display;
@@ -99,8 +100,10 @@ public class Periodiques extends SherlockFragmentActivity implements OnItemClick
 		
 		
 		mAdapter = new MagazineAdapter(this, new TypePeriodiques("Informatique"));
+		mList.setAdapter(mAdapter);
 		
 		mDrawer.setMenuView(mList);
+		mDrawer.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		
 		new RecherchePeriodiques().execute();
 
@@ -305,8 +308,8 @@ public class Periodiques extends SherlockFragmentActivity implements OnItemClick
 	{
 		
 		typePeriodiques = this.listPeriodiques.get(position);
-			
-		mAdapter = new MagazineAdapter(this, typePeriodiques);
+		mAdapter.setItems(typePeriodiques);
+		/*mAdapter = new MagazineAdapter(this, typePeriodiques);
 			
 		mList.setAdapter(mAdapter);
 			
@@ -315,7 +318,7 @@ public class Periodiques extends SherlockFragmentActivity implements OnItemClick
 			System.out.println(a.getString("Titre"));
 		}
 		
-		mDrawer.setMenuView(mList);
+		mDrawer.setMenuView(mList);*/
 		
 		mDrawer.toggleMenu();
 

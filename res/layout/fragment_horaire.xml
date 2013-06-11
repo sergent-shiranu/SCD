@@ -47,7 +47,7 @@
             android:layout_margin="10dp"
             android:text="Inter-semestre"
             android:textStyle="bold"
-            android:textColor="#104E8B" />
+            android:textColor="#AA5303" />
 
         <TextView
             android:id="@+id/textView5"
@@ -65,9 +65,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Vacances (Toussaint,Hiver,printemps)"
+            android:text="Vacances (Toussaint, Hiver, printemps)"
             android:textStyle="bold"
-            android:textColor="#660198" />
+            android:textColor="#AA5303" />
 
         <TextView
             android:id="@+id/textView7"
@@ -119,7 +119,7 @@
             android:text="Service Questions?Réponses!"
             android:textColor="#000000"
             android:textStyle="bold"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_border"/>

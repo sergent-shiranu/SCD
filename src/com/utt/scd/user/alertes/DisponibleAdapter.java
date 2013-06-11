@@ -53,7 +53,7 @@ public class DisponibleAdapter extends BaseAdapter
 	@Override
 	public Object getItem(int position) 
 	{
-		return this.listeLivres.get(position);
+		return this.listeLivres.get(position).getLivre();
 	}
 
 	@Override

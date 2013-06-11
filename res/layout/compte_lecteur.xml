@@ -29,7 +29,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/custom_border"
  			android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Accéder à ma collection"
+            android:text="Accéder à mon panier"
             android:textColor="#003F87" 
             android:textStyle="bold"/>
 
@@ -40,7 +40,7 @@
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="Permet d&apos;enregistrer une recherche pour une future consultation"
+            android:text="Permet d&apos;enregistrer une recherche pour une future consultation."
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#734A12"
             android:textStyle="bold" />
@@ -63,7 +63,7 @@
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="Permet d&apos;être notifié du retour d&apos;un exemplaire"
+            android:text="Permet d&apos;être prévenu du retour d&apos;un exemplaire."
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#734A12"
             android:textStyle="bold" />

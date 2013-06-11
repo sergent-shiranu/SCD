@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,8 +18,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,6 +76,7 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 		getSupportActionBar().setHomeButtonEnabled(true);
 		
 		this.couverture = (ImageView) findViewById(R.id.imageView1);
+		this.couverture.setOnClickListener(this);
 		
 		this.titre = (TextView) findViewById(R.id.textView1);
 		this.auteur = (TextView) findViewById(R.id.textView2);
@@ -770,10 +774,46 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 	@Override
 	public void onClick(View v) 
 	{
-		int position = (Integer) v.getTag();
+		if (v.equals(couverture))
+		{
+			System.out.println("ZOOOOOOMMM");
+			zoomCouverture();
+		}
+		else
+		{
+			int position = (Integer) v.getTag();
+			
+			Intent intent = new Intent(this,Localisation.class);
+			intent.putExtra("url", exemplaires.get(position).getParseFile("localisation_image").getUrl());
+			startActivity(intent);
+		}
 		
-		Intent intent = new Intent(this,Localisation.class);
-		intent.putExtra("url", exemplaires.get(position).getParseFile("localisation_image").getUrl());
-		startActivity(intent);
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void zoomCouverture()
+	{
+		Dialog dialog = new Dialog(this);
+		LayoutInflater factory = LayoutInflater.from(this);
+		
+        View view = factory.inflate(R.layout.zoom_couverture, null);
+		ImageView cvt = (ImageView) view.findViewById(R.id.imageView1);
+		//cvt.setImageBitmap(bitmap);
+		
+		WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
+		
+		int new_width = display.getWidth()*5/6;
+		
+		int new_height = bitmap.getHeight()*display.getWidth()*5/6/ (bitmap.getWidth());
+
+
+		Bitmap resized = Bitmap.createScaledBitmap(bitmap, new_width, new_height, true);
+		cvt.setImageBitmap(resized);
+		
+		dialog.requestWindowFeature((int) Window.FEATURE_NO_TITLE);
+		dialog.setContentView(view);
+		dialog.setCanceledOnTouchOutside(true);
+		dialog.show();
 	}
 }

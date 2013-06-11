@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Display;
@@ -53,7 +54,7 @@ import com.utt.scd.user.CompteLecteur;
 public class SCD extends SherlockFragmentActivity implements OnQueryTextListener, OnItemClickListener, OnClickListener 
 {
 
-	public static int THEME = R.style.Theme_Dark_blue;
+	public static int THEME = R.style.Theme_Dark_purple;
 	
     private SlidingLayer slidingLayer;
     private TextView titre, detail;
@@ -141,6 +142,7 @@ public class SCD extends SherlockFragmentActivity implements OnQueryTextListener
 				TextView date = (TextView) view.findViewById(R.id.date);
 				Format formatter  = new SimpleDateFormat("dd/MM/yyyy");
 				date.setText(formatter.format(eve.getDate("Date")));
+				date.setBackgroundColor(SCD.color());
 				
 				
 				TextView titre = (TextView) view.findViewById(R.id.textView1);
@@ -576,6 +578,36 @@ public class SCD extends SherlockFragmentActivity implements OnQueryTextListener
             }
 		}
 		
+	}
+	
+	
+	
+	
+	
+	
+	
+	public static int color()
+	{
+		if (THEME == R.style.Theme_Dark_blue)
+		{
+			return Color.BLUE;
+		}
+		else if (THEME == R.style.Theme_Dark_green)
+		{
+			return Color.parseColor("#488214");
+		}
+		else if (THEME == R.style.Theme_Dark_purple)
+		{
+			return Color.parseColor("#8A2BE2");
+		}
+		else if (THEME == R.style.Theme_Dark_red)
+		{
+			return Color.RED;
+		}
+		else
+		{
+			return Color.YELLOW;
+		}
 	}
 
 	

@@ -17,7 +17,7 @@
             android:layout_height="200px"
             android:layout_margin="5dp"
             android:clickable="true"
-            android:focusable="false" />
+            android:background="@drawable/custom_border" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -156,18 +156,6 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
                     android:text="Etat"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#003F87"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/localisation"
-                    android:layout_width="200px"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Localisation"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="#003F87"
                     android:textStyle="bold" />
