@@ -61,7 +61,7 @@ public class MagazineAdapter extends BaseAdapter
 		view = this.inflater.inflate(R.layout.livre_item, null);
 		
 		CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox1);
-		checkBox.setVisibility(View.INVISIBLE);
+		checkBox.setVisibility(View.GONE);
 		
 		//Titre
 		TextView titre = (TextView) view.findViewById(R.id.titre);

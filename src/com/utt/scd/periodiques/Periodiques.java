@@ -3,14 +3,20 @@ package com.utt.scd.periodiques;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.simonvt.menudrawer.MenuDrawer;
+import net.simonvt.menudrawer.Position;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -32,6 +38,12 @@ public class Periodiques extends SherlockFragmentActivity implements OnItemClick
 	private GridView gridView;
 	private PeriodiquesAdapter adapter;
 	
+	
+	private ListView mList;
+	private MagazineAdapter mAdapter;
+	private MenuDrawer mDrawer;
+	
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -41,8 +53,18 @@ public class Periodiques extends SherlockFragmentActivity implements OnItemClick
 		
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); 
 
-		setContentView(R.layout.periodiques);
 		
+		mDrawer = MenuDrawer.attach(this, MenuDrawer.Type.OVERLAY, Position.RIGHT);
+		mDrawer.setContentView(R.layout.periodiques);
+		mDrawer.setTouchMode(MenuDrawer.TOUCH_MODE_FULLSCREEN);
+		
+		WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
+		
+		
+		mDrawer.setMenuSize(display.getWidth()*5/6);
+		
+
 		setSupportProgressBarIndeterminateVisibility(false); 
 		
 		getSupportActionBar().setHomeButtonEnabled(true);
@@ -59,11 +81,45 @@ public class Periodiques extends SherlockFragmentActivity implements OnItemClick
 		this.gridView.setAdapter(adapter);
 		this.gridView.setOnItemClickListener(this);
 		
+		mList = new ListView(this);
+		mList.setOnItemClickListener(new OnItemClickListener() {
+
+			
+			public void onItemClick(AdapterView<?> adapter, View view, int position, long id) 
+			{
+				mDrawer.toggleMenu();
+				
+				Intent intent = new Intent(getBaseContext(), PeriodiqueDetail.class);
+				intent.putExtra("objectId", typePeriodiques.getList().get(position).getObjectId());
+				startActivity(intent);
+				
+			}
+
+		});
+		
+		
+		mAdapter = new MagazineAdapter(this, new TypePeriodiques("Informatique"));
+		
+		mDrawer.setMenuView(mList);
+		
 		new RecherchePeriodiques().execute();
+
+		
 		
 	}
 
-	
+	@Override
+	public void onBackPressed() 
+	{
+		 final int drawerState = mDrawer.getDrawerState();
+	     if (drawerState == MenuDrawer.STATE_OPEN || drawerState == MenuDrawer.STATE_OPENING) 
+	     {
+	    	 mDrawer.closeMenu();
+	         return;
+	     }
+
+	     super.onBackPressed();
+	} 
 	
 	
 	
@@ -242,10 +298,28 @@ public class Periodiques extends SherlockFragmentActivity implements OnItemClick
 	}
 
 
+	private TypePeriodiques typePeriodiques;
 
 	@Override
 	public void onItemClick(AdapterView<?> adapter, View view, int position, long id) 
 	{
+		
+		typePeriodiques = this.listPeriodiques.get(position);
+			
+		mAdapter = new MagazineAdapter(this, typePeriodiques);
+			
+		mList.setAdapter(mAdapter);
+			
+		for (ParseObject a : typePeriodiques.getList())
+		{
+			System.out.println(a.getString("Titre"));
+		}
+		
+		mDrawer.setMenuView(mList);
+		
+		mDrawer.toggleMenu();
+
+		
 		
 		
 	}
