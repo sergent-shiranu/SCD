@@ -521,6 +521,7 @@ public class SCD extends SherlockFragmentActivity implements OnQueryTextListener
 		}
 		else if (position == 2)
 		{
+			System.out.println("phai chay buoc nay");
 			Intent intent = new Intent(this, Periodiques.class);
 			startActivity(intent);
 		}
