@@ -606,7 +606,7 @@ public class SCD extends SherlockFragmentActivity implements OnQueryTextListener
 		}
 		else
 		{
-			return Color.YELLOW;
+			return Color.parseColor("#FFB00F");
 		}
 	}
 

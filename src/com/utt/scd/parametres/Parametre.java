@@ -3,6 +3,8 @@ package com.utt.scd.parametres;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +28,9 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 	private ToggleButton rappel_prets, rappel_alertes;
 	
 	private TextView frequence, anticipation, theme;
+	
+	private SharedPreferences prefs;
+	private Editor editor;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -56,7 +61,90 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 		this.anticipation.setOnClickListener(this);
 		this.theme = (TextView) findViewById(R.id.textView10);
 		this.theme.setBackgroundColor(SCD.color());
+		if (SCD.THEME == R.style.Theme_Dark_blue)
+		{
+			this.theme.setText("Bleu");
+		}
+		else if (SCD.THEME == R.style.Theme_Dark_green)
+		{
+			this.theme.setText("Vert");
+		}
+		else if (SCD.THEME == R.style.Theme_Dark_purple)
+		{
+			this.theme.setText("Violet");
+		}
+		else if (SCD.THEME == R.style.Theme_Dark_red)
+		{
+			this.theme.setText("Rouge");
+		}
+		else
+		{
+			this.theme.setText("Jaune");
+		}
 		this.theme.setOnClickListener(this);
+		
+		
+		this.prefs = getSharedPreferences("XXX", MODE_PRIVATE);
+		this.editor = prefs.edit();
+		
+		if (prefs.getString("rappel_pret", "").equals("1"))
+		{
+			this.rappel_prets.setChecked(true);
+		}
+		else if (prefs.getString("frequence_rappel", "").equals(""))
+		{
+			this.rappel_prets.setChecked(false);
+		}
+		
+		
+		
+		
+		
+		if (prefs.getString("frequence_rappel", "").equals("Non défini"))
+		{
+			this.frequence.setText("Non défini");
+		}
+		else if (prefs.getString("frequence_rappel", "").equals("1 fois par jour"))
+		{
+			this.frequence.setText("1 fois par jour");
+		}
+		else if (prefs.getString("frequence_rappel", "").equals("2 fois par jour"))
+		{
+			this.frequence.setText("2 fois par jour");
+		}
+		else
+		{
+			this.frequence.setText("Non défini");
+		}
+		
+		
+		if (prefs.getString("anticipation", "").equals("Non défini"))
+		{
+			this.anticipation.setText("Non défini");
+		}
+		else if (prefs.getString("frequence_rappel", "").equals("2 jours avant"))
+		{
+			this.anticipation.setText("2 jours avant");
+		}
+		else if (prefs.getString("frequence_rappel", "").equals("Un seul jour avant"))
+		{
+			this.anticipation.setText("Un seul jour avant");
+		}
+		else
+		{
+			this.anticipation.setText("Non défini");
+		}
+		
+		
+		if (prefs.getString("rappel_alerte", "").equals("1"))
+		{
+			this.rappel_alertes.setChecked(true);
+		}
+		else if (prefs.getString("rappel_alerte", "").equals(""))
+		{
+			this.rappel_alertes.setChecked(false);
+		}
+		
 		
 	}
 	
