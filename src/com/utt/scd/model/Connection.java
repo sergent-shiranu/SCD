@@ -701,6 +701,43 @@ public class Connection
 	}
 	
 	
+	// Switch off alerting system
+	
+	public void switchOffAlertingSystem() throws ParseException, ConnectionNotInitializedException
+	{	
+		if (!this.isInitialized) 
+		{
+			throw new ConnectionNotInitializedException("Connection has not been initialized");
+		}
+		else
+		{
+			ParseUser user = ParseUser.getCurrentUser();
+			
+			user.put("is_alerted",false); // L'indice qui indique si l'utilisateur est alerté actuellement ou pas			
+			user.save();
+		}
+		
+	}
+	
+	
+	// Switch on alerting system
+	public void switchOnAlertingSystem() throws ParseException, ConnectionNotInitializedException
+	{	
+		if (!this.isInitialized) 
+		{
+			throw new ConnectionNotInitializedException("Connection has not been initialized");
+		}
+		else
+		{
+			ParseUser user = ParseUser.getCurrentUser();
+			
+			user.put("is_alerted",true); // L'indice qui indique si l'utilisateur est alerté actuellement ou pas			
+			user.save();
+		}
+		
+	}
+	
+	
 	
 	
 	
