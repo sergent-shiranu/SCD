@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,9 @@ import com.utt.scd.model.Connection;
 import com.utt.scd.model.ConnectionNotInitializedException;
 import com.utt.scd.resultats.LivreDetail;
 
+import de.timroes.swipetodismiss.SwipeDismissList;
+import de.timroes.swipetodismiss.SwipeDismissList.Undoable;
+
 public class Collection extends SherlockFragmentActivity implements OnItemClickListener 
 {
 	private ListView list;
@@ -39,6 +43,10 @@ public class Collection extends SherlockFragmentActivity implements OnItemClickL
 	private TextView nombre_resultat;
 	
 	private ArrayList<String> livresCorbeille;
+	private ArrayList<String> livresPanier;
+
+	
+	private SwipeDismissList mSwipeList;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -56,9 +64,42 @@ public class Collection extends SherlockFragmentActivity implements OnItemClickL
 		this.list = (ListView) findViewById(R.id.listView1);
 		this.list.setOnItemClickListener(this);
 		
+		
 		this.listLivres = new ArrayList<ParseObject>();
 		this.adapter = new CollectionAdapter(this, listLivres);
         this.list.setAdapter(adapter);
+        
+        
+        this.mSwipeList = new SwipeDismissList(list, new SwipeDismissList.OnDismissCallback() {
+			
+			@Override
+			public Undoable onDismiss(AbsListView listView, final int position) 
+			{
+				// Get item that should be deleted from the adapter.
+				final ParseObject item = (ParseObject) adapter.getItem(position);
+				
+				livresCorbeille = new ArrayList<String>();
+				livresCorbeille.add(item.getObjectId());
+				
+				adapter.removeItem(item);
+				
+				new retirerCollection().execute();
+
+				return new SwipeDismissList.Undoable() {
+					
+					@Override
+					public void undo() 
+					{
+						livresPanier = new ArrayList<String>();
+						livresPanier.add(item.getObjectId());
+						
+						//adapter.insertItem(item, position);
+						
+						new ajouterCollection().execute();
+					}
+				};
+			}
+		});
         
         this.nombre_resultat = (TextView) findViewById(R.id.textView1);
         
@@ -175,79 +216,88 @@ public class Collection extends SherlockFragmentActivity implements OnItemClickL
 	
 	
 	
-	//private MenuItem mPanierMenuItem;
 	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) 
+	public class ajouterCollection extends AsyncTask<String, Integer, String>
 	{
- 
-        MenuItem corbeille = menu.add(0,0,0,"Corbeille");
-        {
-        	corbeille.setIcon(R.drawable.action_delete);
-        	corbeille.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);           
-        }
-        
-        MenuItem apropos = menu.add(0,1,1,"A propos");
-        {
-            apropos.setIcon(R.drawable.action_about);
-            apropos.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);           
-        }
+		private AlertingDialogOneButton alertingDialogOneButton;
+		
+		private Connection connection;
+		
 
-        
-		return true;
-	}
-	
-	
-	
-	private AlertingDialogOneButton alertingDialogOneButton;
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) 
-	{
-		switch (item.getItemId()) 
+		public ajouterCollection()
 		{
-			case 0:
-				
-				if (this.listLivres.size() > 0)
-				{
-					this.livresCorbeille = new ArrayList<String>();
-					
-					this.livresCorbeille = this.adapter.getLivresPanier();
+			this.connection = Connection.getInstance();
+			this.connection.initialize();
+		}
 
-					if (this.livresCorbeille.size() == 0)
-					{
-						this.alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																						"Veuillez choisir au moins un livre",																			
-																						R.drawable.action_about);
-						this.alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
-					}
-					else
-					{
-						new retirerCollection().execute();
-					}
-				}
-				
-				
-				return true;
-				
-			case 1:
-				
-				Intent intent = new Intent(this,Apropos.class);
-				startActivity(intent);
-				
-				
-				return true;
-	
-			case android.R.id.home:
-	
-				this.finish();
-	
-				return true;
-	
-		};
+		@Override
+		protected void onPreExecute() 
+		{
+			super.onPreExecute();
+			setSupportProgressBarIndeterminateVisibility(true); 
+		}
+		
+		@Override
+		protected String doInBackground(String... arg0) 
+		{
+			try 
+			{
+				this.connection.ajouterLivreCollection(livresPanier);
+			} 
+			catch (ConnectionNotInitializedException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "no internet";
+			}
+			catch (ParseException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "fail";
+			} 
+			
+			
+			return "successful";
+    	    
+		}
+		
+		@Override
+		protected void onPostExecute(String result) 
+		{
+			super.onPostExecute(result);
 
-		return false;
+			setSupportProgressBarIndeterminateVisibility(false); 
+			
+			if(result.equals("fail"))
+			{
+				
+				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
+																			"Erreur inconnue s'est produite, veuillez réessayer plus tard",																			
+																			R.drawable.action_alert);
+				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+			}
+			else if(result.equals("no internet"))
+			{
+				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
+																			"Problème de connexion, veuillez vérifier le réglage de connexion de votre téléphone",																			
+																			R.drawable.action_alert);
+				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+				
+			}
+			else if (result.equals("successful"))
+			{	
+				Toast.makeText(getBaseContext(), "Ajout avec succès", Toast.LENGTH_LONG).show();
+				
+				new RecupererLivresCollection().execute();
+			}
+			
+		}
+
 	}
+	
+	
+	
 	
 	
 	
@@ -329,6 +379,88 @@ public class Collection extends SherlockFragmentActivity implements OnItemClickL
 		}
 
 	}
+	
+	
+	
+	
+	
+	//private MenuItem mPanierMenuItem;
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) 
+	{
+ 
+        MenuItem corbeille = menu.add(0,0,0,"Corbeille");
+        {
+        	corbeille.setIcon(R.drawable.action_delete);
+        	corbeille.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);           
+        }
+        
+        MenuItem apropos = menu.add(0,1,1,"A propos");
+        {
+            apropos.setIcon(R.drawable.action_about);
+            apropos.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);           
+        }
+
+        
+		return true;
+	}
+	
+	
+	
+	private AlertingDialogOneButton alertingDialogOneButton;
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) 
+	{
+		switch (item.getItemId()) 
+		{
+			case 0:
+				
+				if (this.listLivres.size() > 0)
+				{
+					this.livresCorbeille = new ArrayList<String>();
+					
+					this.livresCorbeille = this.adapter.getLivresPanier();
+
+					if (this.livresCorbeille.size() == 0)
+					{
+						this.alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
+																						"Veuillez choisir au moins un livre",																			
+																						R.drawable.action_about);
+						this.alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+					}
+					else
+					{
+						new retirerCollection().execute();
+					}
+				}
+				
+				
+				return true;
+				
+			case 1:
+				
+				Intent intent = new Intent(this,Apropos.class);
+				startActivity(intent);
+				
+				
+				return true;
+	
+			case android.R.id.home:
+	
+				this.finish();
+	
+				return true;
+	
+		};
+
+		return false;
+	}
+	
+	
+	
+	
 	
 	
 	

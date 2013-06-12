@@ -87,7 +87,7 @@
         
         <activity
             android:name="com.utt.scd.user.collection.Collection"
-            android:label="Collection">
+            android:label="Panier">
         </activity>
         
         <activity

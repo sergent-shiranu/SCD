@@ -53,7 +53,7 @@ public class CollectionAdapter extends BaseAdapter
 	@Override
 	public Object getItem(int position) 
 	{
-		return this.listeLivres.get(position);
+		return this.listeLivres.get(position).getLivre();
 	}
 
 	@Override
@@ -65,6 +65,36 @@ public class CollectionAdapter extends BaseAdapter
 	public String getId(int position)
 	{
 		return this.listeLivres.get(position).getLivre().getObjectId();
+	}
+	
+	public void removeItem(ParseObject livre)
+	{
+		this.listLivres.remove(livre);
+		
+		this.listeLivres = new ArrayList<ItemLivre>();
+		
+		for (int i = 0 ; i < listLivres.size() ; i++)
+		{
+			this.listeLivres.add(new ItemLivre(listLivres.get(i)));
+		}
+		
+		
+		notifyDataSetChanged();
+	}
+	
+	public void insertItem(ParseObject livre, int position)
+	{
+		this.listLivres.add(position, livre);
+		
+		this.listeLivres = new ArrayList<ItemLivre>();
+		
+		for (int i = 0 ; i < listLivres.size() ; i++)
+		{
+			this.listeLivres.add(new ItemLivre(listLivres.get(i)));
+		}
+		
+		
+		notifyDataSetChanged();
 	}
 
 	@Override
