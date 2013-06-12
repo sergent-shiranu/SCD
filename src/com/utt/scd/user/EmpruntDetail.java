@@ -42,7 +42,8 @@ public class EmpruntDetail extends SherlockFragmentActivity implements OnClickLi
 	private Bundle extras;
 	private ParseObject exemplaire;
 	private TextView titre,auteur,cote;
-	private ImageView couverture;private Bitmap bit;
+	private ImageView couverture;
+	private Bitmap bit;
 	private TextView date_emprunt,date_retour,renouvelable;
 	private Button acceder_fiche;
 	
@@ -159,14 +160,8 @@ public class EmpruntDetail extends SherlockFragmentActivity implements OnClickLi
 				}
 				
 				
-				System.out.println("data id : " + extras.getString("objectId"));
+				//System.out.println("data id : " + extras.getString("objectId"));
 				this.exemplaires = this.connection.recupererExemplaireEmprunter(extras.getString("objectId"));
-			} 
-			catch (ParseException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return "fail";
 			} 
 			catch (ConnectionNotInitializedException e) 
 			{
@@ -174,6 +169,13 @@ public class EmpruntDetail extends SherlockFragmentActivity implements OnClickLi
 				e.printStackTrace();
 				return "no internet";
 			}
+			catch (ParseException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "fail";
+			} 
+			
 			
 			return "successful";
     	    
@@ -190,15 +192,15 @@ public class EmpruntDetail extends SherlockFragmentActivity implements OnClickLi
 			{
 				
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_about);
+																			"Erreur inconnue s'est produite, veuillez réessayer plus tard",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 			}
 			else if(result.equals("no internet"))
 			{
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_search);
+																			"Problème de connexion, veuillez vérifier le réglage de connexion de votre téléphone",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 				
 			}

@@ -13,7 +13,6 @@ import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -226,58 +225,80 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 		{
 			if (isChecked)
 			{
-				String[] data = {"1"};
+				data[0] = "1";
 				new modifierAlerte().execute(data);
 			}
 			else
 			{
-				String[] data = {"0"};
+				data[0] = "0";
 				new modifierAlerte().execute(data);
 			}
 		}
 		
 	}
-
+	private String[] data = {""};
 	
 	
 	private AlertDialog choice_frequence, choice_anticipation, choice_theme;
-	
+	private AlertingDialogOneButton alertingDialogOneButton;
 	@Override
 	public void onClick(View v) 
 	{
 		if (v.equals(frequence))
 		{
-			final CharSequence[] items = {"Non défini","1 fois par jour","2 fois par jour"};
+			if (!rappel_prets.isChecked())
+			{
+				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
+																			"Veuillez activer le Rappel de prêts",																			
+																			R.drawable.action_alert);
+				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+			}
+			else
+			{
+				final CharSequence[] items = {"Non défini","1 fois par jour","2 fois par jour"};
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setTitle("Choix d'anticipation");
+				builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int item) 
+					{
+						frequence.setText(items[item]);
+						choice_frequence.dismiss();    
+					}
+				});
+				choice_frequence = builder.create();
+				choice_frequence.setCancelable(true);
+				choice_frequence.show();
+			}
 			
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("Choix d'anticipation");
-			builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int item) 
-				{
-					frequence.setText(items[item]);
-					choice_frequence.dismiss();    
-				}
-			});
-			choice_frequence = builder.create();
-			choice_frequence.setCancelable(true);
-			choice_frequence.show();
 		}
 		else if (v.equals(anticipation))
 		{
-			final CharSequence[] items = {"Non défini","2 jours avant","Un seul jour avant"};
+			if (!rappel_prets.isChecked())
+			{
+				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
+																			"Veuillez activer le Rappel de prêts",																			
+																			R.drawable.action_alert);
+				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+			}
+			else
+			{
+				final CharSequence[] items = {"Non défini","2 jours avant","Un seul jour avant"};
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setTitle("Choissisez votre thème");
+				builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int item) 
+					{
+						anticipation.setText(items[item]);
+						choice_anticipation.dismiss();    
+					}
+				});
+				choice_anticipation = builder.create();
+				choice_anticipation.setCancelable(true);
+				choice_anticipation.show();
+			}
 			
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("Choissisez votre thème");
-			builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int item) 
-				{
-					anticipation.setText(items[item]);
-					choice_anticipation.dismiss();    
-				}
-			});
-			choice_anticipation = builder.create();
-			choice_anticipation.setCancelable(true);
-			choice_anticipation.show();
 		}
 		else
 		{
@@ -328,6 +349,12 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 	}
 
 	
+	
+	/**
+	 * Tâche asynchrône : Activier ou Déactiver les alertes (arg0[0] = "1" ou arg0[0] = "0")
+	 * @author mr.giua
+	 *
+	 */
 	public class modifierAlerte extends AsyncTask<String, Integer, String>
 	{
 		private AlertingDialogOneButton alertingDialogOneButton;
@@ -382,21 +409,22 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 			{
 				
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_about);
+																			"Problème inconnu, veuillez vous identifier",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 			}
 			else if(result.equals("no internet"))
 			{
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
+																			"Problème de connexion, veuillez vérifier le réglage de connexion de votre téléphone",																			
 																			R.drawable.action_search);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 				
 			}
 			else if (result.equals("successful"))
 			{	
-				Toast.makeText(getBaseContext(), "Votre paramètre est enregistré", Toast.LENGTH_LONG).show();
+
+				//Toast.makeText(getBaseContext(), "Votre paramètre est enregistré", Toast.LENGTH_LONG).show();
 				
 			}
 			

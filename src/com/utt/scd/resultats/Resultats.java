@@ -42,7 +42,7 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 	private LivreAdapter adapter;
 	private List<ParseObject> listLivres;
 	
-	private String titre="", auteur="", support="", langue="", uv="", domaine = "";
+	private String titre = "", auteur = "", support = "", langue = "", uv = "", domaine = "";
 	private Bundle extras;
 	
 	private TextView nombre_resultat;
@@ -184,15 +184,15 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 			{
 				
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_about);
+																				"Erreur inconnue s'est produite, veuillez réessayer plus tard",																			
+																				R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 			}
 			else if(result.equals("no internet"))
 			{
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_search);
+																				"Problème de connexion, veuillez vérifier le réglage de connexion de votre téléphone",																			
+																				R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 				
 			}
@@ -386,14 +386,8 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 		{
 			try 
 			{
-				System.out.println(arg0[0] + arg0[1]);
+				//System.out.println(arg0[0] + arg0[1]);
 				this.connection.login(arg0[0], arg0[1]);
-			} 
-			catch (ParseException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return "fail";
 			} 
 			catch (ConnectionNotInitializedException e) 
 			{
@@ -401,6 +395,13 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 				e.printStackTrace();
 				return "no internet";
 			}
+			catch (ParseException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "fail";
+			} 
+			
 			
 			return "successful";
     	    
@@ -417,15 +418,15 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 			{
 				
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_about);
+																			"Vos identifiants ne sont pas corrects",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 			}
 			else if(result.equals("no internet"))
 			{
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_search);
+																			"Problème de connexion, veuillez vérifier le réglage de connexion de votre téléphone",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 				
 			}
@@ -471,18 +472,19 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 			{
 				this.connection.ajouterLivreCollection(livresPanier);
 			} 
-			catch (ParseException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return "fail";
-			} 
 			catch (ConnectionNotInitializedException e) 
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return "no internet";
 			}
+			catch (ParseException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "fail";
+			} 
+			
 			
 			return "successful";
     	    
@@ -499,15 +501,15 @@ public class Resultats extends SherlockFragmentActivity implements OnItemClickLi
 			{
 				
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_about);
+																			"Erreur inconnue s'est produite, veuillez réessayer plus tard",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 			}
 			else if(result.equals("no internet"))
 			{
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_search);
+																			"Problème de connexion, veuillez vérifier le réglage de connexion de votre téléphone",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 				
 			}

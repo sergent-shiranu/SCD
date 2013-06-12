@@ -146,15 +146,15 @@ public class Collection extends SherlockFragmentActivity implements OnItemClickL
 			{
 				
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_about);
+																			"Erreur inconnue s'est produite, veuillez réessayer plus tard",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 			}
 			else if(result.equals("no internet"))
 			{
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_search);
+																			"Problème de connexion, veuillez vérifier le réglage de connexion de votre téléphone",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 				
 			}
@@ -306,15 +306,15 @@ public class Collection extends SherlockFragmentActivity implements OnItemClickL
 			{
 				
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_about);
+																			"Erreur inconnue s'est produite, veuillez réessayer plus tard",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 			}
 			else if(result.equals("no internet"))
 			{
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_search);
+																			"Problème de connexion, veuillez vérifier le réglage de connexion de votre téléphone",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 				
 			}

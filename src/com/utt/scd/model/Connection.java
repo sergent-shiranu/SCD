@@ -38,11 +38,18 @@ public class Connection
 	private boolean isInitialized = false;	
 	
 	
+	/**
+	 * Constructeur privé
+	 */
 	private Connection() 
 	{
 		super();
 	}
 	
+	/**
+	 * Retourner une instance de ce singleton
+	 * @return
+	 */
 	public final static Connection getInstance() 
 	{
 		if (Connection.instance == null) 
@@ -59,6 +66,11 @@ public class Connection
 		return Connection.instance;
 	}
 	
+	
+	/**
+	 * Initialiser le singleton
+	 * @return
+	 */
 	public Connection initialize()
 	{
 		
@@ -71,15 +83,20 @@ public class Connection
 		
 
 		return (Connection.getInstance());
-		
-		
+
 	}
 	
 	
 	
 	//******************************* RECHERCHE ***************************************//
 	
-	// Par son objectId
+	/**
+	 * Rechercher un livre par son objectId
+	 * @param objectId
+	 * @return
+	 * @throws ConnectionNotInitializedException
+	 * @throws ParseException
+	 */
 	public ParseObject rechercheLivre(String objectId) throws ConnectionNotInitializedException, ParseException
 	{
 		ParseQuery query = new ParseQuery("Livre");
@@ -96,7 +113,18 @@ public class Connection
 	}
 	
 	
-	// Recherche avancée
+	/**
+	 * Recherche avancée - Rechercher un livre par plusieurs critères
+	 * @param titre
+	 * @param auteur
+	 * @param support
+	 * @param langue
+	 * @param uv
+	 * @param domaine
+	 * @return
+	 * @throws ConnectionNotInitializedException
+	 * @throws ParseException
+	 */
 	public List<ParseObject> rechercheAvancee(String titre, String auteur, String support, String langue, String uv, String domaine) throws ConnectionNotInitializedException, ParseException
 	{
 		
@@ -155,7 +183,11 @@ public class Connection
 		}
 	}
 	
-	
+	/**
+	 * Expression régulière pour chercher un livre . Par exemple : "Dev Android" devient ".*[Dd][Ee][Vv].*[Aa][Nn][Dd][Rr][Oo][Ii][Dd].*" 
+	 * @param chaine
+	 * @return
+	 */
 	public String regexRecherche(String chaine)
 	{
 		String[] mots = chaine.split(" ");
@@ -195,8 +227,14 @@ public class Connection
 	
 	
 	//******************************* RECUPERER LIVRE D'UN EXEMPLAIRE *************************************//
-	
-	// Par exemplaire objet lui-même
+
+	/**
+	 * Récuperer un livre d'un exemplaire donné
+	 * @param exemplaire
+	 * @return
+	 * @throws ConnectionNotInitializedException
+	 * @throws ParseException
+	 */
 	public List<ParseObject> recupererLivreParSonExemplaire(ParseObject exemplaire) throws ConnectionNotInitializedException, ParseException
 	{
 		ParseRelation relation = exemplaire.getRelation("exemplaire_de");
@@ -232,7 +270,13 @@ public class Connection
 	}
 	
 	
-	// Par son objectId
+	/**
+	 * Récupérer le livre d'un exemplaire donné par son objectId
+	 * @param id_exemplaire
+	 * @return
+	 * @throws ConnectionNotInitializedException
+	 * @throws ParseException
+	 */
 	public List<ParseObject> recupererLivreParSonExemplaire(String id_exemplaire) throws ConnectionNotInitializedException, ParseException
 	{
 		
@@ -270,7 +314,13 @@ public class Connection
 	
 	//******************************* RECUPERER LES EXEMPLAIRES D'UN LIVRE ***************************************//
 	
-	// Par Objet Livre lui-même
+	/**
+	 * Récupérer les exemplaires d'un livre donné
+	 * @param livre
+	 * @return
+	 * @throws ConnectionNotInitializedException
+	 * @throws ParseException
+	 */
 	public List<ParseObject> recupererExemplaireParSonLivre(ParseObject livre) throws ConnectionNotInitializedException, ParseException
 	{
 		
@@ -306,7 +356,13 @@ public class Connection
 	}
 	
 	
-	// Par son objectId
+	/**
+	 * Récupérer les exemplaires d'un livre donné par son objectId
+	 * @param id_livre
+	 * @return
+	 * @throws ConnectionNotInitializedException
+	 * @throws ParseException
+	 */
 	public List<ParseObject> recupererExemplaireParSonLivre(String id_livre) throws ConnectionNotInitializedException, ParseException
 	{
 		ParseQuery query = new ParseQuery("Exemplaire");
@@ -344,7 +400,12 @@ public class Connection
 	//******************************* RECUPERER LES PERIODIQUES ***************************************//
 	
 	
-	// Toutes périodiques
+	/**
+	 * Récupérer toutes les périodiques
+	 * @return
+	 * @throws ConnectionNotInitializedException
+	 * @throws ParseException
+	 */
 	public List<ParseObject> recupererToutesPeriodiques() throws ConnectionNotInitializedException, ParseException
 	{
 		ParseQuery query = new ParseQuery("Periodique");
@@ -361,7 +422,13 @@ public class Connection
 	}
 	
 	
-	// Une périodique quelconque par son objectId
+	/**
+	 * Récupérer une périodique quelconque par son objectId
+	 * @param objectId
+	 * @return
+	 * @throws ConnectionNotInitializedException
+	 * @throws ParseException
+	 */
 	public ParseObject recupererPeriodique(String objectId) throws ConnectionNotInitializedException, ParseException
 	{
 		ParseQuery query = new ParseQuery("Periodique");
@@ -383,7 +450,12 @@ public class Connection
 	
 	
 	//******************************* RECUPERER LES EVENEMENTS/ACTIVITES ***************************************//
-	
+	/**
+	 * Récupérer les événements ou activités
+	 * @return
+	 * @throws ConnectionNotInitializedException
+	 * @throws ParseException
+	 */
 	public List<ParseObject> recupererEvenement() throws ConnectionNotInitializedException, ParseException
 	{
 		ParseQuery query = new ParseQuery("Evenement");
@@ -409,7 +481,14 @@ public class Connection
 	//******************************* UTILISATEUR ***************************************//
 	
 	
-	// Login
+	/**
+	 * Login
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws ParseException
+	 * @throws ConnectionNotInitializedException
+	 */
 	public ParseUser login(String username, String password) throws ParseException, ConnectionNotInitializedException
 	{	
 		if (!this.isInitialized) 
@@ -431,7 +510,11 @@ public class Connection
 	}
 	
 	
-	// Logout
+	/**
+	 * Logout
+	 * @throws ParseException
+	 * @throws ConnectionNotInitializedException
+	 */
 	public void logout() throws ParseException, ConnectionNotInitializedException
 	{	
 		if (!this.isInitialized) 
@@ -454,8 +537,12 @@ public class Connection
 	
 	
 	
-	// Ajouter un livre à sa collection, le paramètre contient un array des objectID des livres à ajouter
-	
+	/**
+	 * Ajouter un ou plusieurs livres au panier pour consulter plus tard 
+	 * @param livresPanier
+	 * @throws ParseException
+	 * @throws ConnectionNotInitializedException
+	 */
 	public void ajouterLivreCollection(ArrayList<String> livresPanier) throws ParseException, ConnectionNotInitializedException
 	{
 		ParseQuery query = new ParseQuery("Livre");
@@ -486,8 +573,12 @@ public class Connection
 	}
 	
 	
-	// Retirer un livre de sa collection, le paramètre contient un array des objectID des livres à retirer
-	
+	/**
+	 * Enlever un ou plusieurs livres du panier
+	 * @param livresCorbeille
+	 * @throws ParseException
+	 * @throws ConnectionNotInitializedException
+	 */
 	public void retirerLivreCollection(ArrayList<String> livresCorbeille) throws ParseException, ConnectionNotInitializedException
 	{
 		ParseQuery query = new ParseQuery("Livre");
@@ -528,7 +619,12 @@ public class Connection
 	
 	
 	
-	// Récupérer tous les livres dans sa collection
+	/**
+	 * Récupérer tous les livres dans son panier
+	 * @return
+	 * @throws ConnectionNotInitializedException
+	 * @throws ParseException
+	 */
 	public List<ParseObject> recupererLivresCollection() throws ConnectionNotInitializedException, ParseException
 	{
 		ParseUser user = ParseUser.getCurrentUser();
@@ -555,7 +651,13 @@ public class Connection
 	
 	
 	
-	// Etre alerté par l'apparition d'exemplaire d'un livre; le premier paramètre est objectId du livre,  option = 1 pour un exemplaire dispo court, 2 pour dispo long, 0 pour dispo (court + long)
+	/**
+	 * Etre alerté par l'apparition d'exemplaire d'un livre; le premier paramètre est objectId du livre,  option = 1 pour un exemplaire dispo long, 0 pour dispo (court + long)
+	 * @param objectId
+	 * @param option
+	 * @throws ParseException
+	 * @throws ConnectionNotInitializedException
+	 */
 	
 	public void notifieExemplaire(String objectId, String option) throws ParseException, ConnectionNotInitializedException
 	{
@@ -609,7 +711,12 @@ public class Connection
 	}
 	
 	
-	// Récupérer toutes les alertes long (les Livre)
+	/**
+	 * Récupérer toutes les alertes "Long" (Les Livres)
+	 * @return
+	 * @throws ConnectionNotInitializedException
+	 * @throws ParseException
+	 */
 	
 	public List<ParseObject> recupererAlertesLong() throws ConnectionNotInitializedException, ParseException
 	{
@@ -633,7 +740,14 @@ public class Connection
 	}
 	
 	
-	// Récupérer toutes les alertes disponibles (les Livre)
+	
+	
+	/**
+	 * Récupérer toutes les alertes "Disponible" (Les Livres)
+	 * @return
+	 * @throws ConnectionNotInitializedException
+	 * @throws ParseException
+	 */
 	
 	public List<ParseObject> recupererAlertesDisponibles() throws ConnectionNotInitializedException, ParseException
 	{
@@ -658,8 +772,11 @@ public class Connection
 	
 	
 	
-	// Retirer toutes les alertes long (les Livre)
-	
+	/**
+	 * Enlever les alertes "Disponible" ou "Long" (Les Livres)
+	 * @throws ConnectionNotInitializedException
+	 * @throws ParseException
+	 */
 	public void retirerAlertes(ArrayList<String> livresCorbeille, String option) throws ConnectionNotInitializedException, ParseException
 	{
 		
@@ -701,7 +818,13 @@ public class Connection
 	}
 	
 	
-	// Switch on-off alerting system
+	// 
+	/**
+	 * Switch on-off alerting system ("0" pour switch off, "1" pour switch on)
+	 * @param on_off
+	 * @throws ConnectionNotInitializedException
+	 * @throws ParseException
+	 */
 	
 	public void switchAlertingSystem(String on_off) throws ParseException, ConnectionNotInitializedException
 	{	
@@ -743,8 +866,13 @@ public class Connection
 	
 	
 	
-	// Get livre emprunter par currentUser
-	
+
+	/**
+	 * Récupérer livres empruntés par currentUser
+	 * @return
+	 * @throws ConnectionNotInitializedException
+	 * @throws ParseException
+	 */
 	public List<ParseObject> recupererLivresEmprunter() throws ConnectionNotInitializedException, ParseException
 	{
 		ParseUser user = ParseUser.getCurrentUser();
@@ -768,9 +896,13 @@ public class Connection
 		}
 	}
 	
-	
-	
-	// Get Exemplaire emprunter (ObjectId est id du livre)
+
+	/**
+	 * Récupérer livres empruntés par currentUser (ObjectId est id du livre)
+	 * @return
+	 * @throws ConnectionNotInitializedException
+	 * @throws ParseException
+	 */
 	
 	public List<ParseObject> recupererExemplaireEmprunter(String objectId) throws ConnectionNotInitializedException, ParseException
 	{

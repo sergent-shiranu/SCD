@@ -234,19 +234,19 @@ public class Periodiques extends SherlockFragmentActivity implements OnItemClick
 
 			if(result.equals("fail"))
 			{
-
+				
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_about);
+																			"Erreur inconnue s'est produite, veuillez réessayer plus tard",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 			}
 			else if(result.equals("no internet"))
 			{
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_search);
+																			"Problème de connexion, veuillez vérifier le réglage de connexion de votre téléphone",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
-
+				
 			}
 			else if (result.equals("successful"))
 			{	
@@ -309,16 +309,7 @@ public class Periodiques extends SherlockFragmentActivity implements OnItemClick
 		
 		typePeriodiques = this.listPeriodiques.get(position);
 		mAdapter.setItems(typePeriodiques);
-		/*mAdapter = new MagazineAdapter(this, typePeriodiques);
-			
-		mList.setAdapter(mAdapter);
-			
-		for (ParseObject a : typePeriodiques.getList())
-		{
-			System.out.println(a.getString("Titre"));
-		}
-		
-		mDrawer.setMenuView(mList);*/
+
 		
 		mDrawer.toggleMenu();
 

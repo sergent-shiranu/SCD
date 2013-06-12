@@ -28,6 +28,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -259,21 +260,21 @@ public class SCD extends SherlockFragmentActivity implements OnQueryTextListener
 			{
 				
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_about);
+																			"Vos identifiants ne sont pas corrects",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 			}
 			else if(result.equals("no internet"))
 			{
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_search);
+																			"Problème de connexion, veuillez vérifier le réglage de connexion de votre téléphone",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 				
 			}
 			else if (result.equals("successful"))
 			{	
-				System.out.println("Identification successful");
+				Toast.makeText(getApplicationContext(), "S'identifier avec succès", Toast.LENGTH_LONG).show();
 				
 				Intent intent = new Intent(getBaseContext(), CompteLecteur.class);
 				startActivity(intent);
@@ -344,15 +345,15 @@ public class SCD extends SherlockFragmentActivity implements OnQueryTextListener
 			{
 				
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_about);
+																			"Erreur inconnue s'est produite, veuillez réessayer plus tard",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 			}
 			else if(result.equals("no internet"))
 			{
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_search);
+																			"Problème de connexion, veuillez vérifier le réglage de connexion de votre téléphone",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 				
 			}
@@ -396,6 +397,9 @@ public class SCD extends SherlockFragmentActivity implements OnQueryTextListener
         
 		return true;
 	}
+	
+	
+	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) 
@@ -403,8 +407,7 @@ public class SCD extends SherlockFragmentActivity implements OnQueryTextListener
 		switch (item.getItemId()) 
 		{
 			case 0:
-	
-				
+		
 				return true;
 	
 			case 1:
@@ -532,14 +535,6 @@ public class SCD extends SherlockFragmentActivity implements OnQueryTextListener
 			Intent intent = new Intent(this, Parametre.class);
 			startActivity(intent);
 			
-			/*if (!this.slidingLayer.isOpened()) 
-			{
-				this.slidingLayer.openLayer(true);
-            }
-			else if (this.slidingLayer.isOpened())
-			{
-				this.slidingLayer.closeLayer(true);
-            }*/
 		}
 		
 	}
@@ -586,6 +581,9 @@ public class SCD extends SherlockFragmentActivity implements OnQueryTextListener
 	
 	
 	
+	
+	
+	
 	public static int color()
 	{
 		if (THEME == R.style.Theme_Dark_blue)
@@ -609,7 +607,4 @@ public class SCD extends SherlockFragmentActivity implements OnQueryTextListener
 			return Color.parseColor("#aaFFB00F");
 		}
 	}
-
-	
-
 }

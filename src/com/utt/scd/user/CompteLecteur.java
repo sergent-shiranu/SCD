@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -181,18 +182,19 @@ public class CompteLecteur extends SherlockFragmentActivity implements OnClickLi
 			{
 				this.connection.logout();
 			} 
-			catch (ParseException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return "fail";
-			} 
 			catch (ConnectionNotInitializedException e) 
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return "no internet";
 			}
+			catch (ParseException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "fail";
+			} 
+			
 			
 			return "successful";
     	    
@@ -209,21 +211,21 @@ public class CompteLecteur extends SherlockFragmentActivity implements OnClickLi
 			{
 				
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_about);
+																			"Erreur inconnue s'est produite, veuillez réessayer plus tard",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 			}
 			else if(result.equals("no internet"))
 			{
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_search);
+																			"Problème de connexion, veuillez vérifier le réglage de connexion de votre téléphone",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 				
 			}
 			else if (result.equals("successful"))
 			{	
-				System.out.println("Identification successful");
+				Toast.makeText(getApplicationContext(), "Votre session est fermée", Toast.LENGTH_LONG).show();
 				
 				finish();
 			}
@@ -265,18 +267,19 @@ public class CompteLecteur extends SherlockFragmentActivity implements OnClickLi
 			{
 				this.listLivres = this.connection.recupererLivresEmprunter();
 			} 
-			catch (ParseException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return "fail";
-			} 
 			catch (ConnectionNotInitializedException e) 
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return "no internet";
 			}
+			catch (ParseException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "fail";
+			} 
+			
 			
 			return "successful";
     	    
@@ -293,26 +296,20 @@ public class CompteLecteur extends SherlockFragmentActivity implements OnClickLi
 			{
 				
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_about);
+																			"Erreur inconnue s'est produite, veuillez réessayer plus tard",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 			}
 			else if(result.equals("no internet"))
 			{
 				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
-																			result,																			
-																			R.drawable.action_search);
+																			"Problème de connexion, veuillez vérifier le réglage de connexion de votre téléphone",																			
+																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
 				
 			}
 			else if (result.equals("successful"))
 			{	
-				System.out.println("Successful");
-				
-				for (ParseObject obj : listLivres)
-				{
-					System.out.println(obj.getObjectId()+"--------------");
-				}
 				
 				livres = this.listLivres;
 				populateView();
@@ -328,53 +325,6 @@ public class CompteLecteur extends SherlockFragmentActivity implements OnClickLi
 	@Override
 	public void onClick(View v) 
 	{
-		/*if (v.equals(listLinearLayout))
-		{
-			
-			System.out.println( "putain de merde ");
-			
-			int position = (Integer) v.getTag();
-			
-			System.out.println( "putain de merde " + position);
-			
-			Intent intent = new Intent(this,EmpruntDetail.class);
-			intent.putExtra("objectId", livres.get(position).getObjectId());
-			intent.putExtra("Titre", livres.get(position).getString("Titre"));
-			
-			String au = "Auteur : ";
-			
-			@SuppressWarnings("unchecked")
-			ArrayList<String> ar = (ArrayList<String>) livres.get(position).get("Auteur");
-			
-			if (ar.size() == 1)
-			{
-				au = ar.get(0);
-			}
-			else
-			{
-				for (int i = 0 ; i < ar.size() -1 ; i ++)
-				{
-					au += ar.get(i) + "-";
-				}
-				au += ar.get(ar.size()-1);
-			}
-			
-			intent.putExtra("Auteur", au);
-			intent.putExtra("Cote", livres.get(position).getString("Cote"));
-			intent.putExtra("url", livres.get(position).getParseFile("couverture").getUrl());
-			
-			startActivity(intent);
-		}
-		else if (v.equals(alertes))
-		{
-			
-		}
-		else if (v.equals(collection))
-		{
-			
-		}
-		
-	}*/
 		if (v.equals(alertes))
 		{
 			Intent intent = new Intent(this, Alertes.class);
@@ -387,11 +337,7 @@ public class CompteLecteur extends SherlockFragmentActivity implements OnClickLi
 		}
 		else
 		{
-			System.out.println( "putain de merde ");
-			
 			int position = (Integer) v.getTag();
-			
-			System.out.println( "putain de merde " + position);
 			
 			Intent intent = new Intent(this,EmpruntDetail.class);
 			intent.putExtra("objectId", livres.get(position).getObjectId());
