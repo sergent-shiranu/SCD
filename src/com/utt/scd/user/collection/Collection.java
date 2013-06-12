@@ -48,6 +48,9 @@ public class Collection extends SherlockFragmentActivity implements OnItemClickL
 	
 	private SwipeDismissList mSwipeList;
 	
+	private ParseObject liv;
+	private int pos;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -70,7 +73,7 @@ public class Collection extends SherlockFragmentActivity implements OnItemClickL
         this.list.setAdapter(adapter);
         
         
-        this.mSwipeList = new SwipeDismissList(list, new SwipeDismissList.OnDismissCallback() {
+        this.setmSwipeList(new SwipeDismissList(list, new SwipeDismissList.OnDismissCallback() {
 			
 			@Override
 			public Undoable onDismiss(AbsListView listView, final int position) 
@@ -80,6 +83,9 @@ public class Collection extends SherlockFragmentActivity implements OnItemClickL
 				
 				livresCorbeille = new ArrayList<String>();
 				livresCorbeille.add(item.getObjectId());
+				
+				liv = item;
+				pos = position;
 				
 				adapter.removeItem(item);
 				
@@ -99,7 +105,7 @@ public class Collection extends SherlockFragmentActivity implements OnItemClickL
 					}
 				};
 			}
-		});
+		}));
         
         this.nombre_resultat = (TextView) findViewById(R.id.textView1);
         
@@ -359,6 +365,8 @@ public class Collection extends SherlockFragmentActivity implements OnItemClickL
 																			"Erreur inconnue s'est produite, veuillez réessayer plus tard",																			
 																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+				
+				adapter.insertItem(liv, pos);
 			}
 			else if(result.equals("no internet"))
 			{
@@ -366,6 +374,8 @@ public class Collection extends SherlockFragmentActivity implements OnItemClickL
 																			"Problème de connexion, veuillez vérifier le réglage de connexion de votre téléphone",																			
 																			R.drawable.action_alert);
 				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+				
+				adapter.insertItem(liv, pos);
 				
 			}
 			else if (result.equals("successful"))
@@ -475,5 +485,17 @@ public class Collection extends SherlockFragmentActivity implements OnItemClickL
 		intent.putExtra("objectId", this.adapter.getId(position));
 		
 		startActivity(intent);
+	}
+
+
+
+	public SwipeDismissList getmSwipeList() {
+		return mSwipeList;
+	}
+
+
+
+	public void setmSwipeList(SwipeDismissList mSwipeList) {
+		this.mSwipeList = mSwipeList;
 	}
 }
