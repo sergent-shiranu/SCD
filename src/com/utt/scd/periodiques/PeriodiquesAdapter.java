@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.utt.scd.R;
+import com.utt.scd.SCD;
 
 
 public class PeriodiquesAdapter extends BaseAdapter
@@ -106,6 +107,7 @@ public class PeriodiquesAdapter extends BaseAdapter
 		holder.imageView.setMinimumWidth(display.getWidth());
 
         holder.name.setText(item.getNom());
+        holder.name.setBackgroundColor(SCD.color());
 
 
         return view;

@@ -701,9 +701,9 @@ public class Connection
 	}
 	
 	
-	// Switch off alerting system
+	// Switch on-off alerting system
 	
-	public void switchOffAlertingSystem() throws ParseException, ConnectionNotInitializedException
+	public void switchAlertingSystem(String on_off) throws ParseException, ConnectionNotInitializedException
 	{	
 		if (!this.isInitialized) 
 		{
@@ -713,29 +713,21 @@ public class Connection
 		{
 			ParseUser user = ParseUser.getCurrentUser();
 			
-			user.put("is_alerted",false); // L'indice qui indique si l'utilisateur est alerté actuellement ou pas			
-			user.save();
-		}
-		
-	}
-	
-	
-	// Switch on alerting system
-	public void switchOnAlertingSystem() throws ParseException, ConnectionNotInitializedException
-	{	
-		if (!this.isInitialized) 
-		{
-			throw new ConnectionNotInitializedException("Connection has not been initialized");
-		}
-		else
-		{
-			ParseUser user = ParseUser.getCurrentUser();
+			if (on_off.equals("0"))
+			{
+				user.put("is_alerted",false); // L'indice qui indique si l'utilisateur est alerté actuellement ou pas			
+			}
+			else
+			{
+				user.put("is_alerted",true); // L'indice qui indique si l'utilisateur est alerté actuellement ou pas			
+			}
 			
-			user.put("is_alerted",true); // L'indice qui indique si l'utilisateur est alerté actuellement ou pas			
+			
 			user.save();
 		}
 		
 	}
+	
 	
 	
 	

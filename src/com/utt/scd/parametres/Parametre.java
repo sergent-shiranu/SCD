@@ -6,21 +6,28 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 import com.utt.scd.R;
 import com.utt.scd.SCD;
 import com.utt.scd.apropos.Apropos;
+import com.utt.scd.dialog.AlertingDialogOneButton;
+import com.utt.scd.model.Connection;
+import com.utt.scd.model.ConnectionNotInitializedException;
 
 public class Parametre extends SherlockFragmentActivity implements OnCheckedChangeListener, OnClickListener 
 {
@@ -87,6 +94,9 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 		this.prefs = getSharedPreferences("XXX", MODE_PRIVATE);
 		this.editor = prefs.edit();
 		
+		ParseUser user = ParseUser.getCurrentUser();
+		
+		
 		if (prefs.getString("rappel_pret", "").equals("1"))
 		{
 			this.rappel_prets.setChecked(true);
@@ -136,13 +146,20 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 		}
 		
 		
-		if (prefs.getString("rappel_alerte", "").equals("1"))
+		if (user.getObjectId() != null)
+		{
+			if (user.getBoolean("is_alerted"))
+			{
+				this.rappel_alertes.setChecked(true);
+			}
+			else
+			{
+				this.rappel_alertes.setChecked(false);
+			}
+		}
+		else
 		{
 			this.rappel_alertes.setChecked(true);
-		}
-		else if (prefs.getString("rappel_alerte", "").equals(""))
-		{
-			this.rappel_alertes.setChecked(false);
 		}
 		
 		
@@ -198,18 +215,24 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 			}
 			else
 			{
+				frequence.setText("Non défini");
+				editor.putString("frequence_rappel", "Non défini");
 				
+				anticipation.setText("Non défini");
+				editor.putString("anticipation", "Non défini");
 			}
 		}
 		else
 		{
 			if (isChecked)
 			{
-				
+				String[] data = {"1"};
+				new modifierAlerte().execute(data);
 			}
 			else
 			{
-				
+				String[] data = {"0"};
+				new modifierAlerte().execute(data);
 			}
 		}
 		
@@ -303,4 +326,84 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 		}
 		
 	}
+
+	
+	public class modifierAlerte extends AsyncTask<String, Integer, String>
+	{
+		private AlertingDialogOneButton alertingDialogOneButton;
+		
+		public Connection connection;
+
+		public modifierAlerte()
+		{
+			connection = Connection.getInstance();
+			connection.initialize();
+		}
+
+		@Override
+		protected void onPreExecute() 
+		{
+			super.onPreExecute();
+			setSupportProgressBarIndeterminateVisibility(true); 
+		}
+		
+		@Override
+		protected String doInBackground(String... arg0) 
+		{
+			try 
+			{
+				this.connection.switchAlertingSystem(arg0[0]);
+			} 
+			catch (ConnectionNotInitializedException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "no internet";
+			} 
+			catch (ParseException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "fail";
+			}
+			
+			return "successful";
+    	    
+		}
+		
+		@Override
+		protected void onPostExecute(String result) 
+		{
+			super.onPostExecute(result);
+
+			setSupportProgressBarIndeterminateVisibility(false); 
+			
+			if(result.equals("fail"))
+			{
+				
+				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
+																			result,																			
+																			R.drawable.action_about);
+				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+			}
+			else if(result.equals("no internet"))
+			{
+				alertingDialogOneButton = AlertingDialogOneButton.newInstance("Erreur", 
+																			result,																			
+																			R.drawable.action_search);
+				alertingDialogOneButton.show(getSupportFragmentManager(), "error 1 alerting dialog");
+				
+			}
+			else if (result.equals("successful"))
+			{	
+				Toast.makeText(getBaseContext(), "Votre paramètre est enregistré", Toast.LENGTH_LONG).show();
+				
+			}
+			
+		}
+
+		
+		
+	}
+	
 }
