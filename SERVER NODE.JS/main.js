@@ -9,6 +9,7 @@ Parse.Cloud.afterSave("_User", function(request) {
 	var islogged = currentUser.get('is_logging');
 	var installationId = currentUser.get('installationId');
 
+	// Si l'utilisateur s'identifie, le paramètre is_logging = 1; Quand l'utilisateur logout, le paramètre is_loggin = 0
 	if (islogged == 1)
 	{
 
@@ -22,7 +23,6 @@ Parse.Cloud.afterSave("_User", function(request) {
 			success: function(resultats) 
 			{
 				alert("Il y a au total : " + resultats.length + " téléphone qui va recevoir éventuellement des push notifications." );	
-				alert("Il n'y a qu'un seul device qui recevra des push notifications");
 			},
 
 			error: function(error) 
@@ -32,7 +32,90 @@ Parse.Cloud.afterSave("_User", function(request) {
 		});
 		
 		
-		var relation = currentUser.relation("emprunte");
+		
+		
+		var exemplaire = Parse.Object.extend("Exemplaire");
+		var queryEx = new Parse.Query(exemplaire);
+		queryEx.equalTo("emprunte_par", currentUser);
+		
+		queryEx.find({
+			success: function(exemplaires_empruntes) 
+			{
+				alert("Nombre d'exemplaires empruntés est : " + exemplaires_empruntes.length + " exemplaires.");
+				// Pour chaque exemplaire, on planifie envoyer une notification Push pour la date de retour
+				for (var i = 0; i < exemplaires_empruntes.length; i++) 
+				{
+					var ex = exemplaires_empruntes[i];
+					
+					var liv = null;
+					
+					var relation = ex.relation("exemplaire_de");
+					
+					relation.query().find({
+						success: function(livre_emprunte) 
+						{
+							alert("Nombre de livres empruntés est : " + livre_emprunte.length + " livres.");
+							liv = livre_emprunte[0];
+							
+							
+							var post = ex.get('etat') + " " + ex.get('retour');
+					
+							if (liv != null)
+							{
+								post = post + liv.get('Titre');
+							}
+							
+							alert('Livre ' + i + ' ' + post);
+							
+							var date = new Date(ex.get('retour'));
+							var date_retour = date.toLocaleString();
+							
+							Parse.Push.send(
+							{
+								where: pushQuery, // Set our Installation query
+								data: 
+								{
+									action: "com.utt.scd.EMPRUNT",
+									titre: liv.get('Titre'), 
+									alert: "Bonjour M." + currentUser.get('nom') + ", vous avez des livres à rendre le " + date_retour
+								},
+								//push_time: date,
+								//expiration_interval: 86400,
+							}, 
+							{
+								success: function() 
+								{
+									// Push was successful
+								},
+								error: function(error) 
+								{
+									throw " Got an error " + error.code + " : " + error.message;
+								}
+							});
+	
+						},
+						error: function(error) 
+						{
+							alert("Error: " + error.code + " " + error.message);
+						}
+					});
+				
+					
+				}
+			},
+			error: function(error) 
+			{
+				alert("Error: " + error.code + " " + error.message);
+			}
+		});
+		
+		
+		
+		
+		
+		
+		
+		/*var relation = currentUser.relation("emprunte");
 		
 		relation.query().find({
 			success: function(resultats) 
@@ -74,9 +157,9 @@ Parse.Cloud.afterSave("_User", function(request) {
 			},
 			error: function(error) 
 			{
-					alert("Error: " + error.code + " not found " + error.message);
+				alert("Error: " + error.code + " not found " + error.message);
 			}
-		});
+		});*/
 	}
 
 });
@@ -87,7 +170,6 @@ Parse.Cloud.afterSave("Exemplaire", function(request, response) {
 	
 	var exemplaire = request.object
 	
-	//if (exemplaire.get('duree_pret') == "Long" || exemplaire.get('duree_pret') == "Court")
 	if (exemplaire.get('etat') == "Disponible")
 	{
 		var exemplaire_de = exemplaire.relation("exemplaire_de");
@@ -142,7 +224,6 @@ Parse.Cloud.afterSave("Exemplaire", function(request, response) {
 								success: function(resultats) 
 								{
 									alert("Il y a au total : " + resultats.length + " téléphone qui va recevoir éventuellement des push notifications." );	
-									alert("Il n'y a qu'un seul device qui recevra des push notifications");
 								},
 
 								error: function(error) 
@@ -151,25 +232,34 @@ Parse.Cloud.afterSave("Exemplaire", function(request, response) {
 								}
 							});
 							
-							Parse.Push.send(
+							
+							if (user.get('is_alerted'))
 							{
-								where: pushQuery, // Set our Installation query
-								data: 
+								Parse.Push.send(
 								{
-									alert: "Bonjour M." + user.get('nom') + ", un exemplaire du livre " + livre.get['Titre'] + " est disponible"
-								},
-								//expiration_interval: 86400,
-							}, 
-							{
-								success: function() 
+									where: pushQuery, // Set our Installation query
+									data: 
+									{
+										action: "com.utt.scd.ALERTE",
+										titre: livre.get('Titre'),
+										type: exemplaire.get('duree_pret'),
+										alert: "Bonjour M." + user.get('nom') + ", un exemplaire du livre " + livre.get('Titre') + " de type " + exemplaire.get('duree_pret') + " est disponible"
+									},
+									//expiration_interval: 86400,
+								}, 
 								{
-									// Push was successful
-								},
-								error: function(error) 
-								{
-									throw " Got an error " + error.code + " : " + error.message;
-								}
-							});
+									success: function() 
+									{
+										// Push was successful
+									},
+									error: function(error) 
+									{
+										throw " Got an error " + error.code + " : " + error.message;
+									}
+								});
+							}
+							
+							
 						}
 								
 					},

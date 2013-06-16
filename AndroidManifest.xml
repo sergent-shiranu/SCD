@@ -45,6 +45,13 @@
         </receiver>
 
         
+        <receiver android:name="com.utt.scd.MonitorPushNotification.SCDReceiver">
+			<intent-filter>
+			  <action android:name="com.utt.scd.EMPRUNT" />
+			  <action android:name="com.utt.scd.ALERTE" />
+			</intent-filter>
+		</receiver>
+        
         <activity
             android:name=".apropos.Apropos"
             android:label="A propos">

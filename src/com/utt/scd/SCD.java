@@ -7,9 +7,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -66,6 +68,8 @@ public class SCD extends SherlockFragmentActivity implements OnQueryTextListener
     
     private LinearLayout parent;
     private List<ParseObject> listeEvenements;
+    
+    private IntentFilter intentFilter;	
 
 	
 	@Override
@@ -121,9 +125,21 @@ public class SCD extends SherlockFragmentActivity implements OnQueryTextListener
         
         this.close = (Button) findViewById(R.id.Button1);
         this.close.setOnClickListener(this);
+        
+        //---intent to filter for push notification, sending, and connected ---
+        this.intentFilter = new IntentFilter();
+        this.intentFilter.addAction("ALERTE");
+        this.intentFilter.addAction("EMPRUNT");
 
+        this.registerReceiver(intentReceiver, intentFilter);
 	}
 	
+	@Override
+	protected void onDestroy() 
+	{
+		super.onDestroy();
+		unregisterReceiver(intentReceiver);
+	}
 	
 	
 	@SuppressWarnings("deprecation")
@@ -575,6 +591,40 @@ public class SCD extends SherlockFragmentActivity implements OnQueryTextListener
 		
 	}
 	
+	
+	
+	
+	
+	
+	
+	public BroadcastReceiver intentReceiver = new BroadcastReceiver() {
+		
+		@Override
+		public void onReceive(Context context, Intent intent) 
+		{
+			String action = intent.getAction();
+
+	    	System.out.println("ACTION : " + action);
+	    	
+	    	if (action.equals("ALERTE"))
+	    	{
+	    		String message = intent.getExtras().getString("message");
+	    		
+	    		System.out.println("Message intent : " + message);
+	    		
+	    		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+	    	}
+	    	else if (action.equals("com.utt.scd.ALERTE"))
+	    	{
+	    		String title = intent.getExtras().getString("title");
+	    		String type = intent.getExtras().getString("type");
+	    		
+	    		System.out.println("Title : " + title + " type : " + type);
+	    	}
+	    	
+			
+		}
+	};
 	
 	
 	
