@@ -149,11 +149,17 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 		{
 			if (user.getBoolean("is_alerted"))
 			{
-				this.rappel_alertes.setChecked(true);
+				if (!this.rappel_alertes.isChecked())
+				{
+					this.rappel_alertes.toggle();
+				}	
 			}
 			else
 			{
-				this.rappel_alertes.setChecked(false);
+				if (this.rappel_alertes.isChecked())
+				{
+					this.rappel_alertes.toggle();
+				}
 			}
 		}
 		else
@@ -219,6 +225,8 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 				
 				anticipation.setText("Non défini");
 				editor.putString("anticipation", "Non défini");
+				
+				editor.commit();
 			}
 		}
 		else

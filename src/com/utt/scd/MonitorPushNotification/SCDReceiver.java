@@ -64,6 +64,7 @@ public class SCDReceiver extends BroadcastReceiver
 
 
 	
+	@SuppressWarnings("deprecation")
 	public void alert(Context context, Intent intent, String message) 
 	{
 		//Log.d("PUSH", "Message intent received!");
