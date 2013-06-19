@@ -63,7 +63,7 @@
         </activity>
         
         <activity
-            android:name=".apropos.Localisation"
+            android:name="com.utt.scd.resultats.Localisation"
             android:label="Résultats">
         </activity>
         

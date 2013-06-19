@@ -39,7 +39,6 @@ import com.parse.ParseUser;
 import com.utt.scd.R;
 import com.utt.scd.SCD;
 import com.utt.scd.apropos.Apropos;
-import com.utt.scd.apropos.Localisation;
 import com.utt.scd.dialog.AlertingDialogOneButton;
 import com.utt.scd.model.Connection;
 import com.utt.scd.model.ConnectionNotInitializedException;
@@ -770,7 +769,6 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 	{
 		if (v.equals(couverture))
 		{
-			System.out.println("ZOOOOOOMMM");
 			zoomCouverture();
 		}
 		else
@@ -779,6 +777,30 @@ public class LivreDetail extends SherlockFragmentActivity implements OnClickList
 			
 			Intent intent = new Intent(this,Localisation.class);
 			intent.putExtra("url", exemplaires.get(position).getParseFile("localisation_image").getUrl());
+
+			
+			String au = "Auteur : ";
+			
+			@SuppressWarnings("unchecked")
+			ArrayList<String> ar = (ArrayList<String>) livre.get("Auteur");
+			
+			if (ar.size() == 1)
+			{
+				au = ar.get(0);
+			}
+			else
+			{
+				for (int i = 0 ; i < ar.size() -1 ; i ++)
+				{
+					au += ar.get(i) + "-";
+				}
+				au += ar.get(ar.size()-1);
+			}
+			
+			intent.putExtra("couverture", bitmap);
+			intent.putExtra("titre", (String)livre.get("Titre"));
+			intent.putExtra("auteur", au);
+			intent.putExtra("cote", (String)livre.get("Cote"));
 			startActivity(intent);
 		}
 		

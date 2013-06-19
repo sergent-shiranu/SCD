@@ -1,23 +1,27 @@
-package com.utt.scd.apropos;
-
-import it.sephiroth.android.library.imagezoom.ImageViewTouch;
-import it.sephiroth.android.library.imagezoom.ImageViewTouch.OnImageViewTouchDoubleTapListener;
-import it.sephiroth.android.library.imagezoom.ImageViewTouch.OnImageViewTouchSingleTapListener;
-import it.sephiroth.android.library.imagezoom.ImageViewTouchBase.OnDrawableChangeListener;
+package com.utt.scd.resultats;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import uk.co.senab.photoview.PhotoViewAttacher;
+
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Display;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -25,13 +29,18 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 import com.utt.scd.R;
 import com.utt.scd.SCD;
+import com.utt.scd.apropos.Apropos;
 import com.utt.scd.dialog.AlertingDialogOneButton;
 import com.utt.scd.model.Connection;
 
-public class Localisation extends SherlockFragmentActivity 
+public class Localisation extends SherlockFragmentActivity implements OnClickListener 
 {
-	private ImageViewTouch localisation;
-	private static final String LOG_TAG = "image-test";
+	private TextView titre, auteur, cote;
+	private ImageView couverture;
+	private Bitmap bi;
+	
+	private ImageView localisation;
+	private PhotoViewAttacher mAttacher;
 	
 	private Bitmap bitmap;
 	
@@ -52,38 +61,28 @@ public class Localisation extends SherlockFragmentActivity
 		
 		this.extras = getIntent().getExtras();
 		
+		this.couverture = (ImageView) findViewById(R.id.imageView1);
+		this.couverture.setOnClickListener(this);
 		
-		this.localisation =  (ImageViewTouch) findViewById(R.id.image);
+		this.bi = this.extras.getParcelable("couverture");
+		this.couverture.setImageBitmap(bi);
+		
+		this.titre = (TextView) findViewById(R.id.textView1);
+		this.titre.setText("Titre : " + this.extras.getString("titre"));
+		this.auteur = (TextView) findViewById(R.id.textView2);
+		this.auteur.setText(this.extras.getString("auteur"));
+		this.cote = (TextView) findViewById(R.id.textView3);
+		this.cote.setText("Cote : " + this.extras.getString("cote"));
+		
+		
+		this.localisation =  (ImageView) findViewById(R.id.image);
+		
+		this.mAttacher = new PhotoViewAttacher(localisation);
 		
 
 		new RecupererLocalisation().execute(extras.getString("url"));
 		
-		this.localisation.setSingleTapListener( new OnImageViewTouchSingleTapListener() {
-
-			@Override
-			public void onSingleTapConfirmed() 
-			{
-				Log.d( LOG_TAG, "onSingleTapConfirmed" );
-			}
-		} );
-
-		this.localisation.setDoubleTapListener( new OnImageViewTouchDoubleTapListener() {
-
-			@Override
-			public void onDoubleTap() 
-			{
-				Log.d( LOG_TAG, "onDoubleTap" );
-			}
-		} );
-
-		this.localisation.setOnDrawableChangedListener( new OnDrawableChangeListener() {
-
-			@Override
-			public void onDrawableChanged( Drawable drawable ) 
-			{
-				Log.i( LOG_TAG, "onBitmapChanged: " + drawable );
-			}
-		} );
+		
 	}
 	
 	
@@ -201,10 +200,49 @@ public class Localisation extends SherlockFragmentActivity
 
 				bitmap = bit;
 				localisation.setImageBitmap(bitmap);
+				mAttacher.update();
 
 			}
 			
 		}
 	
+	}
+	
+	@Override
+	public void onClick(View v) 
+	{
+		if (v.equals(couverture))
+		{
+			zoomCouverture();
+		}
+		
+		
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void zoomCouverture()
+	{
+		Dialog dialog = new Dialog(this);
+		LayoutInflater factory = LayoutInflater.from(this);
+		
+        View view = factory.inflate(R.layout.zoom_couverture, null);
+		ImageView cvt = (ImageView) view.findViewById(R.id.imageView1);
+		//cvt.setImageBitmap(bitmap);
+		
+		WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
+		
+		int new_width = display.getWidth()*5/6;
+		
+		int new_height = bi.getHeight()*display.getWidth()*5/6/ (bi.getWidth());
+
+
+		Bitmap resized = Bitmap.createScaledBitmap(bi, new_width, new_height, true);
+		cvt.setImageBitmap(resized);
+		
+		dialog.requestWindowFeature((int) Window.FEATURE_NO_TITLE);
+		dialog.setContentView(view);
+		dialog.setCanceledOnTouchOutside(true);
+		dialog.show();
 	}
 }

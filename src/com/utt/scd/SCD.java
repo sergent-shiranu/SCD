@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -57,7 +58,7 @@ import com.utt.scd.user.CompteLecteur;
 public class SCD extends SherlockFragmentActivity implements OnQueryTextListener, OnItemClickListener, OnClickListener 
 {
 
-	public static int THEME = R.style.Theme_Dark_purple;
+	public static int THEME = R.style.Theme_Dark_green;
 	
     private SlidingLayer slidingLayer;
     private TextView titre, detail;
@@ -70,11 +71,25 @@ public class SCD extends SherlockFragmentActivity implements OnQueryTextListener
     private List<ParseObject> listeEvenements;
     
     private IntentFilter intentFilter;	
+    
+    private SharedPreferences prefs;
+
 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
+		this.prefs = getSharedPreferences("XXX", MODE_PRIVATE);
+		
+		if (!(this.prefs.getInt("theme", R.style.Theme_Dark_green) != R.style.Theme_Dark_green))
+		{
+			THEME = this.prefs.getInt("theme", R.style.Theme_Dark_green);
+			
+			System.out.println("theme scd : " + SCD.THEME);
+		}
+		
+		System.out.println("theme scd : " + SCD.THEME);
+		
 		setTheme(THEME);
 		super.onCreate(savedInstanceState);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

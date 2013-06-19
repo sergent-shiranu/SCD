@@ -57,7 +57,7 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 		this.rappel_prets.setOnCheckedChangeListener(this);
 		
 		this.rappel_alertes = (ToggleButton) findViewById(R.id.ParamToggleButton2);
-		this.rappel_alertes.setOnCheckedChangeListener(this);
+		
 		
 		this.frequence = (TextView) findViewById(R.id.textView4);
 		this.frequence.setBackgroundColor(SCD.color());
@@ -167,6 +167,8 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 			this.rappel_alertes.setChecked(true);
 		}
 		
+		this.rappel_alertes.setOnCheckedChangeListener(this);
+		
 		
 	}
 	
@@ -216,7 +218,8 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 		{
 			if (isChecked)
 			{
-				
+				editor.putString("rappel_pret", "1");
+				editor.commit();
 			}
 			else
 			{
@@ -272,6 +275,9 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 					{
 						frequence.setText(items[item]);
 						choice_frequence.dismiss();    
+						
+						editor.putString("frequence_rappel", items[item].toString());
+						editor.commit();
 					}
 				});
 				choice_frequence = builder.create();
@@ -294,12 +300,15 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 				final CharSequence[] items = {"Non défini","2 jours avant","Un seul jour avant"};
 				
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setTitle("Choissisez votre thème");
+				builder.setTitle("Choissisez votre anticipation");
 				builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int item) 
 					{
 						anticipation.setText(items[item]);
-						choice_anticipation.dismiss();    
+						choice_anticipation.dismiss(); 
+						
+						editor.putString("anticipation", items[item].toString());
+						editor.commit();
 					}
 				});
 				choice_anticipation = builder.create();
@@ -313,7 +322,7 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 			final CharSequence[] items = {"Bleu","Vert","Rouge","Violet","Jaune"};
 			
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("Choissisez la fréquence de rappel");
+			builder.setTitle("Choissisez votre thème");
 			builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int item) 
 				{
@@ -341,9 +350,16 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 						SCD.THEME = R.style.Theme_Dark_yellow;
 					}
 					
+					editor.putInt("theme", SCD.THEME);
+					editor.commit();
+					
+					System.out.println("theme params : " + SCD.THEME);
+					
 					Intent intent = new Intent(getApplicationContext(),SCD.class);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					
+					
 					
 					startActivity(intent);
 					
@@ -356,6 +372,14 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 		
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	/**

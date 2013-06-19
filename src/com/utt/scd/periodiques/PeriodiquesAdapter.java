@@ -87,6 +87,10 @@ public class PeriodiquesAdapter extends BaseAdapter
         {
         	holder.imageView.setImageResource(R.drawable.informatique);
         }
+        else if (item.getNom().equals("Technique"))
+        {
+        	holder.imageView.setImageResource(R.drawable.technique);
+        }
         else if (item.getNom().equals("Ecologie"))
         {
         	holder.imageView.setImageResource(R.drawable.ecologie);
@@ -94,6 +98,10 @@ public class PeriodiquesAdapter extends BaseAdapter
         else if (item.getNom().equals("Automobile"))
         {
         	holder.imageView.setImageResource(R.drawable.automobile);
+        }
+        else if (item.getNom().equals("Gestion"))
+        {
+        	holder.imageView.setImageResource(R.drawable.gestion);
         }
         else if (item.getNom().equals("Sciences"))
         {

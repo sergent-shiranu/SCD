@@ -433,6 +433,7 @@ public class Connection
 	{
 		ParseQuery query = new ParseQuery("Periodique");
 		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+		query.addDescendingOrder("Date");
 		
 		if (!this.isInitialized) 
 		{

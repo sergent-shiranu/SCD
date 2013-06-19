@@ -130,11 +130,6 @@ public class Periodiques extends SherlockFragmentActivity implements OnItemClick
 	{
 		if (this.listPeriodiques.size() > 0)
 		{
-			for (TypePeriodiques a : this.listPeriodiques)
-			{
-				System.out.println("ייייייייייייייייי");
-				System.out.println(a.getNom());
-			}
 			
 			this.adapter = new PeriodiquesAdapter(this, this.listPeriodiques);
 			
@@ -178,8 +173,10 @@ public class Periodiques extends SherlockFragmentActivity implements OnItemClick
 				this.resultats = connection.recupererToutesPeriodiques();
 
 				TypePeriodiques informatique = new TypePeriodiques("Informatique");
+				TypePeriodiques technique = new TypePeriodiques("Technique");
 				TypePeriodiques ecologie = new TypePeriodiques("Ecologie");
 				TypePeriodiques automobile = new TypePeriodiques("Automobile");
+				TypePeriodiques gestion = new TypePeriodiques("Gestion");
 				TypePeriodiques sciences = new TypePeriodiques("Sciences");
 
 				for (ParseObject ob : resultats)
@@ -187,6 +184,10 @@ public class Periodiques extends SherlockFragmentActivity implements OnItemClick
 					if (ob.getString("Categorie").equals("Informatique")) 
 					{
 						informatique.ajouterElement(ob);
+					}
+					else if (ob.getString("Categorie").equals("Technique"))
+					{
+						technique.ajouterElement(ob);
 					}
 					else if (ob.getString("Categorie").equals("Ecologie"))
 					{
@@ -196,6 +197,10 @@ public class Periodiques extends SherlockFragmentActivity implements OnItemClick
 					{
 						automobile.ajouterElement(ob);
 					}
+					else if (ob.getString("Categorie").equals("Gestion"))
+					{
+						gestion.ajouterElement(ob);
+					}
 					else if (ob.getString("Categorie").equals("Sciences"))
 					{
 						sciences.ajouterElement(ob);
@@ -203,8 +208,10 @@ public class Periodiques extends SherlockFragmentActivity implements OnItemClick
 				}
 
 				this.list.add(informatique);
+				this.list.add(technique);
 				this.list.add(ecologie);
 				this.list.add(automobile);
+				this.list.add(gestion);
 				this.list.add(sciences);
 
 			} 
@@ -310,11 +317,7 @@ public class Periodiques extends SherlockFragmentActivity implements OnItemClick
 		typePeriodiques = this.listPeriodiques.get(position);
 		mAdapter.setItems(typePeriodiques);
 
-		
 		mDrawer.toggleMenu();
 
-		
-		
-		
 	}
 }

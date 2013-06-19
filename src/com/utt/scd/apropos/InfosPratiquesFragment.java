@@ -84,8 +84,8 @@ public class InfosPratiquesFragment extends SherlockFragment implements OnClickL
 			
 			if(location_latitude != 0 && location_longitude != 0)
 			{
-				double destionation_longitude = 4.0669048;
-				double destionation_latitude = 48.2690833;
+				double destionation_longitude = 4.06654;
+				double destionation_latitude = 48.26919;
 				
 				
 				Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("http://maps.google.com/maps?saddr=" + location_latitude + "," + location_longitude+ 
