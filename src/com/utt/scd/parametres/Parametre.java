@@ -83,6 +83,10 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 		{
 			this.theme.setText("Rouge");
 		}
+		else if (SCD.THEME == R.style.Theme_Dark_brown)
+		{
+			this.theme.setText("Brown");
+		}
 		else
 		{
 			this.theme.setText("Jaune");
@@ -107,9 +111,9 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 		
 		
 		
+		this.frequence.setText(prefs.getString("frequence_rappel", "Non défini"));
 		
-		
-		if (prefs.getString("frequence_rappel", "").equals("Non défini"))
+		/*if (prefs.getString("frequence_rappel", "").equals("Non défini"))
 		{
 			this.frequence.setText("Non défini");
 		}
@@ -124,10 +128,12 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 		else
 		{
 			this.frequence.setText("Non défini");
-		}
+		}*/
 		
 		
-		if (prefs.getString("anticipation", "").equals("Non défini"))
+		this.anticipation.setText(prefs.getString("anticipation", "Non défini"));
+		
+		/*if (prefs.getString("anticipation", "").equals("Non défini"))
 		{
 			this.anticipation.setText("Non défini");
 		}
@@ -142,7 +148,7 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 		else
 		{
 			this.anticipation.setText("Non défini");
-		}
+		}*/
 		
 		
 		if (user.getObjectId() != null)
@@ -319,7 +325,7 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 		}
 		else
 		{
-			final CharSequence[] items = {"Bleu","Vert","Rouge","Violet","Jaune"};
+			final CharSequence[] items = {"Bleu","Vert","Rouge","Violet","Jaune","Brown"};
 			
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle("Choissisez votre thème");
@@ -348,6 +354,10 @@ public class Parametre extends SherlockFragmentActivity implements OnCheckedChan
 					else if (item == 4)
 					{
 						SCD.THEME = R.style.Theme_Dark_yellow;
+					}
+					else if (item == 5)
+					{
+						SCD.THEME = R.style.Theme_Dark_brown;
 					}
 					
 					editor.putInt("theme", SCD.THEME);

@@ -910,13 +910,15 @@ curl -X PUT \
 
 
 // Emprunter un livre 
+  
+  
 curl -X PUT \
   -H "X-Parse-Application-Id: UhdjNYP0FdJoxZd1ZXFOdVx5JlJ0vQaWAPxwSlIx" \
   -H "X-Parse-REST-API-Key: mzeMNCCNXDWFYp0qSY0WydVEUVkYU3ilmxAO6uyx" \
   -H "X-Parse-Master-Key: BFEhYgNBo7ioJl1j9U3X7wyfDNe3rMwX1lDah1a9" \
   -H "Content-Type: application/json" \
-  -d '{"emprunter":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"Exemplaire","objectId":"dQqNlwAJN3"}]}}' \
-  https://api.parse.com/1/users/kdBSL5IoyI
+  -d '{"emprunte_par":{"__op":"AddRelation","objects":[{"__type":"Pointer","className":"_User","objectId":"TGjNNsZKk7"}]}}' \
+  https://api.parse.com/1/classes/Exemplaire/Fg35L2jJQZ
   
 // Get livre prêté par user
 curl -X GET \
